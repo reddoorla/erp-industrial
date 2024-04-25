@@ -1,0 +1,36 @@
+{
+	"format": "custom",
+	"id": "nav",
+	"label": "nav",
+	"repeatable": false,
+	"status": true,
+	"json": {
+		"Main": {
+			"links": {
+				"type": "Group",
+				"config": {
+					"label": "links",
+					"repeat": true,
+					"fields": {
+						"text": {
+							"type": "Text",
+							"config": {
+								"label": "text",
+								"placeholder": ""
+							}
+						},
+						"href": {
+							"type": "Link",
+							"config": {
+								"label": "href",
+								"placeholder": "",
+								"allowTargetBlank": false,
+								"select": null
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

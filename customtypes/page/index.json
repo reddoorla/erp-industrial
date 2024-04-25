@@ -27,6 +27,12 @@
 				"fieldset": "Slice Zone",
 				"config": {
 					"choices": {
+						"hero": {
+							"type": "SharedSlice"
+						},
+						"full_screen_slide": {
+							"type": "SharedSlice"
+						},
 						"rich_text": {
 							"type": "SharedSlice"
 						}

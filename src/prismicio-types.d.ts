@@ -4,7 +4,63 @@ import type * as prismic from '@prismicio/client';
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type PageDocumentDataSlicesSlice = RichTextSlice;
+/**
+ * Item in *nav → links*
+ */
+export interface NavDocumentDataLinksItem {
+	/**
+	 * text field in *nav → links*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: nav.links[].text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	text: prismic.KeyTextField;
+
+	/**
+	 * href field in *nav → links*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: nav.links[].href
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	href: prismic.LinkField;
+}
+
+/**
+ * Content for nav documents
+ */
+interface NavDocumentData {
+	/**
+	 * links field in *nav*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: nav.links[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#group
+	 */
+	links: prismic.GroupField<Simplify<NavDocumentDataLinksItem>>;
+}
+
+/**
+ * nav document from Prismic
+ *
+ * - **API ID**: `nav`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NavDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+	Simplify<NavDocumentData>,
+	'nav',
+	Lang
+>;
+
+type PageDocumentDataSlicesSlice = HeroSlice | FullScreenSlideSlice | RichTextSlice;
 
 /**
  * Content for Page documents
@@ -30,8 +86,7 @@ interface PageDocumentData {
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/field#slices
 	 */
-	slices: prismic.SliceZone<PageDocumentDataSlicesSlice>;
-	/**
+	slices: prismic.SliceZone<PageDocumentDataSlicesSlice> /**
 	 * Meta Title field in *Page*
 	 *
 	 * - **Field Type**: Text
@@ -39,7 +94,7 @@ interface PageDocumentData {
 	 * - **API ID Path**: page.meta_title
 	 * - **Tab**: SEO & Metadata
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
+	 */;
 	meta_title: prismic.KeyTextField;
 
 	/**
@@ -80,7 +135,278 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 	Lang
 >;
 
-export type AllDocumentTypes = PageDocument;
+export type AllDocumentTypes = NavDocument | PageDocument;
+
+/**
+ * Primary content in *FullScreenSlide → Primary*
+ */
+export interface FullScreenSlideSliceDefaultPrimary {
+	/**
+	 * background image field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.background_image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	background_image: prismic.ImageField<never>;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * title field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *FullScreenSlide → Items*
+ */
+export interface FullScreenSlideSliceDefaultItem {
+	/**
+	 * button text field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].button_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	button_text: prismic.KeyTextField;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * title field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * body text field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].body_text
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	body_text: prismic.RichTextField;
+}
+
+/**
+ * with popup buttons variation for FullScreenSlide Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<FullScreenSlideSliceDefaultPrimary>,
+	Simplify<FullScreenSlideSliceDefaultItem>
+>;
+
+/**
+ * Primary content in *FullScreenSlide → Primary*
+ */
+export interface FullScreenSlideSliceEmbedPrimary {
+	/**
+	 * title field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * external embed field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: custom html tp fill width of screen
+	 * - **API ID Path**: full_screen_slide.primary.external_embed
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	external_embed: prismic.RichTextField;
+}
+
+/**
+ * custom embed variation for FullScreenSlide Slice
+ *
+ * - **API ID**: `embed`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSliceEmbed = prismic.SharedSliceVariation<
+	'embed',
+	Simplify<FullScreenSlideSliceEmbedPrimary>,
+	never
+>;
+
+/**
+ * Primary content in *FullScreenSlide → Primary*
+ */
+export interface FullScreenSlideSliceWithVideoPopupPrimary {
+	/**
+	 * background image field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.background_image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	background_image: prismic.ImageField<never>;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * title field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * button text field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.button_text
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	button_text: prismic.RichTextField;
+
+	/**
+	 * video embed field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Embed
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.video_embed
+	 * - **Documentation**: https://prismic.io/docs/field#embed
+	 */
+	video_embed: prismic.EmbedField;
+}
+
+/**
+ * with video popup variation for FullScreenSlide Slice
+ *
+ * - **API ID**: `withVideoPopup`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSliceWithVideoPopup = prismic.SharedSliceVariation<
+	'withVideoPopup',
+	Simplify<FullScreenSlideSliceWithVideoPopupPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *FullScreenSlide*
+ */
+type FullScreenSlideSliceVariation =
+	| FullScreenSlideSliceDefault
+	| FullScreenSlideSliceEmbed
+	| FullScreenSlideSliceWithVideoPopup;
+
+/**
+ * FullScreenSlide Shared Slice
+ *
+ * - **API ID**: `full_screen_slide`
+ * - **Description**: FullScreenSlide
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSlice = prismic.SharedSlice<
+	'full_screen_slide',
+	FullScreenSlideSliceVariation
+>;
+
+/**
+ * Primary content in *Hero → Primary*
+ */
+export interface HeroSliceDefaultPrimary {
+	/**
+	 * Title field in *Hero → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * video embed field in *Hero → Primary*
+	 *
+	 * - **Field Type**: Embed
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.primary.video_embed
+	 * - **Documentation**: https://prismic.io/docs/field#embed
+	 */
+	video_embed: prismic.EmbedField;
+}
+
+/**
+ * Default variation for Hero Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<HeroSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *Hero*
+ */
+type HeroSliceVariation = HeroSliceDefault;
+
+/**
+ * Hero Shared Slice
+ *
+ * - **API ID**: `hero`
+ * - **Description**: Hero
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroSlice = prismic.SharedSlice<'hero', HeroSliceVariation>;
 
 /**
  * Primary content in *RichText → Primary*
@@ -134,10 +460,26 @@ declare module '@prismicio/client' {
 
 	namespace Content {
 		export type {
+			NavDocument,
+			NavDocumentData,
+			NavDocumentDataLinksItem,
 			PageDocument,
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
 			AllDocumentTypes,
+			FullScreenSlideSlice,
+			FullScreenSlideSliceDefaultPrimary,
+			FullScreenSlideSliceDefaultItem,
+			FullScreenSlideSliceEmbedPrimary,
+			FullScreenSlideSliceWithVideoPopupPrimary,
+			FullScreenSlideSliceVariation,
+			FullScreenSlideSliceDefault,
+			FullScreenSlideSliceEmbed,
+			FullScreenSlideSliceWithVideoPopup,
+			HeroSlice,
+			HeroSliceDefaultPrimary,
+			HeroSliceVariation,
+			HeroSliceDefault,
 			RichTextSlice,
 			RichTextSliceDefaultPrimary,
 			RichTextSliceVariation,
