@@ -2,7 +2,9 @@
 	import { PrismicPreview } from '@prismicio/svelte/kit';
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';
+	import Nav from '$lib/components/Nav.svelte';
 	import "../app.css"
+	import Footer from '$lib/components/Footer.svelte';
 </script>
 
 <svelte:head>
@@ -18,7 +20,10 @@
 		<meta name="twitter:card" content="summary_large_image" />
 	{/if}
 </svelte:head>
-<main>
+<Nav />
+<main class="snap-y snap-proximity h-screen overflow-scroll m-0">
+
 	<slot />
+	<Footer />
 </main>
 <PrismicPreview {repositoryName} />

@@ -247,12 +247,12 @@ export interface FullScreenSlideSliceEmbedPrimary {
 	/**
 	 * external embed field in *FullScreenSlide → Primary*
 	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: custom html tp fill width of screen
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
 	 * - **API ID Path**: full_screen_slide.primary.external_embed
-	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
-	external_embed: prismic.RichTextField;
+	external_embed: prismic.KeyTextField;
 }
 
 /**

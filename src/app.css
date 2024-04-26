@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-style: normal;
+}
+
+h1{
+    font-size: 115px;
+    font-weight: 350;
+    line-height: 110%; /* 126.5px */
+}
+
+h2{
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%;
+}
+
+h3{
+
+}
+
+h4{
+
+}
+
+h5{
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 171.429% */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    
+}
+
+p{
+    font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+}
+
+.large-paragraph{
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%; /* 60.9px */
+}
+
+button{
+    font-size: 8px;
+font-style: normal;
+font-weight: 700;
+line-height: 145%; /* 11.6px */
+letter-spacing: 2px;
+text-transform: uppercase;
+}

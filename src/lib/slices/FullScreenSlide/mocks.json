@@ -93,15 +93,9 @@
 				"type": "Text"
 			},
 			"external_embed": {
-				"__TYPE__": "StructuredTextContent",
-				"value": [
-					{
-						"type": "paragraph",
-						"content": {
-							"text": "Id reprehenderit duis dolor sint nostrud enim culpa id magna officia consectetur ea minim. Magna veniam minim eiusmod non occaecat ut nostrud labore elit dolor. Laborum irure sint proident in eu dolor reprehenderit nostrud ipsum exercitation."
-						}
-					}
-				]
+				"__TYPE__": "FieldContent",
+				"value": "coast",
+				"type": "Text"
 			}
 		},
 		"items": [

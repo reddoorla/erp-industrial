@@ -84,12 +84,10 @@
           }
         },
         "external_embed": {
-          "type": "StructuredText",
+          "type": "Text",
           "config": {
             "label": "external embed",
-            "placeholder": "custom html tp fill width of screen",
-            "allowTargetBlank": false,
-            "multi": "preformatted"
+            "placeholder": ""
           }
         }
       },
