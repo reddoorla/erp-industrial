@@ -21,7 +21,7 @@
 	{/if}
 </svelte:head>
 <Nav />
-<main class="snap-y snap-proximity h-screen overflow-scroll m-0">
+<main class="snap-y snap-mandatory h-screen overflow-scroll m-0">
 
 	<slot />
 	<Footer />

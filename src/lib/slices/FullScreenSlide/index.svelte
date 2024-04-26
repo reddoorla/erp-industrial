@@ -25,14 +25,14 @@
 	<FullPageSlide backgroundImage={slice.variation==="embed"?null:slice.primary.background_image}>
 		{#if slice.variation==="embed"}
 			
-				<div class="text-white text-center h-56 flex flex-col justify-center items-center">
-					<h2>{slice.primary.title}</h2>
+				<div class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
+					<h3>{slice.primary.title}</h3>
 				</div>
 				{@html slice.primary.external_embed}
 			
 		{:else}
-		<ContentWidth class="h-full relative justify-end z-30 pb-32">
-			<div class="md:w-2/3 relative h-full flex flex-col justify-end mb-16">
+		<ContentWidth class="h-full relative justify-end z-30 pb-8 md:pb-32">
+			<div class="md:w-2/3 relative h-full flex flex-col justify-end mb-8 md:mb-16">
 			<ContentBox 
 				titleText={slice.primary.title||""}
 				titleTag="h2"
@@ -40,7 +40,7 @@
 				float="left"
 				class="text-white z-10 text-left"
 			/>
-			<div class="flex gap-4">
+			<div class="flex flex-col md:flex-row gap-4">
 				{#if slice.variation==="default"}
 					{#each slice.items as item, i}
 						<DefaultButton text={item.button_text||''} on:click={()=>activeOverlay=i}/>
@@ -57,7 +57,7 @@
 		{#if (slice.variation==="default"||slice.variation==="withVideoPopup")&&activeOverlay!=-1 }
 		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur" transition:fade>		
 			{#if slice.variation==="default"}
-					<ContentWidth class="h-full relative flex flex-col justify-end z-40 pb-32">
+					<ContentWidth class="h-full relative flex flex-col justify-end z-40 pb-8 md:pb-32">
 					<ContentBox 
 						titleText={slice.items[activeOverlay].title||""}
 						titleTag="h2"
@@ -68,7 +68,7 @@
 				<div class="text-white mb-12 md:w-160">
 					<PrismicRichText field={slice.items[activeOverlay].body_text} />
 				</div>
-				<div class="flex gap-4">
+				<div class="flex flex-col md:flex-row gap-4">
 						{#each slice.items as item, i}
 							<DefaultButton text={activeOverlay==i?'close':item.button_text||''} 
 								on:click={()=>{	

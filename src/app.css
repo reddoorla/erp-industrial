@@ -61,3 +61,13 @@ line-height: 145%; /* 11.6px */
 letter-spacing: 2px;
 text-transform: uppercase;
 }
+
+@media screen and ( max-width:768px ) {
+    h1{
+        font-size:40px;
+    }
+
+    .large-paragraph, h2{
+        font-size:28px;
+    }
+}

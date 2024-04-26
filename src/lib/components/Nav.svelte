@@ -86,7 +86,7 @@ text-transform: uppercase;
 <div class="h-16 w-screen z-40 fixed">
     <ContentWidth class="flex flex-row justify-between items-center h-full">
         <a href="/" class="hover:opacity-80 transition-all duration-500 bump">
-            <img src={logoFull} alt="logo" class="h-32 translate-y-1/2" />
+            <img src={logoFull} alt="logo" class="h-12 md:h-32 translate-y-1/2" />
         </a>
         
         
