@@ -1,10 +1,14 @@
-<script>
+<script lang="ts">
 	import { PrismicPreview } from '@prismicio/svelte/kit';
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';
 	import Nav from '$lib/components/Nav.svelte';
 	import "../app.css"
 	import Footer from '$lib/components/Footer.svelte';
+
+	let isSnappy = true;
+
+
 </script>
 
 <svelte:head>
@@ -20,8 +24,9 @@
 		<meta name="twitter:card" content="summary_large_image" />
 	{/if}
 </svelte:head>
+
 <Nav />
-<main class="snap-y snap-mandatory h-screen overflow-scroll m-0">
+<main class="{isSnappy ? "snap-y snap-mandatory" : ""} h-screen overflow-scroll m-0 scroll-smooth">
 
 	<slot />
 	<Footer />

@@ -22,8 +22,16 @@
         "video_embed": {
           "type": "Embed",
           "config": {
-            "label": "video embed",
+            "label": "vimeo embed",
             "placeholder": ""
+          }
+        },
+        "loading_placeholder": {
+          "type": "Image",
+          "config": {
+            "label": "loading placeholder",
+            "constraint": {},
+            "thumbnails": []
           }
         }
       },

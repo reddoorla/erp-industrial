@@ -21,13 +21,13 @@
 
 </script>
 
-<section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="sticky top-0 snap-start bg-white">
+<section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="sticky top-0 snap-start bg-white overflow-hidden">
 	<FullPageSlide backgroundImage={slice.variation==="embed"?null:slice.primary.background_image}>
 		{#if slice.variation==="embed"}
 			
-				<div class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
-					<h3>{slice.primary.title}</h3>
-				</div>
+				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
+					<h3 class="font-bold">{slice.primary.title}</h3>
+				</ContentWidth>
 				{@html slice.primary.external_embed}
 			
 		{:else}

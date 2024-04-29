@@ -42,13 +42,6 @@
 
 <style>
     .nav-link{
-        color:black;
-leading-trim: both;
-text-edge: cap;
-font-feature-settings: 'clig' off, 'liga' off;
-
-/* Button - all caps */
-
 font-size: 8px;
 font-style: normal;
 font-weight: 500;
@@ -71,10 +64,10 @@ text-transform: uppercase;
 {#if isOverlayVisible}
 <div class="w-screen h-screen fixed bg-dark flex flex-col items-center justify-center gap-12 z-30" transition:fly>
     {#each navLinks as item}
-        <a href={item.href} class="nav-link">{item.label}</a>
+        <a href={item.href} class="nav-link text-white">{item.label}</a>
     {/each}
 
-    <button class="absolute top-5 right-5 opacity-60 hover:opacity-100 transition-all z-40" on:click={toggleOverlayOff}>
+    <button class="absolute top-5 right-5 opacity-60 hover:opacity-100 transition-all z-50" on:click={toggleOverlayOff}>
         <div in:fade={{delay: 600}} out:fade class="text-white">
         <FontAwesomeIcon icon={faClose} size="3x" />
         </div>
@@ -83,7 +76,7 @@ text-transform: uppercase;
 </div>
 {/if}
 
-<div class="h-16 w-screen z-40 fixed">
+<div class="h-16 w-screen z-40 fixed pointer-events-none">
     <ContentWidth class="flex flex-row justify-between items-center h-full">
         <a href="/" class="hover:opacity-80 transition-all duration-500 bump">
             <img src={logoFull} alt="logo" class="h-12 md:h-32 translate-y-1/2" />
@@ -96,13 +89,14 @@ text-transform: uppercase;
                     <a href={item.href} class="nav-link">{item.label}</a>
                 {/each}
             </div>
-       
-        <button class="lg:hidden ml-6 opacity-60 hover:opacity-100 transition-all" on:click={toggleOverlayOn}>
-           {#if !isOverlayVisible}
+    {#if !isOverlayVisible}
+        <button class="lg:hidden ml-6 opacity-60 hover:opacity-100 transition-all pointer-events-auto" in:fade={{delay: 600}} out:fade on:click={toggleOverlayOn}>
+          
             <FontAwesomeIcon icon={faBars} size="2x"/>
-            {/if}
+     
         
         </button>
+        {/if}
         </div>
 
     </ContentWidth>

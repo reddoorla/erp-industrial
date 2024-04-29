@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import { PrismicEmbed, PrismicImage } from "@prismicio/svelte";
+	import { PrismicImage } from "@prismicio/svelte";
 	import ContentWidth from "$lib/components/ContentWidth.svelte";
 	import ContentBox from "$lib/components/ContentBox.svelte";
 	import type { HeroSlice } from "../../../prismicio-types";
@@ -15,7 +15,8 @@
 
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
   
-  <div class="w-screen h-screen overflow-hidden  sticky top-0 snap-start">
+  <div class="w-screen h-screen overflow-hidden fixed top-0">
+	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute {viewportHeight*16 >viewportWidth*9 ? "h-full":"w-full"}"/>
 	<iframe 
 	  title="background video" 
 	  src={`https://player.vimeo.com/video/${videoId}?background=1`}
@@ -26,7 +27,7 @@
 	></iframe>
 
 	<ContentWidth class="h-full relative justify-end z-30">
-		<div class="w-2/3 relative h-full flex flex-col justify-end mb-16">
+		<div class="w-4/5r relative h-full flex flex-col justify-end mb-16">
 		<ContentBox 
 			titleText={slice.primary.title||""}
 			titleTag="h1"
@@ -35,4 +36,10 @@
 		/>
 		</div>
 	</ContentWidth>
+  </div>
+  <div class="w-screen h-screen sticky top-0 snap-start">
+
+  </div>
+  <div class="w-screen h-screen sticky top-0 snap-start">
+
   </div>

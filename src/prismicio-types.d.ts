@@ -371,7 +371,7 @@ export interface HeroSliceDefaultPrimary {
 	title: prismic.KeyTextField;
 
 	/**
-	 * video embed field in *Hero → Primary*
+	 * vimeo embed field in *Hero → Primary*
 	 *
 	 * - **Field Type**: Embed
 	 * - **Placeholder**: *None*
@@ -379,6 +379,16 @@ export interface HeroSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#embed
 	 */
 	video_embed: prismic.EmbedField;
+
+	/**
+	 * loading placeholder field in *Hero → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.primary.loading_placeholder
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	loading_placeholder: prismic.ImageField<never>;
 }
 
 /**

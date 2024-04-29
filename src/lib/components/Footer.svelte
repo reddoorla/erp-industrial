@@ -40,7 +40,7 @@ text-transform: uppercase;
 
 <svelte:window bind:innerWidth={viewportWidth} />
 
-<div class="bg-black w-screen sticky h-screen top-0 md:h-[30vh] md:top-[70vh]">
+<div class="bg-black w-screen sticky snap-end h-screen top-0 md:h-[30vh] md:top-[70vh]">
     <ContentWidth class="flex flex-row pt-6 h-full">
         {#if viewportWidth>768}
         <div class="h-full w-1/3 relative">
