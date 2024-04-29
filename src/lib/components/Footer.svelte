@@ -20,7 +20,7 @@ font-feature-settings: 'clig' off, 'liga' off;
 
 /* Button - all caps */
 
-font-size: 8px;
+font-size: 10px;
 font-style: normal;
 font-weight: 500;
 line-height: 145%; /* 11.6px */
