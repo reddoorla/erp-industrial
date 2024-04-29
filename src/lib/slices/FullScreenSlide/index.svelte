@@ -6,22 +6,33 @@
 	import FullPageSlide from "$lib/components/FullPageSlide.svelte";
 	import { PrismicRichText } from "@prismicio/svelte";
 	import type { FullScreenSlideSlice } from "../../../prismicio-types";
-	import { fade } from "svelte/transition";
-
-	
-
+	import { fade, fly } from "svelte/transition";
+	import { onMount } from "svelte";
 
 	export let slice:FullScreenSlideSlice;
 
 	let activeOverlay = -1;
+	let section:HTMLElement|undefined;
+	let isActiveSection = false;
+
+	const checkActive = () =>{
+		if(section)
+			isActiveSection = section?.getBoundingClientRect().top<10;
+
+			console.log('fired')
+	}
 
 	let videoId:string|undefined;
 	if(slice.variation==="withVideoPopup")
 		videoId=slice.primary.video_embed.embed_url.split('/').pop();
 
+		onMount(()=>{
+				section?.parentElement?.addEventListener("scroll", checkActive)
+		})
+
 </script>
 
-<section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="sticky top-0 snap-start bg-white overflow-hidden">
+<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="sticky top-0 snap-start bg-white overflow-hidden">
 	<FullPageSlide backgroundImage={slice.variation==="embed"?null:slice.primary.background_image}>
 		{#if slice.variation==="embed"}
 			
@@ -30,9 +41,10 @@
 				</ContentWidth>
 				{@html slice.primary.external_embed}
 			
-		{:else}
+		{:else if isActiveSection}
 		<ContentWidth class="h-full relative justify-end z-30 pb-8 md:pb-32">
 			<div class="md:w-2/3 relative h-full flex flex-col justify-end mb-8 md:mb-16">
+			<div transition:fade>
 			<ContentBox 
 				titleText={slice.primary.title||""}
 				titleTag="h2"
@@ -40,14 +52,15 @@
 				float="left"
 				class="text-white z-10 text-left"
 			/>
-			<div class="flex flex-col md:flex-row gap-4">
+			</div>
+			<div class="flex flex-col md:flex-row gap-4" transition:fly={{x:100,y:20}}>
 				{#if slice.variation==="default"}
 					{#each slice.items as item, i}
 						<DefaultButton text={item.button_text||''} on:click={()=>activeOverlay=i}/>
 					{/each}
 				{/if}
 				{#if slice.variation==="withVideoPopup"}
-					<DefaultButton text="Watch" on:click={()=>activeOverlay=0} />
+					<DefaultButton text="Watch" on:click={()=>activeOverlay=0}/>
 				{/if}
 
 			</div>
