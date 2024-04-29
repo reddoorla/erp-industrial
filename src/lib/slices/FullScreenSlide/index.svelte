@@ -14,7 +14,7 @@
 	let activeOverlay = -1;
 	let section:HTMLElement|undefined;
 	let isActiveSection = false;
-
+	let listener:EventListener;
 
 
 	let videoId:string|undefined;
@@ -24,15 +24,19 @@
 	const checkActive = () =>{
 		if(section)
 			isActiveSection = section?.getBoundingClientRect().top<10;
+		
+		if(isActiveSection)
+			section?.parentElement?.removeEventListener("scroll", checkActive, true)
 	}
 
 	onMount(()=>{
 		section?.parentElement?.addEventListener("scroll", checkActive)
+
 	})
 
 </script>
 
-<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="sticky top-0 snap-start bg-white overflow-hidden">
+<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-start sticky top-0 bg-white overflow-hidden">
 	<FullPageSlide backgroundImage={slice.variation==="embed"?null:slice.primary.background_image}>
 		{#if slice.variation==="embed"}
 			
@@ -53,7 +57,7 @@
 				class="text-white z-10 text-left"
 			/>
 			</div>
-			<div class="flex flex-col md:flex-row gap-4" transition:fly={{x:100,y:20}}>
+			<div class="flex flex-col md:flex-row gap-4" transition:fly={{y:20}}>
 				{#if slice.variation==="default"}
 					{#each slice.items as item, i}
 						<DefaultButton text={item.button_text||''} on:click={()=>activeOverlay=i}/>
@@ -70,6 +74,8 @@
 		{#if (slice.variation==="default"||slice.variation==="withVideoPopup")&&activeOverlay!=-1 }
 		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur" transition:fade>		
 			{#if slice.variation==="default"}
+			{#key activeOverlay}
+			<div class="h-full w-full" transition:fade>
 					<ContentWidth class="h-full relative flex flex-col justify-end z-40 pb-8 md:pb-32">
 					<ContentBox 
 						titleText={slice.items[activeOverlay].title||""}
@@ -90,6 +96,8 @@
 						{/each}
 					</div>
 				</ContentWidth>
+				</div>
+				{/key}
 			{/if}
 			{#if slice.variation==="withVideoPopup"&&videoId}
 				<ContentWidth class="h-full flex justify-center items-center">

@@ -15,14 +15,13 @@
 
 	const sendToBottomPane = () =>{
 		if(bottomPane?.getBoundingClientRect().top>10){
-			bottomPane.parentElement?.scrollTo(0, viewportHeight)	
+			//bottomPane.parentElement?.scrollTo(0, viewportHeight/2)	
 		}
-
-
 	}
 
 	onMount(()=>{
 		bottomPane?.parentElement?.addEventListener("scroll", sendToBottomPane)
+		bottomPane?.parentElement?.scrollTo(0, viewportHeight/2)
 	})
     
 
