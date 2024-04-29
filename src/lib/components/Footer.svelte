@@ -2,7 +2,6 @@
 	import ContentWidth from "./ContentWidth.svelte";
     import logoFull from "../assets/fullLogo.png"
     import loopnet from "../assets/icons/loopnet.svg"
-    import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
     import { faFacebookF, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 	import DefaultButton from "./Buttons/DefaultButton.svelte";
 	import { text } from "@sveltejs/kit";
@@ -16,8 +15,7 @@
 <style>
     .footer-link{
         color: var(--ffffff, #FFF);
-leading-trim: both;
-text-edge: cap;
+
 font-feature-settings: 'clig' off, 'liga' off;
 
 /* Button - all caps */
@@ -62,9 +60,9 @@ text-transform: uppercase;
         <div class="h-full w-1/12"></div>
         <div class="h-full w-1/4 flex flex-col gap-8">
             <div class="w-full flex flex-row h-6 gap-6 text-subtle-blue">
-                <a href="https://linkedin.com" class="text-xl"><FontAwesomeIcon icon={faLinkedinIn}/></a>
-                <a href="https://linkedin.com" class="text-lg -translate-y-[2px]"><FontAwesomeIcon icon={faFacebookF}/></a>
-                <a href="https://linkedin.com" class="scale-105"><img src={loopnet} alt="loopnet"/></a>
+                <a href="https://linkedin.com" class="text-xl"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://facebook.com" class="text-lg -translate-y-[2px]"><i class="fa-brands fa-facebook-f"></a>
+                <a href="https://loopnet.com" class="scale-105"><img src={loopnet} alt="loopnet"/></a>
             </div>
             <a href="/contact">
                 <DefaultButton text="Contact" filled={false} class="text-white border-2 border-white"/>
@@ -82,9 +80,9 @@ text-transform: uppercase;
                 <a href="/" class="footer-link">DST INVESTOR PORTAL</a>
                 <a href="/" class="footer-link">TENANT PORTAL</a>
                 <div class="w-full flex flex-row h-6 gap-6 text-subtle-blue">
-                    <a href="https://linkedin.com" class="text-xl"><FontAwesomeIcon icon={faLinkedinIn}/></a>
-                    <a href="https://linkedin.com" class="text-lg -translate-y-[2px]"><FontAwesomeIcon icon={faFacebookF}/></a>
-                    <a href="https://linkedin.com" class="scale-105"><img src={loopnet} alt="loopnet"/></a>
+                    <a href="https://linkedin.com" class="text-xl"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://facebook.com" class="text-lg -translate-y-[2px]"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://loopnet.com" class="scale-105"><img src={loopnet} alt="loopnet"/></a>
                 </div>
                 <a href="/contact">
                     <DefaultButton text="Contact" filled={false} class="text-white border-2 border-white"/>

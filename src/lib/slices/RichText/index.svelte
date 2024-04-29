@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
 	import { PrismicRichText } from '@prismicio/svelte';
 	import Label from './Label.svelte';
 

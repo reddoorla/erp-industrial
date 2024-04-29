@@ -15,20 +15,20 @@
 	let section:HTMLElement|undefined;
 	let isActiveSection = false;
 
-	const checkActive = () =>{
-		if(section)
-			isActiveSection = section?.getBoundingClientRect().top<10;
 
-			console.log('fired')
-	}
 
 	let videoId:string|undefined;
 	if(slice.variation==="withVideoPopup")
 		videoId=slice.primary.video_embed.embed_url.split('/').pop();
 
-		onMount(()=>{
-				section?.parentElement?.addEventListener("scroll", checkActive)
-		})
+	const checkActive = () =>{
+		if(section)
+			isActiveSection = section?.getBoundingClientRect().top<10;
+	}
+
+	onMount(()=>{
+		section?.parentElement?.addEventListener("scroll", checkActive)
+	})
 
 </script>
 

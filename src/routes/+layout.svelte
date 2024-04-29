@@ -11,6 +11,18 @@
 
 </script>
 
+<style>
+	main::-webkit-scrollbar{
+		display: none;
+	}
+
+	main{
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+</style>
+
 <svelte:head>
 	<title>{$page.data.title}</title>
 	{#if $page.data.meta_description}

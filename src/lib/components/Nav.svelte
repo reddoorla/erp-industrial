@@ -1,8 +1,6 @@
 <script lang='ts'>
     import ContentWidth from "$lib/components/ContentWidth.svelte";
     import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
-    import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
-    import { faBars, faClose} from "@fortawesome/free-solid-svg-icons";
     import logoFull from "$lib/assets/fullLogo.png"
 
     import { fly, fade } from "svelte/transition"
@@ -62,17 +60,18 @@ text-transform: uppercase;
 
 <!--overlay-->
 {#if isOverlayVisible}
-<div class="w-screen h-screen fixed bg-dark flex flex-col items-center justify-center gap-12 z-30" transition:fly>
-    {#each navLinks as item}
-        <a href={item.href} class="nav-link text-white">{item.label}</a>
-    {/each}
+<div class="w-screen h-screen fixed bg-dark z-30" transition:fly>
+ 
 
-    <button class="absolute top-5 right-5 opacity-60 hover:opacity-100 transition-all z-50" on:click={toggleOverlayOff}>
-        <div in:fade={{delay: 600}} out:fade class="text-white">
-        <FontAwesomeIcon icon={faClose} size="3x" />
-        </div>
-      
-    </button>
+    <ContentWidth class="h-screen relative flex flex-col items-center justify-center gap-12">
+        <button class="absolute top-5 right-0 opacity-60 hover:opacity-100 transition-all z-50 text-white" on:click={toggleOverlayOff}>
+            <i class="fa-sharp fa-regular fa-xmark text-2xl text-white" in:fade={{delay: 600}} out:fade></i>
+        </button>
+
+        {#each navLinks as item}
+            <a href={item.href} class="nav-link text-white pointer-events-auto">{item.label}</a>
+        {/each}
+    </ContentWidth>
 </div>
 {/if}
 
@@ -86,13 +85,13 @@ text-transform: uppercase;
         <div class="flex flex-row">
             <div class="hidden lg:flex flex-row justify-between items-center gap-10">
                 {#each navLinks as item}
-                    <a href={item.href} class="nav-link">{item.label}</a>
+                    <a href={item.href} class="nav-link pointer-events-auto">{item.label}</a>
                 {/each}
             </div>
     {#if !isOverlayVisible}
-        <button class="lg:hidden ml-6 opacity-60 hover:opacity-100 transition-all pointer-events-auto" in:fade={{delay: 600}} out:fade on:click={toggleOverlayOn}>
+        <button class="lg:hidden ml-6 opacity-60 hover:opacity-100 transition-all pointer-events-auto text-2xl" in:fade={{delay: 600}} out:fade on:click={toggleOverlayOn}>
           
-            <FontAwesomeIcon icon={faBars} size="2x"/>
+            <i class="fa-sharp fa-regular fa-bars h-8"></i>
      
         
         </button>
