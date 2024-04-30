@@ -33,6 +33,15 @@
             "label": "title",
             "placeholder": ""
           }
+        },
+        "doesStack": {
+          "type": "Boolean",
+          "config": {
+            "label": "stacks?",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
         }
       },
       "items": {
@@ -89,6 +98,15 @@
             "label": "external embed",
             "placeholder": ""
           }
+        },
+        "doesStack": {
+          "type": "Boolean",
+          "config": {
+            "label": "stacks?",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
         }
       },
       "items": {}
@@ -137,6 +155,15 @@
           "config": {
             "label": "video embed",
             "placeholder": ""
+          }
+        },
+        "doesStack": {
+          "type": "Boolean",
+          "config": {
+            "label": "stacks?",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
           }
         }
       },

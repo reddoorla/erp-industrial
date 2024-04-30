@@ -170,6 +170,17 @@ export interface FullScreenSlideSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
 	title: prismic.KeyTextField;
+
+	/**
+	 * stacks? field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.doesStack
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	doesStack: prismic.BooleanField;
 }
 
 /**
@@ -253,6 +264,17 @@ export interface FullScreenSlideSliceEmbedPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
 	external_embed: prismic.KeyTextField;
+
+	/**
+	 * stacks? field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.doesStack
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	doesStack: prismic.BooleanField;
 }
 
 /**
@@ -321,6 +343,17 @@ export interface FullScreenSlideSliceWithVideoPopupPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#embed
 	 */
 	video_embed: prismic.EmbedField;
+
+	/**
+	 * stacks? field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.doesStack
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	doesStack: prismic.BooleanField;
 }
 
 /**

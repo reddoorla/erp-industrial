@@ -15,6 +15,7 @@
 	let section:HTMLElement|undefined;
 	let isActiveSection = false;
 
+	
 
 
 	let videoId:string|undefined;
@@ -33,7 +34,7 @@
 
 </script>
 
-<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky top-0 bg-white overflow-hidden">
+<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} bg-white overflow-hidden">
 	<FullPageSlide backgroundImage={slice.variation==="embed"?null:slice.primary.background_image}>
 		{#if slice.variation==="embed"}
 			
