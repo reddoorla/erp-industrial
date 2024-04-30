@@ -29,7 +29,7 @@
 
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
   
-  <div class="w-screen h-screen overflow-hidden fixed top-0">
+  <div class="w-screen h-screen overflow-hidden snap-end sticky top-0">
 	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute {viewportHeight*16 >viewportWidth*9 ? "h-full":"w-full"}"/>
 	<iframe 
 	  title="background video" 
@@ -51,9 +51,9 @@
 		</div>
 	</ContentWidth>
   </div>
-  <div class="w-screen h-screen sticky top-0 snap-start">
+  <div class="w-screen h-screen sticky snap-end bg-red-300 opacity-20 overflow-hidden">
 
   </div>
-  <div bind:this={bottomPane} class="w-screen h-screen sticky top-0 snap-start">
+  <div bind:this={bottomPane} class="w-screen h-screen sticky snap-end bg-subtle-blue opacity-30 overflow-hidden">
 
   </div>

@@ -38,7 +38,7 @@
 </svelte:head>
 
 <Nav />
-<main class="{isSnappy ? "snap-y snap-mandatory" : ""} h-screen overflow-scroll m-0 scroll-smooth">
+<main class="{isSnappy ? "snap-y snap-mandatory" : ""} h-screen overflow-scroll scroll-p-[1px] m-0 scroll-smooth overscroll-none">
 
 	<slot />
 	<Footer />

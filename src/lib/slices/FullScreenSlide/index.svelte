@@ -14,7 +14,7 @@
 	let activeOverlay = -1;
 	let section:HTMLElement|undefined;
 	let isActiveSection = false;
-	let listener:EventListener;
+
 
 
 	let videoId:string|undefined;
@@ -24,9 +24,6 @@
 	const checkActive = () =>{
 		if(section)
 			isActiveSection = section?.getBoundingClientRect().top<10;
-		
-		if(isActiveSection)
-			section?.parentElement?.removeEventListener("scroll", checkActive, true)
 	}
 
 	onMount(()=>{
@@ -36,7 +33,7 @@
 
 </script>
 
-<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-start sticky top-0 bg-white overflow-hidden">
+<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky bg-white overflow-hidden">
 	<FullPageSlide backgroundImage={slice.variation==="embed"?null:slice.primary.background_image}>
 		{#if slice.variation==="embed"}
 			
