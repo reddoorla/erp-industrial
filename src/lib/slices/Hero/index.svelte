@@ -13,23 +13,23 @@
 
 	let bottomPane:HTMLElement;
 
-	const sendToBottomPane = () =>{
-		if(bottomPane?.getBoundingClientRect().top>10){
-			//bottomPane.parentElement?.scrollTo(0, viewportHeight/2)	
-		}
-	}
+	// const sendToBottomPane = () =>{
+	// 	if(bottomPane?.getBoundingClientRect().top>10){
+	// 		bottomPane.parentElement?.scrollTo(0, viewportHeight*2)	
+	// 	}
+	// }
 
-	onMount(()=>{
-		bottomPane?.parentElement?.addEventListener("scroll", sendToBottomPane)
-		bottomPane?.parentElement?.scrollTo(0, viewportHeight/2)
-	})
+	// onMount(()=>{
+	// 	bottomPane?.parentElement?.addEventListener("scroll", sendToBottomPane)
+	// 	bottomPane?.parentElement?.scrollTo(0, viewportHeight/2)
+	// })
     
 
 </script>
 
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
   
-  <div class="w-screen h-screen overflow-hidden snap-end sticky top-0">
+  <div class="w-screen h-screen overflow-hidden snap-end fixed top-0">
 	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute {viewportHeight*16 >viewportWidth*9 ? "h-full":"w-full"}"/>
 	<iframe 
 	  title="background video" 
@@ -51,9 +51,6 @@
 		</div>
 	</ContentWidth>
   </div>
-  <div class="w-screen h-screen sticky snap-end bg-red-300 opacity-20 overflow-hidden">
-
-  </div>
-  <div bind:this={bottomPane} class="w-screen h-screen sticky snap-end bg-subtle-blue opacity-30 overflow-hidden">
+  <div class="w-screen h-screen sticky snap-end overflow-hidden">
 
   </div>
