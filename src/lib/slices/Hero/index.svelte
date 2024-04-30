@@ -30,7 +30,7 @@
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
   
   <div class="w-screen h-screen overflow-hidden snap-end fixed top-0">
-	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute {viewportHeight*16 >viewportWidth*9 ? "h-full":"w-full"}"/>
+	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
 	<iframe 
 	  title="background video" 
 	  src={`https://player.vimeo.com/video/${videoId}?background=1`}
