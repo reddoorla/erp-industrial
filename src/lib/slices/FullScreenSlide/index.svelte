@@ -44,7 +44,7 @@
 				{@html slice.primary.external_embed}
 			
 		{:else if isActiveSection}
-		<ContentWidth class="h-full relative justify-end z-30 pb-8 md:pb-32">
+		<ContentWidth class="h-full relative justify-end z-30 pb-24 md:pb-32">
 			<div class="md:w-2/3 relative h-full flex flex-col justify-end mb-8 md:mb-16">
 			<div transition:fade>
 			{#if activeOverlay===-1}
@@ -78,7 +78,7 @@
 			{#if slice.variation==="default"}
 			{#key activeOverlay}
 			<div class="h-full w-full" out:fade in:fade={{delay:300}}>
-					<ContentWidth class="h-full relative flex flex-col justify-end z-40 pb-8 md:pb-32">
+					<ContentWidth class="h-full relative flex flex-col justify-end z-40 pb-24 md:pb-32">
 					<ContentBox 
 						titleText={slice.items[activeOverlay].title||""}
 						titleTag="h2"
