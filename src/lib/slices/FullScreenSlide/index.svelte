@@ -47,6 +47,8 @@
 		<ContentWidth class="h-full relative justify-end z-30 pb-8 md:pb-32">
 			<div class="md:w-2/3 relative h-full flex flex-col justify-end mb-8 md:mb-16">
 			<div transition:fade>
+			{#if activeOverlay===-1}
+			<div out:fade in:fade={{delay:300}}>
 			<ContentBox 
 				titleText={slice.primary.title||""}
 				titleTag="h2"
@@ -54,6 +56,8 @@
 				float="left"
 				class="text-white z-10 text-left"
 			/>
+			</div>
+			{/if}
 			</div>
 			<div class="flex flex-col md:flex-row gap-4" transition:fly={{y:20}}>
 				{#if slice.variation==="default"}
@@ -70,10 +74,10 @@
 		</ContentWidth>
 		{/if}
 		{#if (slice.variation==="default"||slice.variation==="withVideoPopup")&&activeOverlay!=-1 }
-		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur" transition:fade>		
+		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur" in:fade={{delay:300}} out:fade>		
 			{#if slice.variation==="default"}
 			{#key activeOverlay}
-			<div class="h-full w-full" transition:fade>
+			<div class="h-full w-full" out:fade in:fade={{delay:300}}>
 					<ContentWidth class="h-full relative flex flex-col justify-end z-40 pb-8 md:pb-32">
 					<ContentBox 
 						titleText={slice.items[activeOverlay].title||""}
@@ -101,9 +105,10 @@
 				<ContentWidth class="h-full flex justify-center items-center">
 					<iframe 
 	  					title="background video" 
-	 					src={`https://player.vimeo.com/video/${videoId}?background=1&muted=0`}
+	 					src={`https://player.vimeo.com/video/${videoId}?background=1&muted=0&autoplay=1`}
 	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto"
 	  					frameborder="0"
+						allow=autoplay
 					></iframe>
 					<DefaultButton text="Close" class="absolute bottom-20" on:click={()=>activeOverlay=-1}/>
 				</ContentWidth>
