@@ -32,7 +32,7 @@
 
 <button on:click
         class="{filled ?
-         "bg-black bg-opacity-80 hover:bg-opacity-100 active:bg-black  text-white" 
+         "bg-black hover:bg-erp-blue active:bg-black  text-white" 
          : 
          "hover:bg-dark text-dark hover:text-white active:bg-black " 
          } w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 {$$props.class || ''}">

@@ -35,6 +35,7 @@ export default {
       light:'#E7E8EB',
       dark: '#000',
       'subtle-blue': '#B6E2E5',
+      'erp-blue':'#1F285C'
     },
     extend: {
       transitionTimingFunction: {
