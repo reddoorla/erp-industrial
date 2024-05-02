@@ -34,7 +34,7 @@
 	<iframe 
 	  title="background video" 
 	  src={`https://player.vimeo.com/video/${videoId}?background=1`}
-	  class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9 ? 'h-full min-w-full' : 'w-full min-h-full'}"
+	  class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9 ? 'h-screen min-w-full' : 'w-screen min-h-full'}"
 	  frameborder="0"
 	  allowfullscreen
 	  

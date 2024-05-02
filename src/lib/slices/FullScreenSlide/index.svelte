@@ -41,7 +41,10 @@
 				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
 					<h3 class="font-bold">{slice.primary.title}</h3>
 				</ContentWidth>
-				{@html slice.primary.external_embed}
+				<div class="h-[80vh]">
+					{@html slice.primary.external_embed}
+				</div>
+				
 			
 		{:else if isActiveSection}
 		<ContentWidth class="h-full relative justify-end z-30 pb-24 md:pb-32">
