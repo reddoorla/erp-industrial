@@ -2,7 +2,6 @@
 	import { PrismicPreview } from '@prismicio/svelte/kit';
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';
-	import Nav from '$lib/components/Nav.svelte';
 	import "../app.css"
 	import Footer from '$lib/components/Footer.svelte';
 
@@ -37,7 +36,7 @@
 	{/if}
 </svelte:head>
 
-<Nav />
+
 <main class="{isSnappy ? "snap-y snap-mandatory" : ""} h-screen overflow-scroll m-0 scroll-smooth overscroll-none">
 
 	<slot />

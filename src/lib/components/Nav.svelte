@@ -7,27 +7,29 @@
 
     export let navLinks=[
         {
-            label:"ABOUT",
+            text:"ABOUT",
             href:"/"
         },
         {
-            label:"PORTFOLIO",
+            text:"PORTFOLIO",
             href:"/"
         },
         {
-            label:"RESOURCES",
+            text:"RESOURCES",
             href:"/"
         },
         {
-            label:"BLOG",
+            text:"BLOG",
             href:"/"
         },
         {
-            label:"CONTACT",
+            text:"CONTACT",
             href:"/"
         },
 
     ];
+
+    export let isLogoLarge=true;
 
 
 
@@ -69,7 +71,7 @@ text-transform: uppercase;
         </button>
 
         {#each navLinks as item}
-            <a href={item.href} class="nav-link text-white pointer-events-auto">{item.label}</a>
+            <a href={item.href} class="nav-link text-white pointer-events-auto">{item.text}</a>
         {/each}
     </ContentWidth>
 </div>
@@ -85,7 +87,7 @@ text-transform: uppercase;
         <div class="flex flex-row">
             <div class="hidden lg:flex flex-row justify-between items-center gap-10">
                 {#each navLinks as item}
-                    <a href={item.href} class="nav-link pointer-events-auto">{item.label}</a>
+                    <a href={item.href} class="nav-link pointer-events-auto">{item.text}</a>
                 {/each}
             </div>
     {#if !isOverlayVisible}
@@ -93,7 +95,6 @@ text-transform: uppercase;
           
             <i class="fa-sharp fa-regular fa-bars h-8"></i>
      
-        
         </button>
         {/if}
         </div>

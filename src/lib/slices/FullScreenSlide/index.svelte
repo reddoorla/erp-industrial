@@ -9,28 +9,26 @@
 	import { fade, fly } from "svelte/transition";
 	import { onMount } from "svelte";
 
+
 	export let slice:FullScreenSlideSlice;
 
 	let activeOverlay = -1;
 	let section:HTMLElement|undefined;
 	let isActiveSection = false;
-
 	
 
 
 	let videoId:string|undefined;
-	if(slice.variation==="withVideoPopup")
+	if(slice.variation==="withVideoPopup"){
 		videoId=slice.primary.video_embed.embed_url.split('/').pop();
+		}
 
-	const checkActive = () =>{
+	const checkActive = () => {
 		if(section)
 			isActiveSection = section?.getBoundingClientRect().top<10;
 	}
 
-	onMount(()=>{
-		section?.parentElement?.addEventListener("scroll", checkActive)
-
-	})
+	onMount( ()=> section?.parentElement?.addEventListener("scroll", checkActive));
 
 </script>
 
@@ -69,7 +67,7 @@
 					{/each}
 				{/if}
 				{#if slice.variation==="withVideoPopup"}
-					<DefaultButton text="Watch" on:click={()=>activeOverlay=0}/>
+					<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
 				{/if}
 
 			</div>
