@@ -82,7 +82,7 @@ text-transform: uppercase;
     <ContentWidth class="flex flex-row justify-between items-center h-full">
         <a href="/" class="hover:opacity-80 transition-all duration-500 bump pointer-events-auto">
          
-            <img src={logoFull} alt="logo" class="h-12 md:h-32 translate-x-1/2 transition-all duration-700 {(isLogoLarge ? "scale-[200%] translate-y-[100%]":"translate-y-1/2")}" style="clip-path: {isLogoLarge ? 'inset(0)' : 'inset(0 0 10px 0)'};"/>          
+            <img src={logoFull} alt="logo" class="h-12 md:h-32 transition-all duration-700 {(isLogoLarge ? "scale-[200%] translate-y-[100%]  translate-x-1/2":"translate-y-1/2")}" style="clip-path: {isLogoLarge ? 'inset(0)' : 'inset(0 0 10px 0)'};"/>          
         </a>
         
         
