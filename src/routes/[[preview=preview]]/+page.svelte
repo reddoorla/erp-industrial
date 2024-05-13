@@ -18,7 +18,7 @@
 	});
 
 	onMount(()=>{
-		window.addEventListener("scroll", ()=>{
+		document.getElementsByTagName('main')[0].addEventListener("scroll", ()=>{
 			isLogoLarge = false;
 		}, {once: true})
 	})
@@ -28,6 +28,6 @@
     <title>ERP Industrial</title>
 </svelte:head>
 
-<Nav {navLinks} {isLogoLarge}/>
+<Nav {navLinks} bind:isLogoLarge={isLogoLarge}/>
 
 <SliceZone slices={data.page.data.slices} {components} />

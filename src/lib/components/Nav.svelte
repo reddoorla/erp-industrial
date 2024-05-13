@@ -1,7 +1,8 @@
 <script lang='ts'>
     import ContentWidth from "$lib/components/ContentWidth.svelte";
     import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
-    import logoFull from "$lib/assets/fullLogo.png"
+    import logoFull from "$lib/assets/erp_logo_subtitled.svg"
+    import logoSmall from "$lib/assets/erp_logo_titled.svg"
 
     import { fly, fade } from "svelte/transition"
 
@@ -79,8 +80,9 @@ text-transform: uppercase;
 
 <div class="h-16 w-screen z-40 fixed pointer-events-none">
     <ContentWidth class="flex flex-row justify-between items-center h-full">
-        <a href="/" class="hover:opacity-80 transition-all duration-500 bump">
-            <img src={logoFull} alt="logo" class="h-12 md:h-32 translate-y-1/2" />
+        <a href="/" class="hover:opacity-80 transition-all duration-500 bump pointer-events-auto">
+         
+            <img src={logoFull} alt="logo" class="h-12 md:h-32 translate-x-1/2 transition-all duration-700 {(isLogoLarge ? "scale-\[200%\] translate-y-\[100%\]":"translate-y-1/2")}" style="clip-path: {isLogoLarge ? 'inset(0)' : 'inset(0 0 10px 0)'};"/>          
         </a>
         
         
