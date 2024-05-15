@@ -109,7 +109,8 @@
 	 					src={`https://player.vimeo.com/video/${videoId}?background=1&muted=0&autoplay=1`}
 	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto"
 	  					frameborder="0"
-						allow=autoplay
+						allow="autoplay"
+						
 					></iframe>
 					<DefaultButton text="Close" class="absolute bottom-20" on:click={()=>activeOverlay=-1}/>
 				</ContentWidth>
