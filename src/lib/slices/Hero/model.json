@@ -33,6 +33,13 @@
             "constraint": {},
             "thumbnails": []
           }
+        },
+        "body_text": {
+          "type": "Text",
+          "config": {
+            "label": "body_text",
+            "placeholder": ""
+          }
         }
       },
       "items": {}

@@ -6,9 +6,11 @@ export async function load({ params, fetch, cookies }) {
 	const client = createClient({ fetch, cookies });
 
 	const page = await client.getByUID('page', params.uid);
+	const nav = await client.getSingle('nav');
 
 	return {
 		page,
+		nav,
 		title: asText(page.data.title),
 		meta_description: page.data.meta_description,
 		meta_title: page.data.meta_title,

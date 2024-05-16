@@ -34,7 +34,6 @@
 				"__TYPE__": "EmbedContent"
 			},
 			"loading_placeholder": {
-				"__TYPE__": "ImageContent",
 				"origin": {
 					"id": "main",
 					"url": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef",
@@ -52,7 +51,15 @@
 					},
 					"background": "transparent"
 				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
 				"thumbnails": {}
+			},
+			"body_text": {
+				"__TYPE__": "FieldContent",
+				"value": "wall",
+				"type": "Text"
 			}
 		},
 		"items": []

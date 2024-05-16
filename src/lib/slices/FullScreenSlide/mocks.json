@@ -39,6 +39,15 @@
 			"doesStack": {
 				"__TYPE__": "BooleanContent",
 				"value": false
+			},
+			"body_text": {
+				"__TYPE__": "FieldContent",
+				"value": "major",
+				"type": "Text"
+			},
+			"isBackgroundBlurred": {
+				"__TYPE__": "BooleanContent",
+				"value": true
 			}
 		},
 		"items": [
@@ -189,12 +198,295 @@
 			"doesStack": {
 				"__TYPE__": "BooleanContent",
 				"value": true
+			},
+			"body_text": {
+				"__TYPE__": "FieldContent",
+				"value": "accident",
+				"type": "Text"
+			},
+			"isBackgroundBlurred": {
+				"__TYPE__": "BooleanContent",
+				"value": false
 			}
 		},
 		"items": [
 			{
 				"__TYPE__": "GroupItemContent",
 				"value": []
+			}
+		]
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "basic",
+		"primary": {
+			"background_image": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1493119508027-2b584f234d6c",
+					"width": 3424,
+					"height": 3424
+				},
+				"url": "https://images.unsplash.com/photo-1493119508027-2b584f234d6c",
+				"width": 3424,
+				"height": 3424,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {}
+			},
+			"eyebrow": {
+				"__TYPE__": "FieldContent",
+				"value": "star",
+				"type": "Text"
+			},
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "away",
+				"type": "Text"
+			},
+			"doesStack": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			},
+			"body_text": {
+				"__TYPE__": "FieldContent",
+				"value": "spirit",
+				"type": "Text"
+			},
+			"isBackgroundBlurred": {
+				"__TYPE__": "BooleanContent",
+				"value": false
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "iconBoxes",
+		"primary": {
+			"background_image": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1593642633279-1796119d5482",
+					"width": 4016,
+					"height": 6016
+				},
+				"url": "https://images.unsplash.com/photo-1593642633279-1796119d5482",
+				"width": 4016,
+				"height": 6016,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {}
+			},
+			"eyebrow": {
+				"__TYPE__": "FieldContent",
+				"value": "else",
+				"type": "Text"
+			},
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "gave",
+				"type": "Text"
+			},
+			"body_text": {
+				"__TYPE__": "FieldContent",
+				"value": "sister",
+				"type": "Text"
+			},
+			"doesStack": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			},
+			"isBackgroundBlurred": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"icon",
+						{
+							"origin": {
+								"id": "main",
+								"url": "https://images.unsplash.com/photo-1504198070170-4ca53bb1c1fa",
+								"width": 2747,
+								"height": 4120
+							},
+							"url": "https://images.unsplash.com/photo-1504198070170-4ca53bb1c1fa",
+							"width": 2747,
+							"height": 4120,
+							"edit": {
+								"zoom": 1,
+								"crop": {
+									"x": 0,
+									"y": 0
+								},
+								"background": "transparent"
+							},
+							"credits": null,
+							"alt": null,
+							"__TYPE__": "ImageContent",
+							"thumbnails": {}
+						}
+					],
+					[
+						"eyebrow",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "great",
+							"type": "Text"
+						}
+					],
+					[
+						"body_text",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "fill",
+							"type": "Text"
+						}
+					]
+				]
+			}
+		]
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "teams",
+		"primary": {
+			"background_image": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1448932223592-d1fc686e76ea",
+					"width": 3500,
+					"height": 2338
+				},
+				"url": "https://images.unsplash.com/photo-1448932223592-d1fc686e76ea",
+				"width": 3500,
+				"height": 2338,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {}
+			},
+			"eyebrow": {
+				"__TYPE__": "FieldContent",
+				"value": "unhappy",
+				"type": "Text"
+			},
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "would",
+				"type": "Text"
+			},
+			"body_text": {
+				"__TYPE__": "FieldContent",
+				"value": "meant",
+				"type": "Text"
+			},
+			"doesStack": {
+				"__TYPE__": "BooleanContent",
+				"value": false
+			},
+			"isBackgroundBlurred": {
+				"__TYPE__": "BooleanContent",
+				"value": false
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"headshot",
+						{
+							"origin": {
+								"id": "main",
+								"url": "https://images.unsplash.com/photo-1547082299-de196ea013d6",
+								"width": 4272,
+								"height": 2848
+							},
+							"url": "https://images.unsplash.com/photo-1547082299-de196ea013d6",
+							"width": 4272,
+							"height": 2848,
+							"edit": {
+								"zoom": 1,
+								"crop": {
+									"x": 0,
+									"y": 0
+								},
+								"background": "transparent"
+							},
+							"credits": null,
+							"alt": null,
+							"__TYPE__": "ImageContent",
+							"thumbnails": {}
+						}
+					],
+					[
+						"title",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "species",
+							"type": "Text"
+						}
+					],
+					[
+						"name",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "southern",
+							"type": "Text"
+						}
+					],
+					[
+						"body_text",
+						{
+							"__TYPE__": "StructuredTextContent",
+							"value": [
+								{
+									"type": "paragraph",
+									"content": {
+										"text": "Aute consectetur cillum reprehenderit quis culpa mollit in excepteur. Sit voluptate proident excepteur veniam reprehenderit aliqua aute velit esse dolor."
+									}
+								}
+							]
+						}
+					]
+				]
 			}
 		]
 	}

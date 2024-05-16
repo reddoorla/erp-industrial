@@ -1,10 +1,9 @@
 <script lang='ts'>
-	/** @type {import("@prismicio/client").Content.FullScreenSlideSlice} */
 	import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 	import ContentBox from "$lib/components/ContentBox.svelte";
 	import ContentWidth from "$lib/components/ContentWidth.svelte";
 	import FullPageSlide from "$lib/components/FullPageSlide.svelte";
-	import { PrismicRichText } from "@prismicio/svelte";
+	import { PrismicImage, PrismicRichText } from "@prismicio/svelte";
 	import type { FullScreenSlideSlice } from "../../../prismicio-types";
 	import { fade, fly } from "svelte/transition";
 	import { onMount } from "svelte";
@@ -33,9 +32,8 @@
 </script>
 
 <section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} bg-white overflow-hidden">
-	<FullPageSlide backgroundImage={slice.variation==="embed"?null:slice.primary.background_image}>
+	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image }>
 		{#if slice.variation==="embed"}
-			
 				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
 					<h3 class="font-bold">{slice.primary.title}</h3>
 				</ContentWidth>
@@ -45,8 +43,13 @@
 				
 			
 		{:else if isActiveSection}
+
+		<div class="absolute w-screen h-screen top-0 left-0" 
+     		class:backdrop-blur={slice.primary.isBackgroundBlurred&&isActiveSection}
+    	 transition:fade={{duration:1000}}>
+		</div>
 		<ContentWidth class="h-full relative justify-end z-30 pb-12 md:pb-32">
-			<div class="md:w-2/3 relative h-full flex flex-col justify-end mb-8 md:mb-16">
+			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"md:w-2/3":""} relative h-full flex flex-col justify-end mb-8 md:mb-16">
 			<div transition:fade>
 			{#if activeOverlay===-1}
 			<div out:fade in:fade={{delay:300}}>
@@ -54,13 +57,14 @@
 				titleText={slice.primary.title||""}
 				titleTag="h2"
 				labelText={slice.primary.eyebrow||""}
+				paragraphText={slice.primary.body_text||""}
 				float="left"
 				class="text-white z-10 text-left"
 			/>
 			</div>
 			{/if}
 			</div>
-			<div class="flex flex-col md:flex-row gap-4" transition:fly={{y:20}}>
+			<div class="flex flex-col md:flex-row gap-4" transition:fly={{y:20, delay:300}}>
 				{#if slice.variation==="default"}
 					{#each slice.items as item, i}
 						<DefaultButton text={item.button_text||''} on:click={()=>activeOverlay=i}/>
@@ -69,12 +73,40 @@
 				{#if slice.variation==="withVideoPopup"}
 					<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
 				{/if}
+				{#if slice.variation==="iconBoxes"}
+				<div class="w-full h-48 flex flex-row gap-8">
+					{#each slice.items as item }
+						<ContentBox 
+							icon={item.icon.url||""}
+							labelText={item.eyebrow||""}
+							paragraphText={item.body_text||""}
+							float="left"
+							class="text-white"
+						/>
+					{/each}
+
+				</div>
+				{/if}
+
+			{#if slice.variation==="teams"}
+
+				<div class="w-full flex flex-col md:flex-row">
+					{#each slice.items as item, i (i)}
+					<div class="w-1/3 pr-8 flex flex-col gap-8 items-start justify-start">
+					<PrismicImage field={item.headshot} class="w-72 rounded-full"/>
+					<h6>{item.title}</h6>
+					<div class="large-paragraph">{item.name}</div>
+				</div>
+			{/each}
+
+		</div>
+{/if}
 
 			</div>
 			</div>
 		</ContentWidth>
 		{/if}
-		{#if (slice.variation==="default"||slice.variation==="withVideoPopup")&&activeOverlay!=-1 }
+		{#if (slice.variation==="default"||slice.variation==="withVideoPopup"||slice.variation==="teams")&&activeOverlay!=-1 }
 		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur" in:fade={{delay:300}} out:fade>		
 			{#if slice.variation==="default"}
 			{#key activeOverlay}
@@ -117,5 +149,22 @@
 			{/if}
 		</div>
 		{/if}
+
 	</FullPageSlide>
 </section>
+
+{#if slice.variation==="teams"}
+
+		<div class="w-full flex flex-col md:flex-row">
+			{#each slice.items as item, i (i)}
+				<div class="w-1/3 pr-8 flex flex-col gap-8 items-start justify-start text-white">
+					<PrismicImage field={item.headshot} class="w-72 rounded-full"/>
+					<h6 class="text-white">{item.title}</h6>
+					<div class="large-paragraph text-white">{item.name}</div>
+				</div>
+			{/each}
+
+		</div>
+{/if}
+
+

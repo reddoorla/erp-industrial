@@ -181,6 +181,27 @@ export interface FullScreenSlideSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	doesStack: prismic.BooleanField;
+
+	/**
+	 * body text field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
+
+	/**
+	 * isBackgroundBlurred field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isBackgroundBlurred
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isBackgroundBlurred: prismic.BooleanField;
 }
 
 /**
@@ -335,6 +356,16 @@ export interface FullScreenSlideSliceWithVideoPopupPrimary {
 	button_text: prismic.RichTextField;
 
 	/**
+	 * body_text field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
+
+	/**
 	 * video embed field in *FullScreenSlide → Primary*
 	 *
 	 * - **Field Type**: Embed
@@ -354,6 +385,17 @@ export interface FullScreenSlideSliceWithVideoPopupPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	doesStack: prismic.BooleanField;
+
+	/**
+	 * isBackgroundBlurred field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isBackgroundBlurred
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isBackgroundBlurred: prismic.BooleanField;
 }
 
 /**
@@ -370,12 +412,335 @@ export type FullScreenSlideSliceWithVideoPopup = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *FullScreenSlide → Primary*
+ */
+export interface FullScreenSlideSliceBasicPrimary {
+	/**
+	 * background image field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.background_image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	background_image: prismic.ImageField<never>;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * title field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * body text field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
+
+	/**
+	 * stacks? field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.doesStack
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	doesStack: prismic.BooleanField;
+
+	/**
+	 * isBackgroundBlurred field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isBackgroundBlurred
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isBackgroundBlurred: prismic.BooleanField;
+}
+
+/**
+ * Basic variation for FullScreenSlide Slice
+ *
+ * - **API ID**: `basic`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSliceBasic = prismic.SharedSliceVariation<
+	'basic',
+	Simplify<FullScreenSlideSliceBasicPrimary>,
+	never
+>;
+
+/**
+ * Primary content in *FullScreenSlide → Primary*
+ */
+export interface FullScreenSlideSliceIconBoxesPrimary {
+	/**
+	 * background image field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.background_image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	background_image: prismic.ImageField<never>;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * title field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * body text field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
+
+	/**
+	 * stacks? field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.doesStack
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	doesStack: prismic.BooleanField;
+
+	/**
+	 * isBackgroundBlurred field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isBackgroundBlurred
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isBackgroundBlurred: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *FullScreenSlide → Items*
+ */
+export interface FullScreenSlideSliceIconBoxesItem {
+	/**
+	 * icon field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].icon
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	icon: prismic.ImageField<never>;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * body_text field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
+}
+
+/**
+ * icon boxes variation for FullScreenSlide Slice
+ *
+ * - **API ID**: `iconBoxes`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSliceIconBoxes = prismic.SharedSliceVariation<
+	'iconBoxes',
+	Simplify<FullScreenSlideSliceIconBoxesPrimary>,
+	Simplify<FullScreenSlideSliceIconBoxesItem>
+>;
+
+/**
+ * Primary content in *FullScreenSlide → Primary*
+ */
+export interface FullScreenSlideSliceTeamsPrimary {
+	/**
+	 * background image field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.background_image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	background_image: prismic.ImageField<never>;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * title field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * body text field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
+
+	/**
+	 * stacks? field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.doesStack
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	doesStack: prismic.BooleanField;
+
+	/**
+	 * isBackgroundBlurred field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isBackgroundBlurred
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isBackgroundBlurred: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *FullScreenSlide → Items*
+ */
+export interface FullScreenSlideSliceTeamsItem {
+	/**
+	 * headshot field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].headshot
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	headshot: prismic.ImageField<never>;
+
+	/**
+	 * name field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].name
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	name: prismic.KeyTextField;
+
+	/**
+	 * job title field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * body_text field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].body_text
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	body_text: prismic.RichTextField;
+}
+
+/**
+ * teams variation for FullScreenSlide Slice
+ *
+ * - **API ID**: `teams`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSliceTeams = prismic.SharedSliceVariation<
+	'teams',
+	Simplify<FullScreenSlideSliceTeamsPrimary>,
+	Simplify<FullScreenSlideSliceTeamsItem>
+>;
+
+/**
  * Slice variation for *FullScreenSlide*
  */
 type FullScreenSlideSliceVariation =
 	| FullScreenSlideSliceDefault
 	| FullScreenSlideSliceEmbed
-	| FullScreenSlideSliceWithVideoPopup;
+	| FullScreenSlideSliceWithVideoPopup
+	| FullScreenSlideSliceBasic
+	| FullScreenSlideSliceIconBoxes
+	| FullScreenSlideSliceTeams;
 
 /**
  * FullScreenSlide Shared Slice
@@ -422,6 +787,16 @@ export interface HeroSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#image
 	 */
 	loading_placeholder: prismic.ImageField<never>;
+
+	/**
+	 * body_text field in *Hero → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.primary.body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
 }
 
 /**
@@ -515,10 +890,18 @@ declare module '@prismicio/client' {
 			FullScreenSlideSliceDefaultItem,
 			FullScreenSlideSliceEmbedPrimary,
 			FullScreenSlideSliceWithVideoPopupPrimary,
+			FullScreenSlideSliceBasicPrimary,
+			FullScreenSlideSliceIconBoxesPrimary,
+			FullScreenSlideSliceIconBoxesItem,
+			FullScreenSlideSliceTeamsPrimary,
+			FullScreenSlideSliceTeamsItem,
 			FullScreenSlideSliceVariation,
 			FullScreenSlideSliceDefault,
 			FullScreenSlideSliceEmbed,
 			FullScreenSlideSliceWithVideoPopup,
+			FullScreenSlideSliceBasic,
+			FullScreenSlideSliceIconBoxes,
+			FullScreenSlideSliceTeams,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,
