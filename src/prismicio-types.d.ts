@@ -732,6 +732,97 @@ export type FullScreenSlideSliceTeams = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *FullScreenSlide → Primary*
+ */
+export interface FullScreenSlideSliceHalfPagePrimary {
+	/**
+	 * background image field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.background_image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	background_image: prismic.ImageField<never>;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * title field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * body text field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
+
+	/**
+	 * stacks? field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.doesStack
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	doesStack: prismic.BooleanField;
+
+	/**
+	 * isBackgroundBlurred field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isBackgroundBlurred
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isBackgroundBlurred: prismic.BooleanField;
+
+	/**
+	 * isImageLeft field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isImageLeft
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isImageLeft: prismic.BooleanField;
+}
+
+/**
+ * halfPage variation for FullScreenSlide Slice
+ *
+ * - **API ID**: `halfPage`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSliceHalfPage = prismic.SharedSliceVariation<
+	'halfPage',
+	Simplify<FullScreenSlideSliceHalfPagePrimary>,
+	never
+>;
+
+/**
  * Slice variation for *FullScreenSlide*
  */
 type FullScreenSlideSliceVariation =
@@ -740,7 +831,8 @@ type FullScreenSlideSliceVariation =
 	| FullScreenSlideSliceWithVideoPopup
 	| FullScreenSlideSliceBasic
 	| FullScreenSlideSliceIconBoxes
-	| FullScreenSlideSliceTeams;
+	| FullScreenSlideSliceTeams
+	| FullScreenSlideSliceHalfPage;
 
 /**
  * FullScreenSlide Shared Slice
@@ -895,6 +987,7 @@ declare module '@prismicio/client' {
 			FullScreenSlideSliceIconBoxesItem,
 			FullScreenSlideSliceTeamsPrimary,
 			FullScreenSlideSliceTeamsItem,
+			FullScreenSlideSliceHalfPagePrimary,
 			FullScreenSlideSliceVariation,
 			FullScreenSlideSliceDefault,
 			FullScreenSlideSliceEmbed,
@@ -902,6 +995,7 @@ declare module '@prismicio/client' {
 			FullScreenSlideSliceBasic,
 			FullScreenSlideSliceIconBoxes,
 			FullScreenSlideSliceTeams,
+			FullScreenSlideSliceHalfPage,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,

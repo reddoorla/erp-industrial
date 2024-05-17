@@ -429,6 +429,73 @@
           }
         }
       }
+    },
+    {
+      "id": "halfPage",
+      "name": "halfPage",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "background_image": {
+          "type": "Image",
+          "config": {
+            "label": "background image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "eyebrow": {
+          "type": "Text",
+          "config": {
+            "label": "eyebrow",
+            "placeholder": ""
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "title",
+            "placeholder": ""
+          }
+        },
+        "body_text": {
+          "type": "Text",
+          "config": {
+            "label": "body text",
+            "placeholder": ""
+          }
+        },
+        "doesStack": {
+          "type": "Boolean",
+          "config": {
+            "label": "stacks?",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
+        },
+        "isBackgroundBlurred": {
+          "type": "Boolean",
+          "config": {
+            "label": "isBackgroundBlurred",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": false
+          }
+        },
+        "isImageLeft": {
+          "type": "Boolean",
+          "config": {
+            "label": "isImageLeft",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
+        }
+      },
+      "items": {}
     }
   ]
 }

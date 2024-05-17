@@ -40,6 +40,18 @@
 				<div class="h-[80vh]">
 					{@html slice.primary.external_embed}
 				</div>
+		{:else if slice.variation==="halfPage"}
+		<div class="bg-black absolute w-screen h-screen flex {slice.primary.isImageLeft?"flex-row":"flex-row-reverse"}">
+			<PrismicImage field={slice.primary.background_image} class="w-1/2 h-full object-cover"/>
+			{#if isActiveSection}
+			<div class="w-1/2 p-64">
+				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
+				<h2 transition:fade={{delay:200}} class="text-white">{slice.primary.title||""}</h2>
+				<p transition:fly={{delay:400, y:20}} class="text-white">{slice.primary.body_text||""}</p>
+			</div>
+			{/if}
+			
+		</div>
 				
 			
 		{:else if isActiveSection}
@@ -93,9 +105,10 @@
 				<div class="w-full flex flex-col md:flex-row">
 					{#each slice.items as item, i (i)}
 					<div class="w-1/3 pr-8 flex flex-col gap-8 items-start justify-start">
-					<PrismicImage field={item.headshot} class="w-72 rounded-full"/>
-					<h6>{item.title}</h6>
-					<div class="large-paragraph">{item.name}</div>
+					<PrismicImage field={item.headshot} class="w-48 rounded-full"/>
+					<h6 class="text-white whitespace-pre-line">{item.title}</h6>
+					<div class="large-paragraph text-white">{item.name}</div>
+					<DefaultButton filled={false} on:click={()=>activeOverlay=i} text="bio"/>
 				</div>
 			{/each}
 
@@ -107,7 +120,7 @@
 		</ContentWidth>
 		{/if}
 		{#if (slice.variation==="default"||slice.variation==="withVideoPopup"||slice.variation==="teams")&&activeOverlay!=-1 }
-		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur" in:fade={{delay:300}} out:fade>		
+		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black {slice.variation==="teams"?"":"bg-opacity-50"} backdrop-blur" in:fade={{delay:300}} out:fade>		
 			{#if slice.variation==="default"}
 			{#key activeOverlay}
 			<div class="h-full w-full" out:fade in:fade={{delay:300}}>
@@ -147,24 +160,32 @@
 					<DefaultButton text="Close" class="absolute bottom-20" on:click={()=>activeOverlay=-1}/>
 				</ContentWidth>
 			{/if}
+			{#if slice.variation==="teams"}
+				{#key activeOverlay}
+					<div class="h-full w-full" out:fade in:fade={{delay:300}}>
+						<ContentWidth class="h-full relative flex flex-row justify-between z-40 pb-12 md:pb-32">
+							<div class="w-1/4 flex flex-col justify-between pt-48">
+								<div class="flex flex-col justify-between gap-8">
+									<PrismicImage field={slice.items[activeOverlay].headshot} class="w-72 rounded-full"/>
+									<h6 class="text-white whitespace-pre-line">{slice.items[activeOverlay].title}</h6>
+									<div class="large-paragraph text-white">{slice.items[activeOverlay].name}</div>
+								</div>
+								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false}/>
+							</div>
+							
+							<div class="w-1/2 text-white flex flex-col justify-end">
+								<PrismicRichText field={slice.items[activeOverlay].body_text} />
+							</div>
+						</ContentWidth>
+					</div>
+					
+				{/key}
+			{/if}
 		</div>
 		{/if}
 
 	</FullPageSlide>
 </section>
 
-{#if slice.variation==="teams"}
-
-		<div class="w-full flex flex-col md:flex-row">
-			{#each slice.items as item, i (i)}
-				<div class="w-1/3 pr-8 flex flex-col gap-8 items-start justify-start text-white">
-					<PrismicImage field={item.headshot} class="w-72 rounded-full"/>
-					<h6 class="text-white">{item.title}</h6>
-					<div class="large-paragraph text-white">{item.name}</div>
-				</div>
-			{/each}
-
-		</div>
-{/if}
 
 

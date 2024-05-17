@@ -34,7 +34,7 @@
         class="{filled ?
          "bg-black hover:bg-erp-blue active:bg-black  text-white" 
          : 
-         "hover:bg-dark text-dark hover:text-white active:bg-black " 
+         "hover:bg-erp-blue border-white border-2 text-white active:bg-black " 
          } w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 {$$props.class || ''}">
         {text}
 </button>
