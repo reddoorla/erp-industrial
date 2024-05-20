@@ -291,6 +291,36 @@
             "placeholder_true": "true",
             "placeholder_false": "false"
           }
+        },
+        "button_text_1": {
+          "type": "Text",
+          "config": {
+            "label": "button_text_1",
+            "placeholder": ""
+          }
+        },
+        "button_link_1": {
+          "type": "Link",
+          "config": {
+            "label": "button_link_1",
+            "placeholder": "",
+            "select": null
+          }
+        },
+        "button_text_2": {
+          "type": "Text",
+          "config": {
+            "label": "button_text_2",
+            "placeholder": ""
+          }
+        },
+        "button_link_2": {
+          "type": "Link",
+          "config": {
+            "label": "button_link_2",
+            "placeholder": "",
+            "select": null
+          }
         }
       },
       "items": {}
@@ -555,6 +585,103 @@
             "default_value": false,
             "placeholder_true": "true",
             "placeholder_false": "false"
+          }
+        }
+      },
+      "items": {}
+    },
+    {
+      "id": "bigText",
+      "name": "big text",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "background_image": {
+          "type": "Image",
+          "config": {
+            "label": "background image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "eyebrow": {
+          "type": "Text",
+          "config": {
+            "label": "eyebrow",
+            "placeholder": ""
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "title",
+            "placeholder": ""
+          }
+        },
+        "body_text": {
+          "type": "Text",
+          "config": {
+            "label": "body text",
+            "placeholder": ""
+          }
+        },
+        "doesStack": {
+          "type": "Boolean",
+          "config": {
+            "label": "stacks?",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
+        },
+        "isBackgroundBlurred": {
+          "type": "Boolean",
+          "config": {
+            "label": "isBackgroundBlurred",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": false
+          }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
+        },
+        "button_text_1": {
+          "type": "Text",
+          "config": {
+            "label": "button_text_1",
+            "placeholder": ""
+          }
+        },
+        "button_link_1": {
+          "type": "Link",
+          "config": {
+            "label": "button_link_1",
+            "placeholder": "",
+            "select": null
+          }
+        },
+        "button_text_2": {
+          "type": "Text",
+          "config": {
+            "label": "button_text_2",
+            "placeholder": ""
+          }
+        },
+        "button_link_2": {
+          "type": "Link",
+          "config": {
+            "label": "button_link_2",
+            "placeholder": "",
+            "select": null
           }
         }
       },

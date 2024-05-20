@@ -281,6 +281,30 @@
 			"isnavlight": {
 				"__TYPE__": "BooleanContent",
 				"value": true
+			},
+			"button_text_1": {
+				"__TYPE__": "FieldContent",
+				"value": "someone",
+				"type": "Text"
+			},
+			"button_link_1": {
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://prismic.io"
+				}
+			},
+			"button_text_2": {
+				"__TYPE__": "FieldContent",
+				"value": "disease",
+				"type": "Text"
+			},
+			"button_link_2": {
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://slicemachine.dev"
+				}
 			}
 		},
 		"items": [
@@ -571,6 +595,92 @@
 			"isnavlight": {
 				"__TYPE__": "BooleanContent",
 				"value": true
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "bigText",
+		"primary": {
+			"background_image": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef",
+					"width": 4000,
+					"height": 6000
+				},
+				"url": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef",
+				"width": 4000,
+				"height": 6000,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {}
+			},
+			"eyebrow": {
+				"__TYPE__": "FieldContent",
+				"value": "have",
+				"type": "Text"
+			},
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "be",
+				"type": "Text"
+			},
+			"body_text": {
+				"__TYPE__": "FieldContent",
+				"value": "refused",
+				"type": "Text"
+			},
+			"doesStack": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			},
+			"isBackgroundBlurred": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			},
+			"isnavlight": {
+				"__TYPE__": "BooleanContent",
+				"value": false
+			},
+			"button_text_1": {
+				"__TYPE__": "FieldContent",
+				"value": "found",
+				"type": "Text"
+			},
+			"button_link_1": {
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://slicemachine.dev"
+				}
+			},
+			"button_text_2": {
+				"__TYPE__": "FieldContent",
+				"value": "raise",
+				"type": "Text"
+			},
+			"button_link_2": {
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://slicemachine.dev"
+				}
 			}
 		},
 		"items": [

@@ -64,6 +64,18 @@
 			"isnavlight": {
 				"__TYPE__": "BooleanContent",
 				"value": true
+			},
+			"button_text": {
+				"__TYPE__": "FieldContent",
+				"value": "movie",
+				"type": "Text"
+			},
+			"button_link": {
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "http://twitter.com"
+				}
 			}
 		},
 		"items": []

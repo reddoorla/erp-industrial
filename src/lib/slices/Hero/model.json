@@ -49,6 +49,21 @@
             "placeholder_true": "true",
             "placeholder_false": "false"
           }
+        },
+        "button_text": {
+          "type": "Text",
+          "config": {
+            "label": "button text",
+            "placeholder": ""
+          }
+        },
+        "button_link": {
+          "type": "Link",
+          "config": {
+            "label": "button_link",
+            "placeholder": "",
+            "select": null
+          }
         }
       },
       "items": {}

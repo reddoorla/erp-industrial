@@ -5,10 +5,11 @@
 	import ContentWidth from "$lib/components/ContentWidth.svelte";
 	import ContentBox from "$lib/components/ContentBox.svelte";
 	import type { HeroSlice } from "../../../prismicio-types";
+	import { isNavLight } from "$lib/stores/isNavLight";
     let viewportWidth:number;
     let viewportHeight:number;
 
-	import { isNavLight } from "$lib/stores/isNavLight";
+	import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 
 	export let slice:HeroSlice;
 
@@ -29,6 +30,7 @@
 
 		onMount(()=>{
 			isMounted=true;
+			isNavLight.set(slice.primary.isnavlight)
 		})
     
 
@@ -65,6 +67,9 @@
 			float="left"
 			class="text-white z-20 text-left"
 		/>
+		{#if slice.primary.button_text}
+			<DefaultButton text={slice.primary.button_text || ''} href={slice.primary.button_link}/>
+		{/if}
 	</div>
 		{/if}
 		</div>

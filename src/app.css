@@ -12,6 +12,9 @@ h1{
     font-size: 115px;
     font-weight: 350;
     line-height: 110%; /* 126.5px */
+
+/* text drop shadow */
+box-shadow: 2px 2px 120px 5px rgba(0, 0, 0, 0.15);
 }
 
 h2{

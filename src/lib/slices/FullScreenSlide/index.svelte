@@ -65,10 +65,11 @@
     	 transition:fade={{duration:1000}}>
 		</div>
 		<ContentWidth class="h-full relative justify-end z-30 pb-12 md:pb-32">
-			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"md:w-2/3":""} relative h-full flex flex-col justify-end mb-8 md:mb-16">
+			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-2/3":""} relative h-full flex flex-col justify-end mb-8 md:mb-16">
 			<div transition:fade>
 			{#if activeOverlay===-1}
 			<div out:fade in:fade={{delay:300}}>
+			{#if slice.variation!=="bigText"}
 			<ContentBox 
 				titleText={slice.primary.title||""}
 				titleTag="h2"
@@ -77,6 +78,10 @@
 				float="left"
 				class="text-white z-10 text-left"
 			/>
+			{:else}
+				<h1 class="text-white my-6">{slice.primary.title||""}</h1>
+				<h5 class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
+			{/if}
 			</div>
 			{/if}
 			</div>
@@ -102,6 +107,16 @@
 					{/each}
 
 				</div>
+				{/if}
+				{#if slice.variation==="basic"||slice.variation==="bigText"}
+					<div class="flex flex-row gap-8">
+						{#if slice.primary.button_text_1}
+							<DefaultButton text={slice.primary.button_text_1||""} href={slice.primary.button_link_1}/>
+						{/if}
+						{#if slice.primary.button_text_2}
+							<DefaultButton text={slice.primary.button_text_2||""} href={slice.primary.button_link_2}/>
+						{/if}
+					</div>
 				{/if}
 
 			{#if slice.variation==="teams"}
