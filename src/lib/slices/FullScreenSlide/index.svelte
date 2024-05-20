@@ -35,7 +35,7 @@
 
 </script>
 
-<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} bg-black overflow-hidden">
+<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden">
 	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image }>
 		{#if slice.variation==="embed"}
 				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
