@@ -7,7 +7,7 @@
 	export let data;
 
 	let navLinks = [{ href: '', text: '' }];
-	let isLogoLarge = true;
+	let isLogoLarge = false;
 
 	data.nav.data.links.forEach((link) => {
 		navLinks.push({
@@ -16,20 +16,50 @@
 		});
 	});
 
-	onMount(() => {
-		document.getElementsByTagName('main')[0].addEventListener(
-			'scroll',
-			() => {
-				isLogoLarge = false;
-			},
-			{ once: true }
-		);
-	});
 </script>
 
 <svelte:head>
 	<title>ERP Industrial</title>
 </svelte:head>
+
+<style>
+	input, select, textarea{
+		border-radius: 4px;
+		background: #1D1C1C;
+		padding:12px;
+	}
+	input, textarea{
+		color:white;
+		resize: none;
+	}
+	input::placeholder, textarea::placeholder, select{
+		color:#FFFFFF99;
+	}
+
+
+
+	button{
+
+font-weight: 500;
+line-height: 24px;
+text-align: center;
+border-radius: 3px;
+display: flex;
+padding: 10px;
+justify-content: center;
+align-items: center;
+min-width: 160px;
+}
+@media only screen and (max-width:768px) {
+button{
+	font-style: normal;
+	font-weight: 500;
+	text-align: center;
+	border-radius: 3px;
+	padding: 10px;
+}
+}
+</style>
 
 <Nav {navLinks} bind:isLogoLarge />
 

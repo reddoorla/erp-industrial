@@ -13,3 +13,10 @@ export async function load({ fetch, cookies }) {
 }
 
 
+export const actions = {
+	default: async (event) => {
+		
+	}
+};
+
+export const prerender = false;
