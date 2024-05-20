@@ -14,8 +14,17 @@ export async function load({ fetch, cookies }) {
 
 
 export const actions = {
-	default: async (event) => {
-		
+	default: async ({ request }) => {
+
+        const formData = await request.formData();
+        
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: formData,
+        })
+          .then(() => console.log("Form successfully submitted"))
+          .catch((error) => alert(error));
 	}
 };
 
