@@ -35,7 +35,7 @@
 
 </script>
 
-<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} bg-white overflow-hidden">
+<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} bg-black overflow-hidden">
 	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image }>
 		{#if slice.variation==="embed"}
 				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
@@ -50,8 +50,13 @@
 			{#if isActiveSection}
 			<div class="lg:w-1/2 p-[12%]">
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
-				<h2 transition:fade={{delay:200}} class="text-white">{slice.primary.title||""}</h2>
+				<h2 transition:fade={{delay:200}} class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
 				<p transition:fly={{delay:400, y:20}} class="text-white">{slice.primary.body_text||""}</p>
+				<div transition:fly={{delay:500, y:20}} class="flex flex-col gap-8 my-16">
+					{#each slice.items as item, i (i) }
+							<DefaultButton text={item.button_text||""} href={item.button_link} filled={false}/>
+					{/each}
+				</div>
 			</div>
 			{/if}
 			

@@ -588,7 +588,23 @@
           }
         }
       },
-      "items": {}
+      "items": {
+        "button_text": {
+          "type": "Text",
+          "config": {
+            "label": "button_text",
+            "placeholder": ""
+          }
+        },
+        "button_link": {
+          "type": "Link",
+          "config": {
+            "label": "button_link",
+            "placeholder": "",
+            "select": null
+          }
+        }
+      }
     },
     {
       "id": "bigText",

@@ -5,6 +5,16 @@
 	import "../app.css"
 	import Footer from '$lib/components/Footer.svelte';
 
+
+import { onMount } from 'svelte';
+import { afterNavigate, disableScrollHandling } from '$app/navigation';
+
+afterNavigate(() => {
+    disableScrollHandling();
+    setTimeout(() => {
+        scrollTo({ top: 0, behavior: 'instant' });
+    }, 100);
+});
 	let isSnappy = true;
 
 

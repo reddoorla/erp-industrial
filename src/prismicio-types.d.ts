@@ -60,7 +60,7 @@ export type NavDocument<Lang extends string = string> = prismic.PrismicDocumentW
 	Lang
 >;
 
-type PageDocumentDataSlicesSlice = HeroSlice | FullScreenSlideSlice | RichTextSlice;
+type PageDocumentDataSlicesSlice = ContactSlice | HeroSlice | FullScreenSlideSlice | RichTextSlice;
 
 /**
  * Content for Page documents
@@ -136,6 +136,118 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 >;
 
 export type AllDocumentTypes = NavDocument | PageDocument;
+
+/**
+ * Primary content in *Contact → Primary*
+ */
+export interface ContactSliceDefaultPrimary {
+	/**
+	 * eyebrow field in *Contact → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.primary.eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * header field in *Contact → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.primary.header
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	header: prismic.KeyTextField;
+
+	/**
+	 * body field in *Contact → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.primary.body
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body: prismic.KeyTextField;
+
+	/**
+	 * address field in *Contact → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.primary.address
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	address: prismic.KeyTextField;
+
+	/**
+	 * phone number field in *Contact → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.primary.phone_number
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	phone_number: prismic.KeyTextField;
+
+	/**
+	 * email field in *Contact → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.primary.email
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	email: prismic.KeyTextField;
+
+	/**
+	 * thank you eyebrow field in *Contact → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.primary.thank_you_eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	thank_you_eyebrow: prismic.KeyTextField;
+
+	/**
+	 * thank you message field in *Contact → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: contact.primary.thank_you_message
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	thank_you_message: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for Contact Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<ContactSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *Contact*
+ */
+type ContactSliceVariation = ContactSliceDefault;
+
+/**
+ * Contact Shared Slice
+ *
+ * - **API ID**: `contact`
+ * - **Description**: Contact
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactSlice = prismic.SharedSlice<'contact', ContactSliceVariation>;
 
 /**
  * Primary content in *FullScreenSlide → Primary*
@@ -927,6 +1039,31 @@ export interface FullScreenSlideSliceHalfPagePrimary {
 }
 
 /**
+ * Primary content in *FullScreenSlide → Items*
+ */
+export interface FullScreenSlideSliceHalfPageItem {
+	/**
+	 * button_text field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].button_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	button_text: prismic.KeyTextField;
+
+	/**
+	 * button_link field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].button_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	button_link: prismic.LinkField;
+}
+
+/**
  * halfPage variation for FullScreenSlide Slice
  *
  * - **API ID**: `halfPage`
@@ -936,7 +1073,7 @@ export interface FullScreenSlideSliceHalfPagePrimary {
 export type FullScreenSlideSliceHalfPage = prismic.SharedSliceVariation<
 	'halfPage',
 	Simplify<FullScreenSlideSliceHalfPagePrimary>,
-	never
+	Simplify<FullScreenSlideSliceHalfPageItem>
 >;
 
 /**
@@ -1257,6 +1394,10 @@ declare module '@prismicio/client' {
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
 			AllDocumentTypes,
+			ContactSlice,
+			ContactSliceDefaultPrimary,
+			ContactSliceVariation,
+			ContactSliceDefault,
 			FullScreenSlideSlice,
 			FullScreenSlideSliceDefaultPrimary,
 			FullScreenSlideSliceDefaultItem,
@@ -1268,6 +1409,7 @@ declare module '@prismicio/client' {
 			FullScreenSlideSliceTeamsPrimary,
 			FullScreenSlideSliceTeamsItem,
 			FullScreenSlideSliceHalfPagePrimary,
+			FullScreenSlideSliceHalfPageItem,
 			FullScreenSlideSliceBigTextPrimary,
 			FullScreenSlideSliceVariation,
 			FullScreenSlideSliceDefault,

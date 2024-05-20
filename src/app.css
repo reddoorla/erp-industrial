@@ -14,7 +14,7 @@ h1{
     line-height: 110%; /* 126.5px */
 
 /* text drop shadow */
-box-shadow: 2px 2px 120px 5px rgba(0, 0, 0, 0.15);
+text-shadow: 2px 2px 120px 5px rgba(0, 0, 0, 0.15);
 }
 
 h2{
@@ -61,7 +61,7 @@ line-height: 24px; /* 150% */
     line-height: 145%; /* 60.9px */
 }
 
-button{
+button, .button-text{
     font-size: 8px;
 font-style: normal;
 font-weight: 700;
