@@ -24,7 +24,7 @@ export const actions = {
           body: formData,
         })
           .then(() => console.log("Form successfully submitted"))
-          .catch((error) => alert(error));
+          .catch((error) => console.log(error));
 	}
 };
 
