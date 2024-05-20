@@ -40,6 +40,15 @@
             "label": "body_text",
             "placeholder": ""
           }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
         }
       },
       "items": {}

@@ -48,6 +48,10 @@
 			"isBackgroundBlurred": {
 				"__TYPE__": "BooleanContent",
 				"value": true
+			},
+			"isnavlight": {
+				"__TYPE__": "BooleanContent",
+				"value": true
 			}
 		},
 		"items": [
@@ -111,6 +115,10 @@
 				"type": "Text"
 			},
 			"doesStack": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			},
+			"isnavlight": {
 				"__TYPE__": "BooleanContent",
 				"value": true
 			}
@@ -207,6 +215,10 @@
 			"isBackgroundBlurred": {
 				"__TYPE__": "BooleanContent",
 				"value": false
+			},
+			"isnavlight": {
+				"__TYPE__": "BooleanContent",
+				"value": true
 			}
 		},
 		"items": [
@@ -265,6 +277,10 @@
 			"isBackgroundBlurred": {
 				"__TYPE__": "BooleanContent",
 				"value": false
+			},
+			"isnavlight": {
+				"__TYPE__": "BooleanContent",
+				"value": true
 			}
 		},
 		"items": [
@@ -323,6 +339,10 @@
 			"isBackgroundBlurred": {
 				"__TYPE__": "BooleanContent",
 				"value": true
+			},
+			"isnavlight": {
+				"__TYPE__": "BooleanContent",
+				"value": false
 			}
 		},
 		"items": [
@@ -424,6 +444,10 @@
 			"isBackgroundBlurred": {
 				"__TYPE__": "BooleanContent",
 				"value": false
+			},
+			"isnavlight": {
+				"__TYPE__": "BooleanContent",
+				"value": true
 			}
 		},
 		"items": [
@@ -541,6 +565,10 @@
 				"value": false
 			},
 			"isImageLeft": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			},
+			"isnavlight": {
 				"__TYPE__": "BooleanContent",
 				"value": true
 			}

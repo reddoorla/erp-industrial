@@ -3,8 +3,11 @@
 
     import logoFull from "$lib/assets/erp_logo_subtitled.svg"
 
+    import { isNavLight } from "$lib/stores/isNavLight";
+
 
     import { fly, fade } from "svelte/transition"
+	import { onMount } from "svelte";
 
     export let navLinks=[
         {
@@ -33,11 +36,15 @@
     export let isLogoLarge=true;
 
 
+    let activeSlice = 0;
+
 
     let isOverlayVisible = false;
 
     const toggleOverlayOn = () => isOverlayVisible = true;
     const toggleOverlayOff = () => isOverlayVisible = false;
+
+
 </script>
 
 
@@ -78,11 +85,10 @@ text-transform: uppercase;
 </div>
 {/if}
 
-<div class="h-16 w-screen z-40 fixed pointer-events-none">
+<div class="h-16 w-screen z-40 fixed pointer-events-none transition-color duration-700 ease-fast-slow {$isNavLight ? "text-white":""}">
     <ContentWidth class="flex flex-row justify-between items-center h-full">
         <a href="/" class="hover:opacity-80 transition-all duration-500 bump pointer-events-auto">
-         
-            <img src={logoFull} alt="logo" class="h-12 md:h-32 transition-all duration-700 {(isLogoLarge ? "scale-[200%] translate-y-[100%]  translate-x-1/2":"translate-y-1/2")}" style="clip-path: {isLogoLarge ? 'inset(0)' : 'inset(0 0 10px 0)'};"/>          
+            <img src={logoFull} alt="logo" class="h-12 md:h-32 transition-all duration-700 ease-fast-slow {$isNavLight ? "brightness-0 invert" : ""} {(isLogoLarge ? "scale-[200%] translate-y-[100%]  translate-x-1/2":"translate-y-1/2")}" style="clip-path: {isLogoLarge ? 'inset(0)' : 'inset(0 0 10px 0)'};"/>          
         </a>
         
         

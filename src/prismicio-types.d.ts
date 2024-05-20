@@ -202,6 +202,17 @@ export interface FullScreenSlideSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	isBackgroundBlurred: prismic.BooleanField;
+
+	/**
+	 * isNavLight field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
 }
 
 /**
@@ -296,6 +307,17 @@ export interface FullScreenSlideSliceEmbedPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	doesStack: prismic.BooleanField;
+
+	/**
+	 * isNavLight field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
 }
 
 /**
@@ -396,6 +418,17 @@ export interface FullScreenSlideSliceWithVideoPopupPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	isBackgroundBlurred: prismic.BooleanField;
+
+	/**
+	 * isNavLight field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
 }
 
 /**
@@ -476,6 +509,17 @@ export interface FullScreenSlideSliceBasicPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	isBackgroundBlurred: prismic.BooleanField;
+
+	/**
+	 * isNavLight field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
 }
 
 /**
@@ -556,6 +600,17 @@ export interface FullScreenSlideSliceIconBoxesPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	isBackgroundBlurred: prismic.BooleanField;
+
+	/**
+	 * isNavLight field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
 }
 
 /**
@@ -671,6 +726,17 @@ export interface FullScreenSlideSliceTeamsPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	isBackgroundBlurred: prismic.BooleanField;
+
+	/**
+	 * isNavLight field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
 }
 
 /**
@@ -807,6 +873,17 @@ export interface FullScreenSlideSliceHalfPagePrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#boolean
 	 */
 	isImageLeft: prismic.BooleanField;
+
+	/**
+	 * isNavLight field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
 }
 
 /**
@@ -889,6 +966,17 @@ export interface HeroSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
 	body_text: prismic.KeyTextField;
+
+	/**
+	 * isNavLight field in *Hero → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: hero.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
 }
 
 /**

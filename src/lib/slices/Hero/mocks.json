@@ -60,6 +60,10 @@
 				"__TYPE__": "FieldContent",
 				"value": "wall",
 				"type": "Text"
+			},
+			"isnavlight": {
+				"__TYPE__": "BooleanContent",
+				"value": true
 			}
 		},
 		"items": []

@@ -7,6 +7,7 @@
 	import type { FullScreenSlideSlice } from "../../../prismicio-types";
 	import { fade, fly } from "svelte/transition";
 	import { onMount } from "svelte";
+	import { isNavLight } from "$lib/stores/isNavLight";
 
 
 	export let slice:FullScreenSlideSlice;
@@ -25,6 +26,9 @@
 	const checkActive = () => {
 		if(section)
 			isActiveSection = section?.getBoundingClientRect().top<10;
+
+		if(isActiveSection)
+			isNavLight.set(slice.primary.isnavlight);
 	}
 
 	onMount( ()=> section?.parentElement?.addEventListener("scroll", checkActive));
@@ -41,10 +45,10 @@
 					{@html slice.primary.external_embed}
 				</div>
 		{:else if slice.variation==="halfPage"}
-		<div class="bg-black absolute w-screen h-screen flex {slice.primary.isImageLeft?"flex-row":"flex-row-reverse"}">
-			<PrismicImage field={slice.primary.background_image} class="w-1/2 h-full object-cover"/>
+		<div class="bg-black absolute w-screen h-screen flex flex-col {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
+			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 lg:h-full object-cover"/>
 			{#if isActiveSection}
-			<div class="w-1/2 p-64">
+			<div class="lg:w-1/2 p-[12%]">
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
 				<h2 transition:fade={{delay:200}} class="text-white">{slice.primary.title||""}</h2>
 				<p transition:fly={{delay:400, y:20}} class="text-white">{slice.primary.body_text||""}</p>

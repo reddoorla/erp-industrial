@@ -58,6 +58,15 @@
             "placeholder_true": "true",
             "default_value": false
           }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
         }
       },
       "items": {
@@ -119,6 +128,15 @@
           "type": "Boolean",
           "config": {
             "label": "stacks?",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
             "default_value": false,
             "placeholder_true": "true",
             "placeholder_false": "false"
@@ -197,6 +215,15 @@
             "placeholder_true": "true",
             "default_value": false
           }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
         }
       },
       "items": {}
@@ -255,6 +282,15 @@
             "placeholder_true": "true",
             "default_value": false
           }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
         }
       },
       "items": {}
@@ -309,6 +345,15 @@
           "type": "Boolean",
           "config": {
             "label": "isBackgroundBlurred",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
             "default_value": false,
             "placeholder_true": "true",
             "placeholder_false": "false"
@@ -390,6 +435,15 @@
           "type": "Boolean",
           "config": {
             "label": "isBackgroundBlurred",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
             "default_value": false,
             "placeholder_true": "true",
             "placeholder_false": "false"
@@ -489,6 +543,15 @@
           "type": "Boolean",
           "config": {
             "label": "isImageLeft",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
+        },
+        "isnavlight": {
+          "type": "Boolean",
+          "config": {
+            "label": "isNavLight",
             "default_value": false,
             "placeholder_true": "true",
             "placeholder_false": "false"

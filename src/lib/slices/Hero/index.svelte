@@ -8,6 +8,8 @@
     let viewportWidth:number;
     let viewportHeight:number;
 
+	import { isNavLight } from "$lib/stores/isNavLight";
+
 	export let slice:HeroSlice;
 
 	let videoId="";
