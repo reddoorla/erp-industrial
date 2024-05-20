@@ -56,7 +56,7 @@ button{
 			<div class="button-text text-white">MESSAGE</div>
 			<p class="text-white">{slice.primary.email||""}</p>
 		</div>
-		<form class="w-2/3 flex flex-col gap-8 pl-16" name="contact" method="POST" data-netlify="true">
+		<form class="w-2/3 flex flex-col gap-8 pl-16" name="contact">
 			<h5 class="text-white">{slice.primary.eyebrow||""}</h5>
 			<div class="w-full flex flex-row justify-between">
 				<input type="email" name="email" placeholder="Your Email" class="w-[45%]" />
