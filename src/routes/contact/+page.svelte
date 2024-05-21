@@ -73,7 +73,7 @@ button{
 			</p>
 			<div class="button-text text-white">VISIT</div>
 			<p class="text-white mb-4 whitespace-pre-line">
-				400 W. Illinois Avenue, Suite 1630 Midland, TX 79701
+				400 W. Illinois Avenue, Suite 1630 <br /> Midland, TX 79701
 			</p>
 			<div class="button-text text-white">CALL</div>
 			<p class="text-white mb-4">432.242.8850</p>
