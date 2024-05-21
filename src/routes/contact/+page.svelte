@@ -2,9 +2,23 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from '@prismicio/helpers';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
-	import { onMount } from 'svelte';
+    import { page } from '$app/stores';
+	import { enhance } from '$app/forms';
+    import type { ActionData, SubmitFunction } from './$types';
+	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
+	import { fade } from 'svelte/transition';
 
 	export let data;
+    interface FormData {
+    success: boolean;
+    // Add other properties if needed
+  }
+
+  let form: FormData | undefined;
+
+  page.subscribe(($page) => {
+    form = $page.form as FormData | undefined;
+  });
 
 	let navLinks = [{ href: '', text: '' }];
 	let isLogoLarge = false;
@@ -16,6 +30,26 @@
 		});
 	});
 
+    let isEmailSent = false;
+    let isEmailSending = false;
+    let isEmailFailed = false;
+
+
+  // ... (rest of the code remains the same)
+
+  const handleSubmit: SubmitFunction = () => {
+    isEmailSending = true;
+
+    return async ({ result  }) => {
+        console.log(result.type)
+      if (result.type === 'success') {
+        isEmailSent = true;
+      } else if (result.type === 'failure') {
+        isEmailFailed = true;
+      }
+      isEmailSending = false;
+    };
+  };
 </script>
 
 <svelte:head>
@@ -49,7 +83,9 @@ padding: 10px;
 justify-content: center;
 align-items: center;
 min-width: 160px;
+
 }
+
 @media only screen and (max-width:768px) {
 button{
 	font-style: normal;
@@ -80,7 +116,15 @@ button{
 			<div class="button-text text-white">MESSAGE</div>
 			<p class="text-white">info@erpfunds.com</p>
 		</div>
-		<form class="w-2/3 flex flex-col gap-8 pl-16" name="contact" method="POST" action="/contact">
+        <div class="w-2/3 pl-16 relative">
+        {#if !isEmailSent}
+        {#if isEmailFailed}
+        <div class='absolute flex flex-col items-center justify-center -top-24 right-0 border-[#b21c0e] border-2' transition:fade>
+            <h5 class='text-subtle-blue p-8'>Something went wrong. Please try sending again</h5>
+        </div>
+            
+        {/if}
+		<form class="w-full flex flex-col gap-8" name="contact" method="POST" action="/contact" use:enhance={handleSubmit}>
 			<h5 class="text-white">SEND US A MESSAGE</h5>
 			<div class="w-full flex flex-row justify-between">
 				<input type="email" name="email" placeholder="Your Email" class="w-[45%]" />
@@ -98,8 +142,21 @@ button{
 				class="hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"
 				type="submit"
 			>
-				SUBMIT
+				{#if !isEmailSending} 
+                    Submit 
+                {:else} 
+                    <div><i class='fa fa-spin fa-circle-o-notch fa-2xl leading-4 w-4'></i></div>
+                {/if}
 			</button>
 		</form>
+        {/if}
+        {#if isEmailSent}
+        <div class="w-full h-72 flex flex-col items-center justify-center gap-16">
+            <h5 class="text-white">THANK YOU!</h5>
+            <p class="text-white">We'll get back to you as soon as possible. In the meantime, explore our available properties.</p>
+            <DefaultButton text="AVAILABILITIES" href="/industrial-portfolio" filled={false}/>
+        </div>
+        {/if}
+    </div>
 	</ContentWidth>
 </section>
