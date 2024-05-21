@@ -1,7 +1,7 @@
 import { createClient } from '$lib/prismicio';
 import sgMail from '@sendgrid/mail';
 import type { Actions, PageServerLoad } from './$types';
-import { fail } from '@sveltejs/kit';
+import { fail, type ActionFailure } from '@sveltejs/kit';
 
 sgMail.setApiKey(import.meta.env.VITE_SENDGRID_KEY);
 
@@ -24,7 +24,7 @@ type ActionResponse = {
 };
 
 export const actions: Actions = {
-  default: async ({ request }): Promise<any> => {
+  default: async ({ request }): Promise<ActionResponse|ActionFailure<{ error: string; }>> => {
     const formData = await request.formData();
 
     const email = formData.get('email')?.toString() || '';
