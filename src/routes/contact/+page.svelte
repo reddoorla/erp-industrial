@@ -50,6 +50,15 @@
       isEmailSending = false;
     };
   };
+
+  import { afterNavigate, disableScrollHandling } from '$app/navigation';
+
+afterNavigate(() => {
+    disableScrollHandling();
+    setTimeout(() => {
+        scrollTo({ top: 0, behavior: 'instant' });
+    }, 50);
+});
 </script>
 
 <svelte:head>

@@ -13,7 +13,7 @@ afterNavigate(() => {
     disableScrollHandling();
     setTimeout(() => {
         scrollTo({ top: 0, behavior: 'instant' });
-    }, 100);
+    }, 50);
 });
 	let isSnappy = true;
 

@@ -6,6 +6,15 @@
 	import { text } from '@sveltejs/kit';
 	import { onMount } from 'svelte';
 
+	import { afterNavigate, disableScrollHandling } from '$app/navigation';
+
+afterNavigate(() => {
+    disableScrollHandling();
+    setTimeout(() => {
+        scrollTo({ top: 0, behavior: 'instant' });
+    }, 50);
+});
+
 	export let data;
 
 	let navLinks=[{href:"",text:""}];

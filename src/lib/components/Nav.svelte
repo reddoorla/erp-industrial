@@ -79,7 +79,7 @@ text-transform: uppercase;
         </button>
 
         {#each navLinks as item}
-            <a href={item.href} class="nav-link text-white pointer-events-auto">{item.text}</a>
+            <a href={item.href} class="nav-link text-white pointer-events-auto" on:click={toggleOverlayOff}>{item.text}</a>
         {/each}
     </ContentWidth>
 </div>

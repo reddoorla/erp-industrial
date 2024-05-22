@@ -64,9 +64,9 @@
 				</div>
 		{:else if slice.variation==="halfPage"}
 		<div class="bg-black absolute w-screen h-screen flex flex-col {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
-			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 lg:h-full object-cover"/>
+			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
-			<div class="lg:w-1/2 p-[12%]">
+			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%]">
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
 				<h2 transition:fade={{delay:200}} class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
 				<p transition:fly={{delay:400, y:20}} class="text-white">{slice.primary.body_text||""}</p>

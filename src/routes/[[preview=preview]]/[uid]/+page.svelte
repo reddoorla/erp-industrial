@@ -5,6 +5,8 @@
 	import { components } from '$lib/slices';
 	import { onMount } from 'svelte';
 	import { isNavLight } from '$lib/stores/isNavLight.js';
+	import { afterNavigate, disableScrollHandling } from '$app/navigation';
+
 
 	export let data;
 
