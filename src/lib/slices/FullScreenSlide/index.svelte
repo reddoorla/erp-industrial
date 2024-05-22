@@ -153,7 +153,7 @@
 				{#each slice.items as item, i (i)}
 					<div class="w-screen md:w-1/3 pr-8 flex flex-col md:gap-8 justify-center items-center md:items-start md:justify-start flex-shrink-0">
 						<PrismicImage field={item.headshot} class="md:w-48 rounded-full"/>
-						<h6 class="text-white whitespace-pre-line">{item.title}</h6>
+						<h5 class="text-white whitespace-pre-line">{item.title}</h5>
 						<div class="large-paragraph text-white">{item.name}</div>
 						<DefaultButton filled={false} on:click={()=>activeOverlay=i} text="bio"/>
 					</div>
@@ -214,7 +214,7 @@
 							<div class="w-full md:w-1/4 flex flex-col justify-between  pt-24">
 								<div class="flex flex-row w-full md:flex-col justify-between gap-8 pb-12">
 									<PrismicImage field={slice.items[activeOverlay].headshot} class=" w-36 h-36 md:h-72  md:w-72 rounded-full max-w-none"/>
-									<h6 class="text-white whitespace-pre-line">{slice.items[activeOverlay].title}</h6>
+									<h5 class="text-white whitespace-pre-line">{slice.items[activeOverlay].title}</h5>
 									<div class="large-paragraph text-white">{slice.items[activeOverlay].name}</div>
 								</div>
 								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12"/>
