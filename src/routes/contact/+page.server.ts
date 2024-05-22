@@ -25,6 +25,8 @@ export const actions: Actions = {
     const email = formData.get('email')?.toString() || '';
     const interest = formData.get('interest')?.toString() || '';
     const message = formData.get('message')?.toString() || '';
+    
+    if(!email || !interest || !message || interest==='Select Interest') return fail(400, { error: 'Missing required fields' });
 
     const msg = {
       to: 'tucker@reddoorla.com',

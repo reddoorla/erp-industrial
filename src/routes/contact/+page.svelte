@@ -120,7 +120,7 @@ button{
         {#if !isEmailSent}
         {#if isEmailFailed}
         <div class='absolute flex flex-col items-center justify-center -top-24 right-0 border-[#b21c0e] border-2' transition:fade>
-            <h5 class='text-subtle-blue p-8'>Something went wrong. Please try sending again</h5>
+            <h5 class='text-subtle-blue p-8'>Something went wrong. Please fill all fields and retry.</h5>
         </div>
             
         {/if}

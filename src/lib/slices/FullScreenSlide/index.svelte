@@ -88,7 +88,7 @@
     	 transition:fade={{duration:1000}}>
 		</div>
 		<ContentWidth class="h-full relative justify-end z-30 pb-12 md:pb-32">
-			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-2/3":""} relative h-full flex flex-col justify-center md:justify-end mb-8 md:mb-16">
+			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-7/12":""} relative h-full flex flex-col justify-center md:justify-end mb-8 md:mb-16">
 			<div transition:fade>
 			{#if activeOverlay===-1}
 			<div out:fade in:fade={{delay:300}}>
