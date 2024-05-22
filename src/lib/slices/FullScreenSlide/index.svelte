@@ -8,6 +8,7 @@
 	import { fade, fly } from "svelte/transition";
 	import { onMount } from "svelte";
 	import { isNavLight } from "$lib/stores/isNavLight";
+	import SliderOfContentBoxes from "$lib/components/SliderOfContentBoxes.svelte";
 
 
 	export let slice:FullScreenSlideSlice;
@@ -15,6 +16,7 @@
 	let activeOverlay = -1;
 	let section:HTMLElement|undefined;
 	let isActiveSection = false;
+	let viewportWidth:number;
 	
 
 
@@ -33,7 +35,23 @@
 
 	onMount( ()=> section?.parentElement?.addEventListener("scroll", checkActive));
 
+
+	let contentBoxPropsArray:any[]=[];
+	if(slice.variation==="iconBoxes"){
+	
+	slice.items.forEach((item)=>{
+		contentBoxPropsArray.push({
+			icon:item.icon.url||"",
+			float:"center",
+			titleText: item.eyebrow||"",
+			paragraphText:item.body_text||""
+		})
+	})
+	}
+
 </script>
+
+<svelte:window bind:innerWidth={viewportWidth} />
 
 <section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden">
 	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image }>
@@ -41,7 +59,7 @@
 				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
 					<h3 class="font-bold">{slice.primary.title}</h3>
 				</ContentWidth>
-				<div class="h-[80vh]">
+				<div class="h-[80vh] -translate-y-16">
 					{@html slice.primary.external_embed}
 				</div>
 		{:else if slice.variation==="halfPage"}
@@ -70,7 +88,7 @@
     	 transition:fade={{duration:1000}}>
 		</div>
 		<ContentWidth class="h-full relative justify-end z-30 pb-12 md:pb-32">
-			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-2/3":""} relative h-full flex flex-col justify-end mb-8 md:mb-16">
+			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-2/3":""} relative h-full flex flex-col justify-center md:justify-end mb-8 md:mb-16">
 			<div transition:fade>
 			{#if activeOverlay===-1}
 			<div out:fade in:fade={{delay:300}}>
@@ -100,16 +118,21 @@
 					<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
 				{/if}
 				{#if slice.variation==="iconBoxes"}
-				<div class="w-full h-48 flex flex-row gap-8">
+				<div class="w-full flex flex-col md:flex-row gap-8">
+					{#if viewportWidth>768}
 					{#each slice.items as item }
+						
 						<ContentBox 
 							icon={item.icon.url||""}
 							labelText={item.eyebrow||""}
 							paragraphText={item.body_text||""}
-							float="left"
 							class="text-white"
 						/>
+					
 					{/each}
+					{:else}
+					<SliderOfContentBoxes {contentBoxPropsArray}/>
+					{/if}
 
 				</div>
 				{/if}
@@ -126,15 +149,15 @@
 
 			{#if slice.variation==="teams"}
 
-				<div class="w-full flex flex-col md:flex-row">
-					{#each slice.items as item, i (i)}
-					<div class="w-1/3 pr-8 flex flex-col gap-8 items-start justify-start">
-					<PrismicImage field={item.headshot} class="w-48 rounded-full"/>
-					<h6 class="text-white whitespace-pre-line">{item.title}</h6>
-					<div class="large-paragraph text-white">{item.name}</div>
-					<DefaultButton filled={false} on:click={()=>activeOverlay=i} text="bio"/>
-				</div>
-			{/each}
+			<div class="w-full flex flex-row overflow-x-auto">
+				{#each slice.items as item, i (i)}
+					<div class="w-screen md:w-1/3 pr-8 flex flex-col md:gap-8 justify-center items-center md:items-start md:justify-start flex-shrink-0">
+						<PrismicImage field={item.headshot} class="md:w-48 rounded-full"/>
+						<h6 class="text-white whitespace-pre-line">{item.title}</h6>
+						<div class="large-paragraph text-white">{item.name}</div>
+						<DefaultButton filled={false} on:click={()=>activeOverlay=i} text="bio"/>
+					</div>
+				{/each}
 
 		</div>
 {/if}
@@ -187,17 +210,17 @@
 			{#if slice.variation==="teams"}
 				{#key activeOverlay}
 					<div class="h-full w-full" out:fade in:fade={{delay:300}}>
-						<ContentWidth class="h-full relative flex flex-row justify-between z-40 pb-12 md:pb-32">
-							<div class="w-1/4 flex flex-col justify-between pt-48">
-								<div class="flex flex-col justify-between gap-8">
-									<PrismicImage field={slice.items[activeOverlay].headshot} class="w-72 rounded-full"/>
+						<ContentWidth class="h-full relative flex flex-col-reverse md:flex-row justify-start md:justify-between z-40 pb-12 md:pb-32">
+							<div class="w-full md:w-1/4 flex flex-col justify-between  pt-24">
+								<div class="flex flex-row w-full md:flex-col justify-between gap-8 pb-12">
+									<PrismicImage field={slice.items[activeOverlay].headshot} class=" w-36 h-36 md:h-72  md:w-72 rounded-full max-w-none"/>
 									<h6 class="text-white whitespace-pre-line">{slice.items[activeOverlay].title}</h6>
 									<div class="large-paragraph text-white">{slice.items[activeOverlay].name}</div>
 								</div>
-								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false}/>
+								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12"/>
 							</div>
 							
-							<div class="w-1/2 text-white flex flex-col justify-end">
+							<div class="md:w-1/2 text-white flex flex-col justify-end items-end">
 								<PrismicRichText field={slice.items[activeOverlay].body_text} />
 							</div>
 						</ContentWidth>

@@ -13,15 +13,10 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
   };
 };
 
-type FormData = {
-  email: string;
-  interest: string;
-  message: string;
-};
-
 type ActionResponse = {
   success: boolean;
 };
+
 
 export const actions: Actions = {
   default: async ({ request }): Promise<ActionResponse|ActionFailure<{ error: string; }>> => {
