@@ -210,9 +210,9 @@
 			{#if slice.variation==="teams"}
 				{#key activeOverlay}
 					<div class="h-full w-full" out:fade in:fade={{delay:300}}>
-						<ContentWidth class="h-full relative flex flex-col-reverse md:flex-row justify-start md:justify-between z-40 pb-12 md:pb-32">
+						<ContentWidth class="h-full relative flex flex-col-reverse md:flex-row justify-start pt-32 overflow-y-auto md:overflow-y-hidden md:justify-between z-40 pb-12 md:pb-32">
 							<div class="w-full md:w-1/4 flex flex-col justify-between  pt-24">
-								<div class="flex flex-row w-full md:flex-col justify-between gap-8 pb-12">
+								<div class="flex w-full flex-col justify-between gap-8 pb-12">
 									<PrismicImage field={slice.items[activeOverlay].headshot} class=" w-36 h-36 md:h-72  md:w-72 rounded-full max-w-none"/>
 									<h5 class="text-white whitespace-pre-line">{slice.items[activeOverlay].title}</h5>
 									<div class="large-paragraph text-white">{slice.items[activeOverlay].name}</div>

@@ -86,3 +86,12 @@ text-transform: uppercase;
 .index-container, #buildout iframe{
     height: 100% !important;
 }
+
+main::-webkit-scrollbar, div::-webkit-scrollbar{
+    display: none;
+}
+
+main, div{
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}

@@ -21,14 +21,7 @@ afterNavigate(() => {
 </script>
 
 <style>
-	main::-webkit-scrollbar{
-		display: none;
-	}
 
-	main{
-		scrollbar-width: none;
-		-ms-overflow-style: none;
-	}
 
 </style>
 
