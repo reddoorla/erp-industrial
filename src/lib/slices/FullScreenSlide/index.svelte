@@ -53,7 +53,7 @@
 
 <svelte:window bind:innerWidth={viewportWidth} />
 
-<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden">
+<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden" in:fade={{delay:400}} out:fade>
 	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image }>
 		{#if slice.variation==="embed"}
 				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
@@ -66,7 +66,7 @@
 		<div class="bg-black absolute w-screen h-screen flex flex-col {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
-			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%]">
+			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%] overflow-y-auto">
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
 				<h2 transition:fade={{delay:200}} class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
 				<p transition:fly={{delay:400, y:20}} class="text-white">{slice.primary.body_text||""}</p>
@@ -149,9 +149,9 @@
 
 			{#if slice.variation==="teams"}
 
-			<div class="w-full flex flex-row overflow-x-auto">
+			<div class="w-full flex flex-row gap-8 overflow-x-auto">
 				{#each slice.items as item, i (i)}
-					<div class="w-screen md:w-1/3 pr-8 flex flex-col md:gap-8 justify-center items-center md:items-start md:justify-start flex-shrink-0">
+					<div class="md:w-1/3 pr-8 flex flex-col gap-8 items-start justify-start flex-shrink-0">
 						<PrismicImage field={item.headshot} class="md:w-48 rounded-full"/>
 						<h5 class="text-white whitespace-pre-line">{item.title}</h5>
 						<div class="large-paragraph text-white">{item.name}</div>

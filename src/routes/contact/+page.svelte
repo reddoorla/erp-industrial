@@ -52,13 +52,18 @@
   };
 
   import { afterNavigate, disableScrollHandling } from '$app/navigation';
+	import { isNavLight } from '$lib/stores/isNavLight';
+	import Footer from '$lib/components/Footer.svelte';
 
 afterNavigate(() => {
     disableScrollHandling();
+	isNavLight.set(true);
     setTimeout(() => {
         scrollTo({ top: 0, behavior: 'instant' });
     }, 50);
 });
+
+let viewportWidth:number;
 </script>
 
 <svelte:head>
@@ -106,11 +111,13 @@ button{
 }
 </style>
 
+<svelte:window bind:innerWidth={viewportWidth} />
+
 <Nav {navLinks} bind:isLogoLarge />
 
-<section class="h-screen w-screen absolute">
-	<ContentWidth class="flex flex-row items-center justify-center mt-48">
-		<div class="w-1/3 flex flex-col gap-4">
+<section class="h-screen w-screen snap-end fixed top-0 overflow-y-auto">
+	<ContentWidth class="flex flex-col md:flex-row items-center justify-center mt-48">
+		<div class="w-full md:w-1/3 flex flex-col gap-4">
 			<h2 class="text-white mb-4">We'd Love to Hear from You</h2>
 			<p class="text-white mb-12">
 				Please send us a message so that we can know how to best serve you and your industrial real
@@ -125,19 +132,19 @@ button{
 			<div class="button-text text-white">MESSAGE</div>
 			<p class="text-white">info@erpfunds.com</p>
 		</div>
-        <div class="w-2/3 pl-16 relative">
+        <div class="w-full md:w-2/3 my-32 md:my-0 md:pl-16 relative">
         {#if !isEmailSent}
         {#if isEmailFailed}
-        <div class='absolute flex flex-col items-center justify-center -top-24 right-0 border-[#b21c0e] border-2' transition:fade>
+        <div class='absolute flex flex-col items-center justify-center -top-24 right-0 border-[#b21c0e] border-2 bg-black' transition:fade>
             <h5 class='text-subtle-blue p-8'>Something went wrong. Please fill all fields and retry.</h5>
         </div>
             
         {/if}
 		<form class="w-full flex flex-col gap-8" name="contact" method="POST" action="/contact" use:enhance={handleSubmit}>
 			<h5 class="text-white">SEND US A MESSAGE</h5>
-			<div class="w-full flex flex-row justify-between">
-				<input type="email" name="email" placeholder="Your Email" class="w-[45%]" />
-				<select name="interest" class="w-[45%] cursor-pointer" placeholder="Select Interest">
+			<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">
+				<input type="email" name="email" placeholder="Your Email" class="md:w-[45%]" />
+				<select name="interest" class="md:w-[45%] cursor-pointer" placeholder="Select Interest">
 					<option class="text-gr">Select Interest</option>
 					<option value="Leasing">Leasing</option>
 					<option value="Investor Relations">Investor Relations</option>
@@ -167,5 +174,9 @@ button{
         </div>
         {/if}
     </div>
+
 	</ContentWidth>
 </section>
+{#if viewportWidth>768}
+<Footer />
+{/if}

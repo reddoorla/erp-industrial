@@ -43,6 +43,6 @@ afterNavigate(() => {
 <main class="{isSnappy ? "snap-y snap-mandatory" : ""} h-screen overflow-scroll m-0 scroll-smooth overscroll-none">
 
 	<slot />
-	<Footer />
+	
 </main>
 <PrismicPreview {repositoryName} />
