@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import { isNavLight } from '$lib/stores/isNavLight.js';
 	import { fade } from 'svelte/transition';
+	import Footer from '$lib/components/Footer.svelte';
 
 
 
@@ -49,3 +50,5 @@
 <Nav {navLinks} bind:isLogoLarge={isLogoLarge}/>
 
 <SliceZone slices={data.page.data.slices} {components} />
+
+<Footer />

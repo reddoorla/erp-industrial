@@ -3,7 +3,7 @@
 	import * as prismicHelpers from "@prismicio/helpers"
 	import { SliceZone } from '@prismicio/svelte';
 	import { components } from '$lib/slices';
-	import { text } from '@sveltejs/kit';
+	import Footer from '$lib/components/Footer.svelte';
 	import { onMount } from 'svelte';
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
@@ -40,3 +40,5 @@ afterNavigate(() => {
 <Nav {navLinks} bind:isLogoLarge={isLogoLarge}/>
 
 <SliceZone slices={data.page.data.slices} {components} />
+
+<Footer />
