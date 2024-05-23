@@ -5,7 +5,7 @@
 	import ContentWidth from "$lib/components/ContentWidth.svelte";
 	import ContentBox from "$lib/components/ContentBox.svelte";
 	import type { HeroSlice } from "../../../prismicio-types";
-	import { isNavLight } from "$lib/stores/isNavLight";
+
     let viewportWidth:number;
     let viewportHeight:number;
 
@@ -29,16 +29,17 @@
 	// }
 
 		onMount(()=>{
-			isMounted=true;
-			isNavLight.set(slice.primary.isnavlight)
+			setTimeout(()=>isMounted=true,25)
+
 		})
     
 
 </script>
 
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
+{#key slice}
   
-  <div class="w-screen h-screen overflow-hidden snap-end fixed top-0">
+  <div class="w-screen h-screen overflow-hidden snap-end fixed top-0" in:fade={{delay:400}} out:fade>
 
 	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
 	{#if videoId}
@@ -78,3 +79,5 @@
   <div class="w-screen h-screen sticky snap-end overflow-hidden">
 
   </div>
+
+  {/key}

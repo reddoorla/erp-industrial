@@ -53,6 +53,7 @@
 
 <svelte:window bind:innerWidth={viewportWidth} />
 
+
 <section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden" in:fade={{delay:400}} out:fade>
 	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image }>
 		{#if slice.variation==="embed"}
@@ -233,6 +234,4 @@
 
 	</FullPageSlide>
 </section>
-
-
 

@@ -5,29 +5,41 @@
 	import { components } from '$lib/slices';
 	import { onMount } from 'svelte';
 	import { isNavLight } from '$lib/stores/isNavLight.js';
-	import { afterNavigate, disableScrollHandling } from '$app/navigation';
+	import { fade } from 'svelte/transition';
+
+
 
 
 	export let data;
 
 	let navLinks=[{href:"",text:""}];
 	let isLogoLarge = true;
-	if(data.page.uid==="contact"){
-		isLogoLarge=false;
-		isNavLight.set(true)
-		
-}
+
 	data.nav.data.links.forEach((link)=>{ navLinks.push({
 			href: (prismicHelpers.isFilled.link(link.href) ? link.href.url||"#" : "#"),
 			text: (link.text||"")
 		})
 	});
 
+	let isMounted = false;
+
 	onMount(()=>{
 		document.getElementsByTagName('main')[0].addEventListener("scroll", ()=>{
 			isLogoLarge = false;
-		}, {once: true})
+		}, {once: true});
+
+		isMounted = true;
+
 	})
+
+	$: {
+	data;
+	if(isMounted)
+	setTimeout(() => {
+        scrollTo({ top: 0, behavior: 'instant' });
+    }, 50);
+
+}
 </script>
 
 <svelte:head> 

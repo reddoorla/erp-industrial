@@ -21,7 +21,6 @@
   });
 
 	let navLinks = [{ href: '', text: '' }];
-	let isLogoLarge = false;
 
 	data.nav.data.links.forEach((link) => {
 		navLinks.push({
@@ -54,6 +53,7 @@
   import { afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { isNavLight } from '$lib/stores/isNavLight';
 	import Footer from '$lib/components/Footer.svelte';
+	import { onMount } from 'svelte';
 
 afterNavigate(() => {
     disableScrollHandling();
@@ -62,6 +62,12 @@ afterNavigate(() => {
         scrollTo({ top: 0, behavior: 'instant' });
     }, 50);
 });
+
+
+
+onMount(()=>{
+	isNavLight.set(true);
+})
 
 let viewportWidth:number;
 </script>
@@ -113,7 +119,7 @@ button{
 
 <svelte:window bind:innerWidth={viewportWidth} />
 
-<Nav {navLinks} bind:isLogoLarge />
+<Nav {navLinks} isLogoLarge={false} />
 
 <section class="h-screen w-screen snap-end fixed top-0 overflow-y-auto">
 	<ContentWidth class="flex flex-col md:flex-row items-center justify-center mt-48">

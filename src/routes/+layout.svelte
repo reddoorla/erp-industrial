@@ -6,8 +6,9 @@
 	import Footer from '$lib/components/Footer.svelte';
 
 
-import { onMount } from 'svelte';
+
 import { afterNavigate, disableScrollHandling } from '$app/navigation';
+
 
 afterNavigate(() => {
     disableScrollHandling();
