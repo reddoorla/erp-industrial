@@ -115,7 +115,7 @@
 						<DefaultButton text={item.button_text||''} on:click={()=>activeOverlay=i}/>
 					{/each}
 				{/if}
-				{#if slice.variation==="withVideoPopup"}
+				{#if slice.variation==="withVideoPopup"&&activeOverlay===-1}
 					<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
 				{/if}
 				{#if slice.variation==="iconBoxes"}
@@ -185,6 +185,7 @@
 				</div>
 				<div class="flex flex-col md:flex-row gap-4">
 						{#each slice.items as item, i}
+
 							<DefaultButton text={activeOverlay==i?'close':item.button_text||''} 
 								on:click={()=>{	
 									if(activeOverlay==i){activeOverlay= -1}
