@@ -10,6 +10,7 @@
     let viewportHeight:number;
 
 	import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
+	import { isFilled } from "@prismicio/helpers";
 
 	export let slice:HeroSlice;
 
@@ -42,7 +43,7 @@
   <div class="w-screen h-screen overflow-hidden snap-end fixed top-0" in:fade={{delay:400}} out:fade>
 
 	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
-	{#if videoId}
+	{#if videoId&&isFilled.embed(slice.primary.video_embed)}
 	<iframe 
 	  title="background video" 
 	  src={`https://player.vimeo.com/video/${videoId}?background=1`}
