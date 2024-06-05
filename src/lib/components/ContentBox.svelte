@@ -73,7 +73,7 @@ onMount(()=>isMounted=true);
         <h6 transition:fade={{delay:400}} class="mb-7">{subtitleText}</h6>
     {/if}
     {#if paragraphText}
-        <p transition:fade={{delay:600}} class="mb-7 max-w-full whitespace-pre-line">{paragraphText}</p>
+        <p transition:fade={{delay:600}} class="mb-7 max-w-full whitespace-pre-line min-h-28">{paragraphText}</p>
     {/if}
     <div class="flex flex-nowrap text-nowrap flex-col sm:flex-row align-middle justify-center sm:justify-{justify}">
         {#if buttonText}

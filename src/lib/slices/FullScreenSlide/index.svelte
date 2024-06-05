@@ -60,14 +60,14 @@
 				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
 					<h3 class="font-bold">{slice.primary.title}</h3>
 				</ContentWidth>
-				<div class="h-[80vh] -translate-y-16">
+				<div class="h-[80vh] md:-translate-y-16">
 					{@html slice.primary.external_embed}
 				</div>
 		{:else if slice.variation==="halfPage"}
-		<div class="bg-black absolute w-screen h-screen flex flex-col {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
+		<div class="bg-black absolute w-screen h-screen flex flex-col overflow-y-auto md:overflow-hidden {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
-			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%] overflow-y-auto md:overflow-hidden">
+			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%] ">
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
 				<h2 transition:fade={{delay:200}} class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
 				<p transition:fly={{delay:400, y:20}} class="text-white">{slice.primary.body_text||""}</p>
@@ -88,8 +88,8 @@
      		class:backdrop-blur={slice.primary.isBackgroundBlurred&&isActiveSection}
     	 transition:fade={{duration:1000}}>
 		</div>
-		<ContentWidth class="h-full relative justify-end z-30 pb-12 md:pb-32">
-			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-7/12":""} relative h-full flex flex-col justify-center md:justify-end mb-8 md:mb-16">
+		<ContentWidth class="h-full relative justify-end z-30 pb-10 md:pb-32">
+			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-3/4":""} relative h-full flex flex-col justify-end mb-8 md:mb-16">
 			<div transition:fade>
 			{#if activeOverlay===-1}
 			<div out:fade in:fade={{delay:300}}>
@@ -119,7 +119,7 @@
 					<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
 				{/if}
 				{#if slice.variation==="iconBoxes"}
-				<div class="w-full flex flex-col md:flex-row gap-8">
+				<div class="w-full flex flex-col md:flex-row gap-8 h-80">
 					{#if viewportWidth>768}
 					{#each slice.items as item }
 						
@@ -127,7 +127,7 @@
 							icon={item.icon.url||""}
 							labelText={item.eyebrow||""}
 							paragraphText={item.body_text||""}
-							class="text-white"
+							class="text-white h-full justify-between"
 						/>
 					
 					{/each}
@@ -150,12 +150,12 @@
 
 			{#if slice.variation==="teams"}
 
-			<div class="w-full flex flex-row gap-8 overflow-x-auto">
+			<div class="w-full h-screen pt-[20vh] md:pt-0 flex flex-col gap-8 overflow-y-auto md:overflow-y-hidden">
 				{#each slice.items as item, i (i)}
-					<div class="md:w-1/3 pr-8 flex flex-col gap-8 items-start justify-start flex-shrink-0">
+					<div class="md:w-1/3 pr-8 flex flex-col gap-8 md:items-start md:justify-start flex-shrink-0">
 						<PrismicImage field={item.headshot} class="md:w-48 rounded-full"/>
 						<h5 class="text-white whitespace-pre-line">{item.title}</h5>
-						<div class="large-paragraph text-white">{item.name}</div>
+						<div class="large-paragraph text-white whitespace-nowrap">{item.name}</div>
 						<DefaultButton filled={false} on:click={()=>activeOverlay=i} text="bio"/>
 					</div>
 				{/each}
@@ -183,7 +183,7 @@
 				<div class="text-white mb-12 md:w-160">
 					<PrismicRichText field={slice.items[activeOverlay].body_text} />
 				</div>
-				<div class="flex flex-col md:flex-row gap-4">
+				<div class="flex flex-col md:flex-row gap-4 mx-[4%] md:mx-auto">
 						{#each slice.items as item, i}
 
 							<DefaultButton text={activeOverlay==i?'close':item.button_text||''} 
@@ -206,7 +206,7 @@
 						allow="autoplay"
 						
 					></iframe>
-					<DefaultButton text="Close" class="absolute bottom-20" on:click={()=>activeOverlay=-1}/>
+					<DefaultButton text="Close" class="absolute bottom-20 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=-1}/>
 				</ContentWidth>
 			{/if}
 			{#if slice.variation==="teams"}
@@ -217,7 +217,7 @@
 								<div class="flex w-full flex-col justify-between gap-8 pb-12">
 									<PrismicImage field={slice.items[activeOverlay].headshot} class=" w-36 h-36 md:h-72  md:w-72 rounded-full max-w-none"/>
 									<h5 class="text-white whitespace-pre-line">{slice.items[activeOverlay].title}</h5>
-									<div class="large-paragraph text-white">{slice.items[activeOverlay].name}</div>
+									<div class="large-paragraph text-white whitespace-nowrap">{slice.items[activeOverlay].name}</div>
 								</div>
 								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12"/>
 							</div>

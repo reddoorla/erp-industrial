@@ -59,7 +59,7 @@
 
 
 	<ContentWidth class="h-full relative justify-end z-30">
-		<div class="w-11/12 max-w-screen-lg relative h-full flex flex-col justify-end pb-32">
+		<div class="md:w-11/12 max-w-screen-lg relative h-full flex flex-col justify-end pb-10 md:pb-32">
 		{#if isMounted}
 		<div transition:fade>
 		<ContentBox 

@@ -3,8 +3,7 @@
     import { swipe } from 'svelte-gestures'
     import ContentBox from "./ContentBox.svelte";
     import type { ComponentProps } from "svelte";
-    import chevronLeft from "$lib/assets/icons/chevron-left.svg";
-    import chevronRight from "$lib/assets/icons/chevron-right.svg";
+
   
     export let contentBoxPropsArray: ComponentProps<ContentBox>[] = [
       {
@@ -69,7 +68,7 @@
     const quintupledPropsArray = [...contentBoxPropsArray, ...contentBoxPropsArray, ...contentBoxPropsArray, ...contentBoxPropsArray, ...contentBoxPropsArray];
   </script>
   
-  <div use:swipe on:swipe={handleSwipe} class="w-full h-full relative overflow-hidden">
+  <div class="w-full h-full relative overflow-hidden">
     <div class="flex flex-row flex-nowrap  {isSlideAnimated ? 'transition-transform duration-500 ease-in-out' : ''}" style="width: {quintupledPropsArray.length * 100}%; transform: translateX(-{(sliderIndex+contentBoxPropsArray.length) * sliderWidth}%);">
       {#each quintupledPropsArray as contentBoxProps}
         <div class="h-full z-0" style="width: {sliderWidth}%;">
@@ -77,6 +76,22 @@
         </div>
       {/each}
     </div>
-  
-
+    <div class=" h-6 w-full flex justify-between z-10 absolute bottom-0 lg:bottom-[20%] xl:bottom-[30%] left-0">
+      <button on:click={slideLeft} class="text-white flex align-middle justify-center cursor-pointer transition-all duration-300 active:-translate-y-2  hover:text-black">
+        <i class="fa-sharp fa-solid fa-chevron-left fa-2x"/>
+      </button>
+      <div class="h-10 flex align-middle justify-start ">
+        {#each  contentBoxPropsArray as image, i}
+            <button class="h-[10px] w-[10px] border-2  rounded-full transition-colors duration-1000 cursor-pointer active:-translate-y-[0.5px] hover:opacity-60 mr-4 
+            {(sliderIndex%contentBoxPropsArray.length>=0&&sliderIndex%contentBoxPropsArray.length===i)|| (sliderIndex%contentBoxPropsArray.length<=0&&contentBoxPropsArray.length+sliderIndex%contentBoxPropsArray.length===i) ? "bg-dark border-dark" : "border-light bg-light"}"
+                on:click={()=>sliderIndex=i}
+                aria-label="image {i} of {contentBoxPropsArray.length}"
+                aria-hidden
+            ></button>
+        {/each}
+    </div>
+      <button on:click={slideRight} class="text-white flex align-middle cursor-pointer transition-all duration-300 active:-translate-y-2 justify-center -translate-y-[5.5px] hover:text-black">
+        <i class="fa-sharp fa-solid fa-chevron-right fa-2x"/>
+      </button>
+    </div>
   </div>

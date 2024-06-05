@@ -12,23 +12,23 @@
     export let navLinks=[
         {
             text:"ABOUT",
-            href:"/"
+            href:"/about"
         },
         {
-            text:"PORTFOLIO",
-            href:"/"
+            text:"INDUSTRIAL PORTFOLIO",
+            href:"/portfolio"
         },
         {
-            text:"RESOURCES",
-            href:"/"
+            text:"INVESTORS",
+            href:"/investors"
         },
         {
-            text:"BLOG",
-            href:"/"
+            text:"OFFICE",
+            href:"/office"
         },
         {
             text:"CONTACT",
-            href:"/"
+            href:"/contact"
         },
 
     ];
@@ -43,6 +43,8 @@
 
     const toggleOverlayOn = () => isOverlayVisible = true;
     const toggleOverlayOff = () => isOverlayVisible = false;
+
+    let viewportWidth:number;
 
 
 </script>
@@ -61,6 +63,7 @@ text-transform: uppercase;
 
 </style>
 
+<svelte:window bind:innerWidth={viewportWidth} />
 
 
 <!--overlay-->
@@ -83,7 +86,7 @@ text-transform: uppercase;
 <div class="h-16 w-screen z-40 fixed pointer-events-none transition-color duration-700 ease-fast-slow {$isNavLight ? "text-white":""}">
     <ContentWidth class="flex flex-row justify-between items-center h-full">
         <a href="/" class="hover:opacity-100 transition-all duration-500 bump pointer-events-auto">
-            <img src={logoFull} alt="logo" class="h-12 md:h-32 transition-all duration-700 ease-fast-slow hover:opacity-100 {$isNavLight ? "brightness-0 invert" : ""} {(isLogoLarge ? "scale-[200%] translate-y-[100%]  translate-x-1/2":"translate-y-1/2")}" style="clip-path: {isLogoLarge ? 'inset(0)' : 'inset(0 0 10px 0)'};"/>          
+            <img src={logoFull} alt="logo" class="h-12 md:h-32 transition-all duration-700 ease-fast-slow hover:opacity-100 {$isNavLight ? "brightness-0 invert" : ""} {(isLogoLarge || viewportWidth<768 ? "scale-[200%] translate-y-[100%]  translate-x-1/2":"translate-y-1/2")}" style="clip-path: {isLogoLarge ? 'inset(0)' : 'inset(0 0 10px 0)'};"/>          
         </a>
         
         
