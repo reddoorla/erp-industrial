@@ -150,9 +150,9 @@
 
 			{#if slice.variation==="teams"}
 
-			<div class="w-full h-screen pt-[20vh] md:pt-0 flex flex-col gap-8 overflow-y-auto md:overflow-y-hidden">
+			<div class="w-full h-screen pt-[20vh] flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-y-hidden">
 				{#each slice.items as item, i (i)}
-					<div class="md:w-1/3 pr-8 flex flex-col gap-8 md:items-start md:justify-start flex-shrink-0">
+					<div class="md:w-1/3 pr-8 flex flex-col gap-8 md:items-start md:justify-end flex-shrink-0">
 						<PrismicImage field={item.headshot} class="md:w-48 rounded-full"/>
 						<h5 class="text-white whitespace-pre-line">{item.title}</h5>
 						<div class="large-paragraph text-white whitespace-nowrap">{item.name}</div>
@@ -183,7 +183,7 @@
 				<div class="text-white mb-12 md:w-160">
 					<PrismicRichText field={slice.items[activeOverlay].body_text} />
 				</div>
-				<div class="flex flex-col md:flex-row gap-4 mx-[4%] md:mx-auto">
+				<div class="flex flex-col md:flex-row gap-4 mx-[4%] md:mx-0" >
 						{#each slice.items as item, i}
 
 							<DefaultButton text={activeOverlay==i?'close':item.button_text||''} 
