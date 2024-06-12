@@ -53,9 +53,9 @@ text-transform: uppercase;
             <a href="/office" class="footer-link">OFFICE</a>
         </div>
         <div class="h-full w-1/6 flex flex-col gap-4">
-            <a href="/" class="footer-link">PE INVESTOR PORTAL</a>
-            <a href="/" class="footer-link">DST INVESTOR PORTAL</a>
-            <a href="/" class="footer-link">TENANT PORTAL</a>
+            <a href="https://icx.efrontcloud.com/@9894/ERP/login.aspx" class="footer-link">PE INVESTOR PORTAL</a>
+            <a href="https://starportal2.phxa.com/ERP/#/index" class="footer-link">DST INVESTOR PORTAL</a>
+            <a href="https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161" class="footer-link">TENANT PORTAL</a>
         </div>
         <div class="h-full w-1/12"></div>
         <div class="h-full w-1/4 flex flex-col gap-8">

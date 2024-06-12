@@ -14,7 +14,7 @@
 
 <div class="w-screen h-screen overflow-hidden">
     {#if backgroundImage}
-        <PrismicImage field={backgroundImage} class="object-cover absolute {viewportHeight*16 >viewportWidth*9 ? "h-full":"w-full h-full"}"/>
+        <PrismicImage field={backgroundImage} class="object-cover absolute w-screen h-screen left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"/>
         <div class="w-full h-full absolute top-0 left-0" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 14.68%, rgba(0, 0, 0, 0.50) 69.9%)"></div>
     {/if}
 
