@@ -147,7 +147,7 @@
 							<DefaultButton text={slice.primary.button_text_1||""} href={(isFilled.link(slice.primary.button_link_1)?slice.primary.button_link_1.url:"")}/>
 						{/if}
 						{#if slice.primary.button_text_2}
-							<DefaultButton text={slice.primary.button_text_2||""} href={(isFilled.link(slice.primary.button_link_1)?slice.primary.button_link_1.url:"")}/>
+							<DefaultButton text={slice.primary.button_text_2||""} href={(isFilled.link(slice.primary.button_link_2)?slice.primary.button_link_2.url:"")}/>
 						{/if}
 					</div>
 				{/if}

@@ -67,7 +67,7 @@ const handleMouseMove = (event: MouseEvent) => {
 	}
   });
 
-  console.log(hoveredElements)
+ 
   hoveredElements = currentHoveredElements;
 };
 
