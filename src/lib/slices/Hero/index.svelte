@@ -33,6 +33,54 @@
 			setTimeout(()=>isMounted=true,25)
 
 		})
+
+		let hoveredElements: Set<HTMLElement> = new Set();
+
+const handleMouseMove = (event: MouseEvent) => {
+  const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
+  const currentHoveredElements: Set<HTMLElement> = new Set(
+	elementsUnder.filter(
+	  (element) => element !== event.currentTarget
+	) as HTMLElement[]
+  );
+
+  // Dispatch mouseout event for elements no longer hovered
+  hoveredElements.forEach((element) => {
+	if (!currentHoveredElements.has(element)) {
+		if(element.tagName==="A"){
+		element.classList.remove('bg-erp-blue');
+		element.classList.add('bg-black');
+		document.getElementsByTagName("body")[0].style.cursor = "auto";
+		}
+	}
+  });
+
+  // Dispatch mouseover event for newly hovered elements
+  currentHoveredElements.forEach((element) => {
+	if (!hoveredElements.has(element)) {
+		if(element.tagName==="A"){
+		element.classList.remove('bg-black');
+		element.classList.add('bg-erp-blue');
+		document.getElementsByTagName("body")[0].style.cursor = "pointer";
+
+	}
+	}
+  });
+
+  console.log(hoveredElements)
+  hoveredElements = currentHoveredElements;
+};
+
+
+	const handleClick = (event:MouseEvent) => {
+    // Manually propagate the click event to the elements underneath
+    const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
+    elementsUnder.forEach((element : Element) => {
+      if (element !== event.currentTarget) {
+        (element as HTMLElement).click();
+      }
+    });
+  }
     
 
 </script>
@@ -77,7 +125,7 @@
 		</div>
 	</ContentWidth>
   </div>
-  <div class="w-screen h-screen sticky snap-end overflow-hidden">
+  <div class="w-screen h-screen sticky snap-end overflow-hidden" on:click={handleClick} on:mousemove={handleMouseMove} aria-hidden >
 
   </div>
 
