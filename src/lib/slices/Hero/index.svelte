@@ -70,7 +70,7 @@
 			class="text-white z-20 text-left"
 		/>
 		{#if slice.primary.button_text}
-			<DefaultButton text={slice.primary.button_text || ''} href={slice.primary.button_link}/>
+			<DefaultButton text={slice.primary.button_text || ''} href={(isFilled.link(slice.primary.button_link)?slice.primary.button_link.url : "")}/>
 		{/if}
 	</div>
 		{/if}
