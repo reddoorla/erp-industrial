@@ -9,6 +9,7 @@
 
 import { afterNavigate, beforeNavigate, disableScrollHandling } from '$app/navigation';
 	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
 let main:HTMLElement
 
@@ -29,6 +30,8 @@ afterNavigate(() => {
 	let isSnappy = true;
 
 	let isTransitioning = false;
+
+	
 
 
 </script>

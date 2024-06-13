@@ -55,6 +55,8 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import { onMount } from 'svelte';
 
+	
+
 afterNavigate(() => {
     disableScrollHandling();
 	isNavLight.set(true);

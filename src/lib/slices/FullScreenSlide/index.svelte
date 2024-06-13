@@ -9,6 +9,8 @@
 	import { onMount } from "svelte";
 	import { isNavLight } from "$lib/stores/isNavLight";
 	import SliderOfContentBoxes from "$lib/components/SliderOfContentBoxes.svelte";
+	import { page } from "$app/stores";
+	import { isFilled } from "@prismicio/helpers";
 
 
 	export let slice:FullScreenSlideSlice;
@@ -61,7 +63,9 @@
 					<h3 class="font-bold">{slice.primary.title}</h3>
 				</ContentWidth>
 				<div class="h-[80vh] md:-translate-y-16">
-					{@html slice.primary.external_embed}
+					{#key $page.url.pathname}
+						{@html slice.primary.external_embed}
+					{/key}
 				</div>
 		{:else if slice.variation==="halfPage"}
 		<div class="bg-black absolute w-screen h-screen flex flex-col overflow-y-auto md:overflow-hidden {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
@@ -73,7 +77,7 @@
 				<p transition:fly={{delay:400, y:20}} class="text-white">{slice.primary.body_text||""}</p>
 				<div transition:fly={{delay:500, y:20}} class="flex flex-col gap-8 my-16">
 					{#each slice.items as item, i (i) }
-							<DefaultButton text={item.button_text||""} href={item.button_link} filled={false}/>
+							<DefaultButton text={item.button_text||""} href={(isFilled.link(item.button_link)?item.button_link.url:"")} filled={false}/>
 					{/each}
 				</div>
 			</div>
@@ -140,10 +144,10 @@
 				{#if slice.variation==="basic"||slice.variation==="bigText"}
 					<div class="flex flex-row gap-8">
 						{#if slice.primary.button_text_1}
-							<DefaultButton text={slice.primary.button_text_1||""} href={slice.primary.button_link_1}/>
+							<DefaultButton text={slice.primary.button_text_1||""} href={(isFilled.link(slice.primary.button_link_1)?slice.primary.button_link_1.url:"")}/>
 						{/if}
 						{#if slice.primary.button_text_2}
-							<DefaultButton text={slice.primary.button_text_2||""} href={slice.primary.button_link_2}/>
+							<DefaultButton text={slice.primary.button_text_2||""} href={(isFilled.link(slice.primary.button_link_1)?slice.primary.button_link_1.url:"")}/>
 						{/if}
 					</div>
 				{/if}

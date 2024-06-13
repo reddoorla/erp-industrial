@@ -30,6 +30,10 @@ afterNavigate(() => {
 		document.getElementsByTagName('main')[0].addEventListener("scroll", ()=>{
 			isLogoLarge = false;
 		}, {once: true})
+		//@ts-ignore
+		BuildOut.embed({    token:     "bdecc802689ae7f3e2007fdaf2ffdb31f711a99e",  plugin:    "inventory",
+				target:    "buildout"
+			});
 	})
 </script>
 
