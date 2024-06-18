@@ -29,15 +29,15 @@ export const actions: Actions = {
 
     switch(interest){
       case "Leasing":
-        sendTo = ['Brennan Berry <BBerry@erpfunds.com>','Tucker Lemos <tucker@reddoorla.com>'];
+        sendTo = ['Brennan Berry <BBerry@erpfunds.com>'];
         break;
       
       case "Investor Relations":
-        sendTo = ['William Meyer II <wmeyer@erpfunds.com>','Tucker Lemos <tucker@reddoorla.com>'];
+        sendTo = ['William Meyer II <wmeyer@erpfunds.com>'];
         break;
 
       case "Property Sales and Acquistions":
-        sendTo = ['Meghan Berry <MBerry@erpfunds.com>','Tucker Lemos <tucker@reddoorla.com>'];
+        sendTo = ['Meghan Berry <MBerry@erpfunds.com>'];
         break;
   }
     
