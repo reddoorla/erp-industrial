@@ -33,11 +33,11 @@ export const actions: Actions = {
         break;
       
       case "Investor Relations":
-        sendTo = ['wmeyer@erpfunds.com'];
+        sendTo = ['William Meyer II <wmeyer@erpfunds.com>','Tucker Lemos <tucker@reddoorla.com>'];
         break;
 
       case "Property Sales and Acquistions":
-        sendTo = ['MBerry@erpfunds.com'];
+        sendTo = ['Meghan Berry <MBerry@erpfunds.com>','Tucker Lemos <tucker@reddoorla.com>'];
         break;
   }
     
