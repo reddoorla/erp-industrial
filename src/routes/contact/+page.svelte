@@ -74,9 +74,7 @@ onMount(()=>{
 let viewportWidth:number;
 </script>
 
-<svelte:head>
-	<title>ERP Industrial</title>
-</svelte:head>
+
 
 <style>
 	input, select, textarea{
