@@ -25,7 +25,7 @@ export const actions: Actions = {
     const email = formData.get('email')?.toString() || '';
     const interest = formData.get('interest')?.toString() || '';
     const message = formData.get('message')?.toString() || '';
-    let sendTo = ['tucker@reddoorla.com'];
+    let sendTo = ['ERP Site Submission <tucker@reddoorla.com>'];
 
     switch(interest){
       case "Leasing":
@@ -45,8 +45,8 @@ export const actions: Actions = {
     if(!email || !interest || !message || interest==='Select Interest') return fail(400, { error: 'Missing required fields' });
 
     const msg = {
-      to: 'tucker@reddoorla.com',
-      from: 'tucker@reddoorla.com',
+      to: sendTo,
+      from: 'ERP Site Submission<tucker@reddoorla.com>',
       replyTo: email,
       subject:interest + ' Inquiry from ' + email,
       text: message,
