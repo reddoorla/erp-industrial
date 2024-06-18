@@ -34,7 +34,8 @@
     let isEmailFailed = false;
 
 
-  // ... (rest of the code remains the same)
+	
+
 
   const handleSubmit: SubmitFunction = () => {
     isEmailSending = true;
@@ -69,6 +70,12 @@ afterNavigate(() => {
 
 onMount(()=>{
 	isNavLight.set(true);
+
+	//@ts-ignore
+	function onSubmit(token) {
+		//@ts-ignore
+     document.getElementById("contact").submit();
+   }
 })
 
 let viewportWidth:number;
@@ -146,7 +153,7 @@ button{
         </div>
             
         {/if}
-		<form class="w-full flex flex-col gap-8" name="contact" method="POST" action="/contact" use:enhance={handleSubmit}>
+		<form class="w-full flex flex-col gap-8" name="contact" id="contact" method="POST" action="/contact" use:enhance={handleSubmit}>
 			<h5 class="text-white">SEND US A MESSAGE</h5>
 			<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">
 				<input type="email" name="email" placeholder="Your Email" class="md:w-[45%]" />
@@ -161,8 +168,11 @@ button{
 				<textarea name="message" class="w-full h-48" placeholder="Your Message" />
 			</div>
 			<button
-				class="hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"
+				class="g-recaptcha hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"
 				type="submit"
+				data-callback="onSubmit"
+				data-action="submit"
+				data-sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
 			>
 				{#if !isEmailSending} 
                     Submit 
