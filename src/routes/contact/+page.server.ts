@@ -33,7 +33,7 @@ export const actions: Actions = {
         break;
       
       case "Investor Relations":
-        sendTo = ['William Meyer II <wmeyer@erpfunds.com>'];
+        sendTo = ['Pippi Espinoza <pespinoza@erpfunds.com>'];
         break;
 
       case "Property Sales and Acquistions":
