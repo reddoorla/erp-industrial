@@ -25,6 +25,22 @@ export const actions: Actions = {
     const email = formData.get('email')?.toString() || '';
     const interest = formData.get('interest')?.toString() || '';
     const message = formData.get('message')?.toString() || '';
+    let sendTo = ['tucker@reddoorla.com'];
+
+    switch(interest){
+      case "Leasing":
+        sendTo = ['Brennan Berry <BBerry@erpfunds.com>','Tucker Lemos <tucker@reddoorla.com>'];
+        break;
+      
+      case "Investor Relations":
+        sendTo = ['wmeyer@erpfunds.com'];
+        break;
+
+      case "Property Sales and Acquistions":
+        sendTo = ['MBerry@erpfunds.com'];
+        break;
+  }
+    
     
     if(!email || !interest || !message || interest==='Select Interest') return fail(400, { error: 'Missing required fields' });
 
@@ -32,7 +48,7 @@ export const actions: Actions = {
       to: 'tucker@reddoorla.com',
       from: 'tucker@reddoorla.com',
       replyTo: email,
-      subject: (interest === 'Select Interest' ? 'Website' : interest) + ' Inquiry from ' + email,
+      subject:interest + ' Inquiry from ' + email,
       text: message,
     };
 

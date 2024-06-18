@@ -156,7 +156,7 @@ button{
 					<option class="text-gr">Select Interest</option>
 					<option value="Leasing">Leasing</option>
 					<option value="Investor Relations">Investor Relations</option>
-					<option value="Leasing">Property Sales and Acquisition</option>
+					<option value="Property Sales and Acquistions">Property Sales and Acquisition</option>
 				</select>
 			</div>
 			<div class="w-full">
