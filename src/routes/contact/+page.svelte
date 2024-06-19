@@ -172,7 +172,7 @@ button{
 				type="submit"
 				data-callback="onSubmit"
 				data-action="submit"
-				data-sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
+				data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
 			>
 				{#if !isEmailSending} 
                     Submit 
