@@ -29,7 +29,7 @@ export const actions: Actions = {
 
     switch(interest){
       case "Leasing":
-        sendTo = ['Brennan Berry <tucker@reddoorla.com>'];
+        sendTo = ['Brennan Berry <BBerry@erpfunds.com>'];
         break;
       
       case "Investor Relations":
