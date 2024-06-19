@@ -45,6 +45,7 @@
 		"@prismicio/svelte": "^1.1.1",
 		"@sendgrid/mail": "^8.1.3",
 		"@vimeo/player": "^2.23.0",
+		"svelte-captcha-enhance": "^1.2.1",
 		"svelte-gestures": "^4.0.0"
 	}
 }

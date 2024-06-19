@@ -71,12 +71,16 @@ afterNavigate(() => {
 onMount(()=>{
 	isNavLight.set(true);
 
-	//@ts-ignore
+	
+})
+
+//@ts-ignore
 	function onSubmit(token) {
+	console.log(token)
 		//@ts-ignore
      document.getElementById("contact").submit();
+	 
    }
-})
 
 let viewportWidth:number;
 </script>
@@ -125,6 +129,9 @@ button{
 </style>
 
 <svelte:window bind:innerWidth={viewportWidth} />
+<svelte:head>
+	<script src="https://www.google.com/recaptcha/api.js"></script>
+</svelte:head>
 
 <Nav {navLinks} isLogoLarge={false} />
 
@@ -169,7 +176,7 @@ button{
 			</div>
 			<button
 				class="g-recaptcha hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"
-				type="submit"
+				
 				data-callback="onSubmit"
 				data-action="submit"
 				data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
