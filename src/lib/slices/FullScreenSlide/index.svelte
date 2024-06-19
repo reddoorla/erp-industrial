@@ -202,14 +202,16 @@
 			{/if}
 			{#if slice.variation==="withVideoPopup"&&videoId}
 				<ContentWidth class="h-full flex justify-center items-center">
+					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"/>
 					<iframe 
 	  					title="background video" 
 	 					src={`https://player.vimeo.com/video/${videoId}?background=1&muted=0&autoplay=1`}
-	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto"
+	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
 	  					frameborder="0"
 						allow="autoplay"
 						
 					></iframe>
+					
 					<DefaultButton text="Close" class="absolute bottom-20 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=-1}/>
 				</ContentWidth>
 			{/if}
