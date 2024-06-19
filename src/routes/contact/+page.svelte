@@ -71,16 +71,16 @@ afterNavigate(() => {
 onMount(()=>{
 	isNavLight.set(true);
 
-	
-})
-
-//@ts-ignore
+	//@ts-ignore
 window.onSubmit = (token) => {
 	console.log(token)
 		//@ts-ignore
      document.getElementById("contact").submit();
 	 
    }
+})
+
+
 
 
 
