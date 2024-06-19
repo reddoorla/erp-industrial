@@ -74,13 +74,7 @@ onMount(()=>{
 	
 })
 
-//@ts-ignore
-	function onSubmit(token) {
-	console.log(token)
-		//@ts-ignore
-     document.getElementById("contact").submit();
-	 
-   }
+
 
 let viewportWidth:number;
 </script>
@@ -131,6 +125,15 @@ button{
 <svelte:window bind:innerWidth={viewportWidth} />
 <svelte:head>
 	<script src="https://www.google.com/recaptcha/api.js"></script>
+	<script>
+		//@ts-ignore
+const onSubmit = (token) => {
+	console.log(token)
+		//@ts-ignore
+     document.getElementById("contact").submit();
+	 
+   }
+	</script>
 </svelte:head>
 
 <Nav {navLinks} isLogoLarge={false} />
