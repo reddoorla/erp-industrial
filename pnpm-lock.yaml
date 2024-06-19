@@ -26,6 +26,9 @@ dependencies:
   '@vimeo/player':
     specifier: ^2.23.0
     version: 2.23.0
+  svelte-captcha-enhance:
+    specifier: ^1.2.1
+    version: 1.2.1(@sveltejs/kit@2.5.16)
   svelte-gestures:
     specifier: ^4.0.0
     version: 4.0.0
@@ -79,9 +82,6 @@ devDependencies:
   svelte-check:
     specifier: ^3.6.2
     version: 3.8.1(postcss@8.4.38)(sass@1.77.6)(svelte@4.2.18)
-  svelte-recaptcha-v2:
-    specifier: ^0.0.2
-    version: 0.0.2
   tailwindcss:
     specifier: ^3.4.3
     version: 3.4.4
@@ -3669,6 +3669,14 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /svelte-captcha-enhance@1.2.1(@sveltejs/kit@2.5.16):
+    resolution: {integrity: sha512-auzGdPxz+OoJRbLUDy05firPfLARXu/wfD1RVoD8xlpcaOVHa4adfgwikJR5w/+DdDsm1h7RpZIEKlZStQgSvg==}
+    peerDependencies:
+      '@sveltejs/kit': ^2.5.7
+    dependencies:
+      '@sveltejs/kit': 2.5.16(@sveltejs/vite-plugin-svelte@3.1.1)(svelte@4.2.18)(vite@5.3.1)
+    dev: false
+
   /svelte-check@3.8.1(postcss@8.4.38)(sass@1.77.6)(svelte@4.2.18):
     resolution: {integrity: sha512-KlQ0TRVe01mdvh49Ylkr9FQxO/UWbQOtaIrccl3gjgkvby1TxY41VkT7ijCl6i29FjaJPE4m6YGmhdqov0MfkA==}
     hasBin: true
@@ -3772,14 +3780,6 @@ packages:
       strip-indent: 3.0.0
       svelte: 4.2.18
       typescript: 5.4.5
-    dev: true
-
-  /svelte-recaptcha-v2@0.0.2:
-    resolution: {integrity: sha512-Sx4QuV/AtjxuwOf6C3yih+n3TLlKN+DefYt7wAFR8hjGcAOIAzcb66d0QQdElZJ2H34hvQc1hIaj3AtkoA7G6w==}
-    dependencies:
-      debug: 4.3.5
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /svelte2tsx@0.7.10(svelte@4.2.18)(typescript@5.4.5):
