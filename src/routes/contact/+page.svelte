@@ -74,6 +74,14 @@ onMount(()=>{
 	
 })
 
+//@ts-ignore
+const onSubmit = (token) => {
+	console.log(token)
+		//@ts-ignore
+     document.getElementById("contact").submit();
+	 
+   }
+
 
 
 let viewportWidth:number;
@@ -125,15 +133,6 @@ button{
 <svelte:window bind:innerWidth={viewportWidth} />
 <svelte:head>
 	<script src="https://www.google.com/recaptcha/api.js"></script>
-	<script>
-		//@ts-ignore
-const onSubmit = (token) => {
-	console.log(token)
-		//@ts-ignore
-     document.getElementById("contact").submit();
-	 
-   }
-	</script>
 </svelte:head>
 
 <Nav {navLinks} isLogoLarge={false} />
@@ -180,7 +179,7 @@ const onSubmit = (token) => {
 			<button
 				class="g-recaptcha hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"
 				
-				data-callback="onSubmit"
+				data-callback={onSubmit}
 				data-action="submit"
 				data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
 			>
