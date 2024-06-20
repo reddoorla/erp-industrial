@@ -52,10 +52,10 @@
 
 <style>
     .nav-link{
-font-size: 10px;
+font-size: 11px;
 font-style: normal;
 font-weight: 500;
-line-height: 145%; /* 11.6px */
+line-height: 145%; 
 letter-spacing: 2px;
 text-transform: uppercase;
     }

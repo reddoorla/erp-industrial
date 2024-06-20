@@ -154,10 +154,10 @@
 
 			{#if slice.variation==="teams"}
 
-			<div class="w-full h-screen pt-[20vh] flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-y-hidden">
-				<h1 class="absolute top-[10vh] left-0 text-white">
+			<div class="w-full h-screen pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-y-hidden">
+				<div class="absolute top-32 md:top-64 right-0 md:left-0 md:right-auto text-white large-paragraph">
 					Management Team
-				</h1>
+				</div>
 				{#each slice.items as item, i (i)}
 					<div class="md:w-1/3 pr-8 flex flex-col gap-8 md:items-start md:justify-end flex-shrink-0">
 						<PrismicImage field={item.headshot} class="md:w-48 rounded-full"/>
