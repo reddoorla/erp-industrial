@@ -47,7 +47,7 @@ const handleMouseMove = (event: MouseEvent) => {
   // Dispatch mouseout event for elements no longer hovered
   hoveredElements.forEach((element) => {
 	if (!currentHoveredElements.has(element)) {
-		if(element.tagName==="A"){
+		if(element.tagName==="A"&&!element.classList.contains('nav-link')){
 		element.classList.remove('bg-erp-blue');
 		element.classList.add('bg-black');
 		document.getElementsByTagName("body")[0].style.cursor = "auto";
