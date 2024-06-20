@@ -35,7 +35,7 @@
 			isNavLight.set(slice.primary.isnavlight);
 	}
 
-	onMount( ()=> section?.parentElement?.addEventListener("scroll", checkActive));
+	onMount( () => section?.parentElement?.addEventListener("scroll", checkActive));
 
 
 	let contentBoxPropsArray:any[]=[];

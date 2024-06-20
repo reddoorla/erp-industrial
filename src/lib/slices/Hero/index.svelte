@@ -58,7 +58,7 @@ const handleMouseMove = (event: MouseEvent) => {
   // Dispatch mouseover event for newly hovered elements
   currentHoveredElements.forEach((element) => {
 	if (!hoveredElements.has(element)) {
-		if(element.tagName==="A"){
+		if(element.tagName==="A"&&!element.classList.contains('nav-link')){
 		element.classList.remove('bg-black');
 		element.classList.add('bg-erp-blue');
 		document.getElementsByTagName("body")[0].style.cursor = "pointer";
