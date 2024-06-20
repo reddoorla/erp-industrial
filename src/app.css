@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body{
     font-family: "neue-haas-grotesk-display", sans-serif;
     font-feature-settings: 'clig' off, 'liga' off;
@@ -48,6 +49,7 @@ h5{
 }
 
 p{
+    font-family: 'sequel-sans', sans-serif;
     font-size: 18px;
 font-style: normal;
 font-weight: 400;
@@ -96,6 +98,3 @@ main, div{
     -ms-overflow-style: none;
 }
 
-.hovered-button{
-    
-}
