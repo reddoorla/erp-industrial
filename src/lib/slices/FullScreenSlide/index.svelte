@@ -68,10 +68,10 @@
 					{/key}
 				</div>
 		{:else if slice.variation==="halfPage"||slice.variation==="halfPageWithButtonOverlays"}
-		<div class="bg-black absolute w-screen h-screen flex flex-col overflow-y-auto md:overflow-hidden py-32 md:pb-0{slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
+		<div class="bg-black absolute w-screen h-screen flex flex-col{slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
-			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%] ">
+			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%] overflow-y-auto md:overflow-hidden py-32 md:pb-0">
 				{#if activeOverlay===-1}
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
 				<h2 in:fade={{delay:600}} out:fade class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
