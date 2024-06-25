@@ -107,7 +107,7 @@ const handleMouseMove = (event: MouseEvent) => {
 
 
 	<ContentWidth class="h-full relative justify-end z-30">
-		<div class="md:w-11/12 max-w-screen-lg relative h-full flex flex-col justify-end pb-10 md:pb-32">
+		<div class="md:w-11/12 max-w-screen-lg relative h-full flex flex-col md:justify-end overflow-y-auto md:overflow-hidden pb-32 md:pb-0">
 		{#if isMounted}
 		<div transition:fade>
 		<ContentBox 

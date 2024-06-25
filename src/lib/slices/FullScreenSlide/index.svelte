@@ -57,9 +57,9 @@
 
 
 <section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden" in:fade={{delay:400}} out:fade>
-	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image }>
+	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image } >
 		{#if slice.variation==="embed"}
-				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center">
+				<ContentWidth class="text-center h-32 md:h-56 flex flex-col justify-center items-center overflow-y-auto md:overflow-hidden pb-32 md:pb-0">
 					<h3 class="font-bold">{slice.primary.title}</h3>
 				</ContentWidth>
 				<div class="h-[80vh] md:-translate-y-16">
@@ -68,7 +68,7 @@
 					{/key}
 				</div>
 		{:else if slice.variation==="halfPage"||slice.variation==="halfPageWithButtonOverlays"}
-		<div class="bg-black absolute w-screen h-screen flex flex-col overflow-y-auto md:overflow-hidden {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
+		<div class="bg-black absolute w-screen h-screen flex flex-col overflow-y-auto md:overflow-hidden pb-32 md:pb-0{slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
 			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%] ">
@@ -110,7 +110,7 @@
      		class:backdrop-blur={slice.primary.isBackgroundBlurred&&isActiveSection}
     	 transition:fade={{duration:1000}}>
 		</div>
-		<ContentWidth class="h-full relative justify-end z-30 pb-10 md:pb-32">
+		<ContentWidth class="h-full relative justify-end z-30 overflow-y-auto md:overflow-hidden pb-32">
 			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-3/4":""} relative h-full flex flex-col justify-end mb-8 md:mb-16">
 			<div transition:fade>
 			{#if activeOverlay===-1}
@@ -176,7 +176,7 @@
 
 			{#if slice.variation==="teams"}
 
-			<div class="w-full h-screen pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-y-hidden">
+			<div class="w-full h-screen pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-hidden pb-32 md:pb-0">
 				<div class="absolute top-32 md:top-64 right-0 md:left-0 md:right-auto text-white large-paragraph">
 					Management Team
 				</div>
@@ -201,7 +201,7 @@
 			{#if slice.variation==="default"}
 			{#key activeOverlay}
 			<div class="h-full w-full" out:fade in:fade={{delay:300}}>
-					<ContentWidth class="h-full relative flex flex-col justify-end z-40 pb-12 md:pb-32">
+					<ContentWidth class="h-full relative flex flex-col justify-end z-40 overflow-y-auto md:overflow-hidden pb-32 md:pb-0">
 					<ContentBox 
 						titleText={slice.items[activeOverlay].title||""}
 						titleTag="h2"
@@ -226,7 +226,7 @@
 				{/key}
 			{/if}
 			{#if slice.variation==="withVideoPopup"&&videoId}
-				<ContentWidth class="h-full flex justify-center items-center">
+				<ContentWidth class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden pb-32 md:pb-0">
 					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"/>
 					<iframe 
 	  					title="background video" 
