@@ -708,5 +708,120 @@
 				"value": []
 			}
 		]
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "halfPageWithButtonOverlays",
+		"primary": {
+			"background_image": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1587840171670-8b850147754e",
+					"width": 4480,
+					"height": 4480
+				},
+				"url": "https://images.unsplash.com/photo-1587840171670-8b850147754e",
+				"width": 4480,
+				"height": 4480,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {}
+			},
+			"eyebrow": {
+				"__TYPE__": "FieldContent",
+				"value": "acres",
+				"type": "Text"
+			},
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "breathe",
+				"type": "Text"
+			},
+			"body_text": {
+				"__TYPE__": "FieldContent",
+				"value": "constantly",
+				"type": "Text"
+			},
+			"doesStack": {
+				"__TYPE__": "BooleanContent",
+				"value": false
+			},
+			"isBackgroundBlurred": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			},
+			"isImageLeft": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			},
+			"isnavlight": {
+				"__TYPE__": "BooleanContent",
+				"value": true
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"button_text",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "then",
+							"type": "Text"
+						}
+					],
+					[
+						"button_link",
+						{
+							"__TYPE__": "LinkContent",
+							"value": {
+								"__TYPE__": "ExternalLink",
+								"url": "https://prismic.io"
+							}
+						}
+					],
+					[
+						"overlay_title",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "probably",
+							"type": "Text"
+						}
+					],
+					[
+						"overlay_subtitle",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "peace",
+							"type": "Text"
+						}
+					],
+					[
+						"overlay_body",
+						{
+							"__TYPE__": "StructuredTextContent",
+							"value": [
+								{
+									"type": "paragraph",
+									"content": {
+										"text": "Reprehenderit occaecat sit voluptate ad nostrud in Lorem consectetur voluptate tempor fugiat eiusmod ullamco magna."
+									}
+								}
+							]
+						}
+					]
+				]
+			}
+		]
 	}
 ]

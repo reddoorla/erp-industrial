@@ -60,7 +60,7 @@ export type NavDocument<Lang extends string = string> = prismic.PrismicDocumentW
 	Lang
 >;
 
-type PageDocumentDataSlicesSlice = ContactSlice | HeroSlice | FullScreenSlideSlice | RichTextSlice;
+type PageDocumentDataSlicesSlice = HeroSlice | FullScreenSlideSlice | RichTextSlice;
 
 /**
  * Content for Page documents
@@ -136,118 +136,6 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 >;
 
 export type AllDocumentTypes = NavDocument | PageDocument;
-
-/**
- * Primary content in *Contact → Primary*
- */
-export interface ContactSliceDefaultPrimary {
-	/**
-	 * eyebrow field in *Contact → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: contact.primary.eyebrow
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
-	eyebrow: prismic.KeyTextField;
-
-	/**
-	 * header field in *Contact → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: contact.primary.header
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
-	header: prismic.KeyTextField;
-
-	/**
-	 * body field in *Contact → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: contact.primary.body
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
-	body: prismic.KeyTextField;
-
-	/**
-	 * address field in *Contact → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: contact.primary.address
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
-	address: prismic.KeyTextField;
-
-	/**
-	 * phone number field in *Contact → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: contact.primary.phone_number
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
-	phone_number: prismic.KeyTextField;
-
-	/**
-	 * email field in *Contact → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: contact.primary.email
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
-	email: prismic.KeyTextField;
-
-	/**
-	 * thank you eyebrow field in *Contact → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: contact.primary.thank_you_eyebrow
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
-	thank_you_eyebrow: prismic.KeyTextField;
-
-	/**
-	 * thank you message field in *Contact → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: contact.primary.thank_you_message
-	 * - **Documentation**: https://prismic.io/docs/field#key-text
-	 */
-	thank_you_message: prismic.KeyTextField;
-}
-
-/**
- * Default variation for Contact Slice
- *
- * - **API ID**: `default`
- * - **Description**: Default
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type ContactSliceDefault = prismic.SharedSliceVariation<
-	'default',
-	Simplify<ContactSliceDefaultPrimary>,
-	never
->;
-
-/**
- * Slice variation for *Contact*
- */
-type ContactSliceVariation = ContactSliceDefault;
-
-/**
- * Contact Shared Slice
- *
- * - **API ID**: `contact`
- * - **Description**: Contact
- * - **Documentation**: https://prismic.io/docs/slice
- */
-export type ContactSlice = prismic.SharedSlice<'contact', ContactSliceVariation>;
 
 /**
  * Primary content in *FullScreenSlide → Primary*
@@ -1208,6 +1096,163 @@ export type FullScreenSlideSliceBigText = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *FullScreenSlide → Primary*
+ */
+export interface FullScreenSlideSliceHalfPageWithButtonOverlaysPrimary {
+	/**
+	 * background image field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.background_image
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	background_image: prismic.ImageField<never>;
+
+	/**
+	 * eyebrow field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.eyebrow
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	eyebrow: prismic.KeyTextField;
+
+	/**
+	 * title field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * body text field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.primary.body_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	body_text: prismic.KeyTextField;
+
+	/**
+	 * stacks? field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.doesStack
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	doesStack: prismic.BooleanField;
+
+	/**
+	 * isBackgroundBlurred field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isBackgroundBlurred
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isBackgroundBlurred: prismic.BooleanField;
+
+	/**
+	 * isImageLeft field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isImageLeft
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isImageLeft: prismic.BooleanField;
+
+	/**
+	 * isNavLight field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isnavlight
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isnavlight: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *FullScreenSlide → Items*
+ */
+export interface FullScreenSlideSliceHalfPageWithButtonOverlaysItem {
+	/**
+	 * button_text field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].button_text
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	button_text: prismic.KeyTextField;
+
+	/**
+	 * button_link field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].button_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	button_link: prismic.LinkField;
+
+	/**
+	 * overlay_title field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].overlay_title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	overlay_title: prismic.KeyTextField;
+
+	/**
+	 * overlay_subtitle field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].overlay_subtitle
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	overlay_subtitle: prismic.KeyTextField;
+
+	/**
+	 * overlay_body field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].overlay_body
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	overlay_body: prismic.RichTextField;
+}
+
+/**
+ * halfPageWithButtonOverlays variation for FullScreenSlide Slice
+ *
+ * - **API ID**: `halfPageWithButtonOverlays`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type FullScreenSlideSliceHalfPageWithButtonOverlays = prismic.SharedSliceVariation<
+	'halfPageWithButtonOverlays',
+	Simplify<FullScreenSlideSliceHalfPageWithButtonOverlaysPrimary>,
+	Simplify<FullScreenSlideSliceHalfPageWithButtonOverlaysItem>
+>;
+
+/**
  * Slice variation for *FullScreenSlide*
  */
 type FullScreenSlideSliceVariation =
@@ -1218,7 +1263,8 @@ type FullScreenSlideSliceVariation =
 	| FullScreenSlideSliceIconBoxes
 	| FullScreenSlideSliceTeams
 	| FullScreenSlideSliceHalfPage
-	| FullScreenSlideSliceBigText;
+	| FullScreenSlideSliceBigText
+	| FullScreenSlideSliceHalfPageWithButtonOverlays;
 
 /**
  * FullScreenSlide Shared Slice
@@ -1394,10 +1440,6 @@ declare module '@prismicio/client' {
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
 			AllDocumentTypes,
-			ContactSlice,
-			ContactSliceDefaultPrimary,
-			ContactSliceVariation,
-			ContactSliceDefault,
 			FullScreenSlideSlice,
 			FullScreenSlideSliceDefaultPrimary,
 			FullScreenSlideSliceDefaultItem,
@@ -1411,6 +1453,8 @@ declare module '@prismicio/client' {
 			FullScreenSlideSliceHalfPagePrimary,
 			FullScreenSlideSliceHalfPageItem,
 			FullScreenSlideSliceBigTextPrimary,
+			FullScreenSlideSliceHalfPageWithButtonOverlaysPrimary,
+			FullScreenSlideSliceHalfPageWithButtonOverlaysItem,
 			FullScreenSlideSliceVariation,
 			FullScreenSlideSliceDefault,
 			FullScreenSlideSliceEmbed,
@@ -1420,6 +1464,7 @@ declare module '@prismicio/client' {
 			FullScreenSlideSliceTeams,
 			FullScreenSlideSliceHalfPage,
 			FullScreenSlideSliceBigText,
+			FullScreenSlideSliceHalfPageWithButtonOverlays,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,
