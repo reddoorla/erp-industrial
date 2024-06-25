@@ -67,19 +67,37 @@
 						{@html slice.primary.external_embed}
 					{/key}
 				</div>
-		{:else if slice.variation==="halfPage"}
+		{:else if slice.variation==="halfPage"||slice.variation==="halfPageWithButtonOverlays"}
 		<div class="bg-black absolute w-screen h-screen flex flex-col overflow-y-auto md:overflow-hidden {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
 			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%] ">
+				{#if activeOverlay===-1}
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
-				<h2 transition:fade={{delay:200}} class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
-				<p transition:fly={{delay:400, y:20}} class="text-white">{slice.primary.body_text||""}</p>
-				<div transition:fly={{delay:500, y:20}} class="flex flex-col gap-8 my-16">
+				<h2 in:fade={{delay:600}} out:fade class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
+				<p in:fly={{delay:800, y:20}} out:fade class="text-white">{slice.primary.body_text||""}</p>
+				<div in:fly={{delay:900, y:20}} out:fade class="flex flex-col gap-8 my-16">
 					{#each slice.items as item, i (i) }
+						{#if isFilled.link(item.button_link)}
 							<DefaultButton text={item.button_text||""} href={(isFilled.link(item.button_link)?item.button_link.url:"")} filled={false}/>
+						{:else}
+							<DefaultButton text={item.button_text||""} on:click={()=>activeOverlay=i} filled={false}/>
+						{/if}
 					{/each}
 				</div>
+				{:else if slice.variation==="halfPageWithButtonOverlays"}
+					<h5 in:fade={{delay:401}} out:fade class="text-white mb-16">{slice.items[activeOverlay].overlay_subtitle||""}</h5>
+					<h2 in:fade={{delay:401}} out:fade class="text-white whitespace-pre-line my-8">{slice.items[activeOverlay].overlay_title||""}</h2>
+					<p in:fly={{delay:600, y:20}} out:fade class="text-white"><PrismicRichText field={slice.items[activeOverlay].overlay_body} /></p>
+					<div in:fly={{delay:800, y:20}} out:fade class="mt-8">
+						<DefaultButton text={"Go Back"} on:click={()=>activeOverlay=-1} filled={false}/>
+					</div>
+					
+					<button transition:fade  class="absolute top-8 right-16 bump hover:opacity-80 transition-opacity" on:click={()=>activeOverlay=-1}>
+						<i class="fa-solid fa-close fa-xl text-white" />
+					</button>
+					
+				{/if}
 			</div>
 			{/if}
 			
