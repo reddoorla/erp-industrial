@@ -134,7 +134,11 @@
 			<div class="flex flex-col md:flex-row gap-4" transition:fly={{y:20, delay:300}}>
 				{#if slice.variation==="default"}
 					{#each slice.items as item, i}
+					{#if isFilled.link(item.button_link)}
+						<DefaultButton text={item.button_text||''} href={item.button_link.url}/>
+					{:else}
 						<DefaultButton text={item.button_text||''} on:click={()=>activeOverlay=i}/>
+					{/if}
 					{/each}
 				{/if}
 				{#if slice.variation==="withVideoPopup"&&activeOverlay===-1}

@@ -258,6 +258,16 @@ export interface FullScreenSlideSliceDefaultItem {
 	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
 	 */
 	body_text: prismic.RichTextField;
+
+	/**
+	 * button_link field in *FullScreenSlide → Items*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: full_screen_slide.items[].button_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	button_link: prismic.LinkField;
 }
 
 /**
