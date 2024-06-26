@@ -243,7 +243,7 @@
 			{#if slice.variation==="teams"}
 				{#key activeOverlay}
 					<div class="h-full w-full" out:fade in:fade={{delay:300}}>
-						<ContentWidth class="h-screen relative flex flex-col md:flex-row justify-start pt-32 overflow-y-auto md:overflow-hidden md:justify-between z-40 pb-12 md:py-32">
+						<ContentWidth class="h-screen relative flex flex-col md:flex-row justify-start py-32 overflow-y-auto md:overflow-hidden md:justify-between z-40 pb-12 md:py-32">
 							<div class="w-full md:w-1/4 flex flex-col justify-between  md:pt-24">
 								<div class="flex w-full flex-col justify-between gap-8 md:pb-12">
 									<PrismicImage field={slice.items[activeOverlay].headshot} class=" w-36 h-36 md:h-72  md:w-72 rounded-full max-w-none"/>
@@ -258,7 +258,7 @@
 							<div class="md:w-1/2 text-white flex flex-col justify-end items-end py-32">
 								<PrismicRichText field={slice.items[activeOverlay].body_text} />
 							</div>
-							<div class="md:hidden pb-32">
+							<div class="md:hidden pb-64">
 								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12"/>
 							</div>
 						</ContentWidth>
