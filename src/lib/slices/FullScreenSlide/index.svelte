@@ -68,10 +68,10 @@
 					{/key}
 				</div>
 		{:else if slice.variation==="halfPage"||slice.variation==="halfPageWithButtonOverlays"}
-		<div class="bg-black absolute w-screen h-screen flex flex-col{slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
+		<div class="bg-black absolute w-screen h-screen flex flex-col {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
-			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[12%] overflow-y-auto md:overflow-hidden py-32 md:pb-0">
+			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[4%] md:p-[12%] overflow-y-auto md:overflow-hidden py-32 md:pb-0">
 				{#if activeOverlay===-1}
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
 				<h2 in:fade={{delay:600}} out:fade class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
@@ -243,18 +243,23 @@
 			{#if slice.variation==="teams"}
 				{#key activeOverlay}
 					<div class="h-full w-full" out:fade in:fade={{delay:300}}>
-						<ContentWidth class="h-full relative flex flex-col-reverse md:flex-row justify-start pt-32 overflow-y-audo md:overflow-hidden md:justify-between z-40 pb-12 md:py-32">
-							<div class="w-full md:w-1/4 flex flex-col justify-between  pt-24">
-								<div class="flex w-full flex-col justify-between gap-8 pb-12">
+						<ContentWidth class="h-screen relative flex flex-col md:flex-row justify-start pt-32 overflow-y-auto md:overflow-hidden md:justify-between z-40 pb-12 md:py-32">
+							<div class="w-full md:w-1/4 flex flex-col justify-between  md:pt-24">
+								<div class="flex w-full flex-col justify-between gap-8 md:pb-12">
 									<PrismicImage field={slice.items[activeOverlay].headshot} class=" w-36 h-36 md:h-72  md:w-72 rounded-full max-w-none"/>
 									<h5 class="text-white whitespace-pre-line">{slice.items[activeOverlay].title}</h5>
 									<div class="large-paragraph text-white whitespace-nowrap">{slice.items[activeOverlay].name}</div>
 								</div>
-								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12"/>
+								<div class="hidden md:block">
+									<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12 "/>
+								</div>
 							</div>
 							
-							<div class="md:w-1/2 text-white flex flex-col justify-end items-end overflow-y-auto md:overflow-hidden py-32">
+							<div class="md:w-1/2 text-white flex flex-col justify-end items-end py-32">
 								<PrismicRichText field={slice.items[activeOverlay].body_text} />
+							</div>
+							<div class="md:hidden">
+								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12"/>
 							</div>
 						</ContentWidth>
 					</div>
