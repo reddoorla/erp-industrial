@@ -59,7 +59,7 @@
 <section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="snap-end sticky {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden" in:fade={{delay:400}} out:fade>
 	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image } >
 		{#if slice.variation==="embed"}
-				<ContentWidth class="text-center h-12 md:h-56 flex flex-col justify-center items-center overflow-hidden py-20 md:pb-0">
+				<ContentWidth class="text-center h-12 md:h-56 flex flex-col justify-center items-center overflow-hidden py-10 md:pb-0">
 					<h3 class="font-bold">{slice.primary.title}</h3>
 				</ContentWidth>
 				<div class="overflow-y-auto overflow-x-hidden md:-translate-y-12 mb-32">
