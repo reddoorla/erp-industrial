@@ -258,7 +258,7 @@
 							<div class="md:w-1/2 text-white flex flex-col justify-end items-end py-32">
 								<PrismicRichText field={slice.items[activeOverlay].body_text} />
 							</div>
-							<div class="md:hidden">
+							<div class="md:hidden pb-32">
 								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12"/>
 							</div>
 						</ContentWidth>
