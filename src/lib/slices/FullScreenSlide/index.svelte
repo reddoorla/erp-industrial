@@ -143,7 +143,7 @@
 				{/if}
 				{#if slice.variation==="withVideoPopup"&&activeOverlay===-1}
 							{#if viewportWidth<1024}
-								<DefaultButton text="Watch" href={"https://vimeo.com/"+videoId}/>
+								<DefaultButton text="Watch" href={"https://vimeo.com/"+slice.primary.video_embed.embed_url.split('/').pop()}/>
 							{:else}
 								<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
 							{/if}
