@@ -110,7 +110,7 @@
      		class:backdrop-blur={slice.primary.isBackgroundBlurred&&isActiveSection}
     	 transition:fade={{duration:1000}}>
 		</div>
-		<ContentWidth class="h-full relative justify-end z-30 overflow-y-auto md:overflow-hidden py-32">
+		<ContentWidth class="h-full relative justify-end z-30 overflow-hidden py-32">
 			<div class="{slice.variation!=="iconBoxes"&&slice.variation!=="teams"?"lg:w-3/4":""} relative h-full flex flex-col justify-end mb-8 md:mb-16">
 			<div transition:fade>
 			{#if activeOverlay===-1}
@@ -177,7 +177,7 @@
 			{#if slice.variation==="teams"}
 
 			<div class="w-full h-screen pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-hidden py-32 md:pb-0">
-				<div class="absolute top-32 md:top-64 right-0 md:left-0 md:right-auto text-white large-paragraph">
+				<div class="absolute hidden md:block top-32 md:top-64 right-0 md:left-0 md:right-auto text-white large-paragraph">
 					Management Team
 				</div>
 				{#each slice.items as item, i (i)}
