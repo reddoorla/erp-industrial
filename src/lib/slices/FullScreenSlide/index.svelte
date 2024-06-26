@@ -142,7 +142,11 @@
 					{/each}
 				{/if}
 				{#if slice.variation==="withVideoPopup"&&activeOverlay===-1}
-					<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
+							{#if viewportWidth<1024}
+								<DefaultButton text="Watch" href={"https://vimeo.com/"+videoId}/>
+							{:else}
+								<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
+							{/if}
 				{/if}
 				{#if slice.variation==="iconBoxes"}
 				<div class="w-full flex flex-col md:flex-row gap-8 h-80">
