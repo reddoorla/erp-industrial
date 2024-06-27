@@ -168,7 +168,7 @@
 				</div>
 				{/if}
 				{#if slice.variation==="basic"||slice.variation==="bigText"}
-					<div class="flex flex-row gap-8">
+					<div class="flex flex-col md:flex-row gap-8">
 						{#if slice.primary.button_text_1}
 							<DefaultButton text={slice.primary.button_text_1||""} href={(isFilled.link(slice.primary.button_link_1)?slice.primary.button_link_1.url:"")}/>
 						{/if}
@@ -181,7 +181,7 @@
 			{#if slice.variation==="teams"}
 
 			<div class="w-full h-screen pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-hidden py-32 md:pb-0">
-				<div class="absolute hidden md:block top-32 md:top-64 right-0 md:left-0 md:right-auto text-white large-paragraph">
+				<div class="text-white large-paragraph">
 					Management Team
 				</div>
 				{#each slice.items as item, i (i)}
