@@ -77,7 +77,7 @@
       {/each}
     </div>
     <div class=" h-6 w-full flex justify-between z-10 absolute bottom-0 lg:bottom-[20%] xl:bottom-[30%] left-0">
-      <button on:click={slideLeft} class="text-white flex align-middle justify-center cursor-pointer transition-all duration-300 active:-translate-y-2  hover:text-black">
+      <button on:click={slideRight} class="text-white flex align-middle justify-center cursor-pointer transition-all duration-300 active:-translate-y-2  hover:text-black">
         <i class="fa-sharp fa-solid fa-chevron-left fa-2x"/>
       </button>
       <div class="h-10 flex align-middle justify-start ">
@@ -90,7 +90,7 @@
             ></button>
         {/each}
     </div>
-      <button on:click={slideRight} class="text-white flex align-middle cursor-pointer transition-all duration-300 active:-translate-y-2 justify-center -translate-y-[5.5px] hover:text-black">
+      <button on:click={slideLeft} class="text-white flex align-middle cursor-pointer transition-all duration-300 active:-translate-y-2 justify-center -translate-y-[5.5px] hover:text-black">
         <i class="fa-sharp fa-solid fa-chevron-right fa-2x"/>
       </button>
     </div>
