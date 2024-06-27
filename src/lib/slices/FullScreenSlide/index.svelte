@@ -142,11 +142,12 @@
 					{/each}
 				{/if}
 				{#if slice.variation==="withVideoPopup"&&activeOverlay===-1}
-							{#if viewportWidth<1024}
+							<!-- {#if viewportWidth<1024}
 								<DefaultButton text="Watch" href={"https://vimeo.com/"+slice.primary.video_embed.embed_url.split('/').pop()}/>
 							{:else}
 								<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
-							{/if}
+							{/if} -->
+							<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
 				{/if}
 				{#if slice.variation==="iconBoxes"}
 				<div class="w-full flex flex-col md:flex-row gap-8 h-80">
@@ -232,6 +233,7 @@
 			{#if slice.variation==="withVideoPopup"&&videoId}
 				<ContentWidth class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-0">
 					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"/>
+					{#if viewportWidth<1024}
 					<iframe 
 	  					title="background video" 
 	 					src={`https://player.vimeo.com/video/${videoId}?background=1&muted=0&autoplay=1`}
@@ -240,6 +242,15 @@
 						allow="autoplay"
 						
 					></iframe>
+					{:else}
+					<iframe 
+	  					title="background video" 
+	 					src={`https://player.vimeo.com/video/${videoId}`}
+	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
+	  					frameborder="0"
+						
+					></iframe>
+					{/if}
 					
 					<DefaultButton text="Close" class="absolute bottom-20 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=-1}/>
 				</ContentWidth>
