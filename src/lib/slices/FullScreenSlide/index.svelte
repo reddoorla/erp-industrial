@@ -233,7 +233,8 @@
 			{#if slice.variation==="withVideoPopup"&&videoId}
 				<ContentWidth class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-0">
 					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"/>
-					{#if viewportWidth<1024}
+					{#key viewportWidth}
+					{#if viewportWidth>1024}
 					<iframe 
 	  					title="background video" 
 	 					src={`https://player.vimeo.com/video/${videoId}?background=1&muted=0&autoplay=1`}
@@ -251,6 +252,7 @@
 						
 					></iframe>
 					{/if}
+					{/key}
 					
 					<DefaultButton text="Close" class="absolute bottom-20 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=-1}/>
 				</ContentWidth>
