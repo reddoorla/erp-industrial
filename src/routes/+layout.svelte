@@ -88,12 +88,12 @@ afterNavigate(() => {
 <div class="w-screen h-screen bg-black fixed" in:fade out:fade={{duration:2000}}></div>
 {/if}
 
-{#if showLandscapeModal}
-<div transition:fade class="w-screen h-screen fixed bg-black flex justify-center items-center top-0">
+<!-- {#if showLandscapeModal}
+<div transition:fade class="w-screen h-screen fixed bg-black flex justify-center items-center top-0 left-0">
 	<h3 class="text-white">
 		Please Switch to Portrait Mode
 	</h3>
 
 </div>
-{/if}
+{/if} -->
 <PrismicPreview {repositoryName} />
