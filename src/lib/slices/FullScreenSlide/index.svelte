@@ -118,7 +118,7 @@
 			{#if slice.variation!=="bigText"}
 			<ContentBox 
 				titleText={slice.primary.title||""}
-				titleTag={ viewportWidth > 768 ? "h2" : "h4"}
+				titleTag= "h2"
 				labelText={slice.primary.eyebrow||""}
 				paragraphText={slice.primary.body_text||""}
 				float="left"
