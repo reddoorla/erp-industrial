@@ -38,6 +38,9 @@ afterNavigate(() => {
     const isLandscape = window.innerWidth > window.innerHeight;
     const isNotPortrait = screen.orientation.type !== 'portrait-primary';
 	console.log(navigator.userAgent)
+	console.log(isMobile)
+	console.log(isNotPortrait)
+	console.log(isLandscape)
 
     if (isMobile && isLandscape && isNotPortrait) {
     	console.log("Please switch to portrait mode");
@@ -49,10 +52,10 @@ afterNavigate(() => {
 
   checkScreenOrientation();
 
-  window.addEventListener("orientationchange", checkScreenOrientation, false);
+  window.addEventListener("resize", checkScreenOrientation, false);
 
   return () => {
-    window.removeEventListener("orientationchange", checkScreenOrientation, false);
+    window.removeEventListener("resize", checkScreenOrientation, false);
   };
 });
 
