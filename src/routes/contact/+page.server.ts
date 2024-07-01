@@ -25,7 +25,12 @@ export const actions: Actions = {
     const email = formData.get('email')?.toString() || '';
     const interest = formData.get('interest')?.toString() || '';
     const message = formData.get('message')?.toString() || '';
+    const recaptchaToken = formData.get('g-recaptcha-response')?.toString() || '';
     let sendTo = ['ERP Site Submission <tucker@reddoorla.com>'];
+
+    if (!recaptchaToken) {
+      return fail(400, { error: 'no reCaptcha token' });
+    }
 
     switch(interest){
       case "Leasing":
@@ -43,6 +48,38 @@ export const actions: Actions = {
     
     
     if(!email || !interest || !message || interest==='Select Interest') return fail(400, { error: 'Missing required fields' });
+
+    try {
+      const recaptchaResponse = await fetch(
+        `https://recaptchaenterprise.googleapis.com/v1/projects/energy-related-properties/assessments?key=${import.meta.env.VITE_RECAPTCHA_SECRET_KEY}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            event: {
+              token: recaptchaToken,
+              siteKey: import.meta.env.VITE_RECAPTCHA_SITE_KEY,
+              expectedAction: 'SUBMIT'
+            }
+          })
+        }
+      );
+      console.log(import.meta.env.VITE_RECAPTCHA_SITE_KEY)
+ 
+
+      const recaptchaResult = await recaptchaResponse.json();
+      console.log(recaptchaResponse)
+      console.log(recaptchaResult)
+
+      if (!recaptchaResult.tokenProperties?.valid || recaptchaResult.riskAnalysis?.score < 0.5) {
+        return fail(400, { error: 'reCAPTCHA verification failed' });
+      }
+    } catch (error) {
+      console.error('reCAPTCHA verification error:', error);
+      return fail(500, { error: 'An error occurred during verification' });
+    }
 
     const msg = {
       to: sendTo,

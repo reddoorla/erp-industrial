@@ -34,22 +34,60 @@
     let isEmailFailed = false;
 
 
-	
 
+    async function executeReCaptcha(): Promise<string> {
+        //@ts-ignore
+  if (typeof window.grecaptcha !== 'undefined' && window.grecaptcha.enterprise) {
+    try {
+        //@ts-ignore
+      const token = await window.grecaptcha.enterprise.execute(import.meta.env.VITE_RECAPTCHA_SITE_KEY, { action: 'submit' });
+      console.log('reCAPTCHA token:', token);
+      return token;
+    } catch (error) {
+      console.error('reCAPTCHA execution failed:', error);
+      throw error;
+    }
+  } else {
+    console.error('reCAPTCHA is not loaded');
+    throw new Error('reCAPTCHA not loaded');
+  }
+}
 
-  const handleSubmit: SubmitFunction = () => {
-    isEmailSending = true;
+let reCaptchaToken = "";
 
-    return async ({ result  }) => {
-        console.log(result.type)
-      if (result.type === 'success') {
-        isEmailSent = true;
-      } else if (result.type === 'failure') {
-        isEmailFailed = true;
-      }
-      isEmailSending = false;
-    };
-  };
+async function handleSubmit(event: Event) {
+  event.preventDefault();
+  isEmailSending = true;
+  isEmailSent = false;
+  isEmailFailed = false;
+
+  try {
+    reCaptchaToken = await executeReCaptcha();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    formData.append('recaptcha-token', reCaptchaToken);
+    console.log(reCaptchaToken)
+
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      isEmailSent = true;
+    } else {
+      isEmailFailed = true;
+      console.error('Submission failed:', result);
+    }
+  } catch (error) {
+    console.error('Error during form submission:', error);
+    isEmailFailed = true;
+  } finally {
+    isEmailSending = false;
+  }
+}
 
   import { afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { isNavLight } from '$lib/stores/isNavLight';
@@ -132,7 +170,7 @@ button{
 
 <svelte:window bind:innerWidth={viewportWidth} />
 <svelte:head>
-	<script src="https://www.google.com/recaptcha/api.js"></script>
+	<script src="https://www.google.com/recaptcha/enterprise.js?render=6LcgrQUqAAAAAGSwikmSpKfzVBS8SjC4Gd1GAKP_"></script>
 </svelte:head>
 
 <Nav {navLinks} isLogoLarge={false} />
@@ -162,7 +200,7 @@ button{
         </div>
             
         {/if}
-		<form class="w-full flex flex-col gap-8" name="contact" id="contact" method="POST" action="/contact" use:enhance={handleSubmit}>
+		<form class="w-full flex flex-col gap-8" name="contact" id="contact" method="POST" on:submit|preventDefault={handleSubmit}>
 			<h5 class="text-white">SEND US A MESSAGE</h5>
 			<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">
 				<input type="email" name="email" placeholder="Your Email" class="md:w-[45%]" />
