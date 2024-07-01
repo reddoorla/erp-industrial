@@ -37,6 +37,7 @@ afterNavigate(() => {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const isLandscape = window.innerWidth > window.innerHeight;
     const isNotPortrait = screen.orientation.type !== 'portrait-primary';
+	console.log(navigator.userAgent)
 
     if (isMobile && isLandscape && isNotPortrait) {
     	console.log("Please switch to portrait mode");
