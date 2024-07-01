@@ -70,8 +70,8 @@ text-transform: uppercase;
         </div>
         {:else}
             <div class="w-full h-full flex flex-col gap-8 justify-end relativve">
-                <a href="/" class="h-24 hover:opacity-80 transition-all duration-500 bump brightness-0 invert block translate-y-2 absolute top-4">
-                    <img src={logoFull} alt="logo" class="h-24" />
+                <a href="/" class="h-12 hover:opacity-80 transition-all duration-500 bump brightness-0 invert block translate-y-2 absolute top-4">
+                    <img src={logoFull} alt="logo" class="h-12" />
                 </a>
                 <a href="/about" class="footer-link">ABOUT</a>
                 <a href="/portfolio" class="footer-link">INDUSTRIAL PORTFOLIO</a>
