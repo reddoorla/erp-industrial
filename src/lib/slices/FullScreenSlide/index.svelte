@@ -67,7 +67,7 @@
 						{@html slice.primary.external_embed}
 					{/key}
 				</div>
-		{:else if slice.variation==="halfPage"||slice.variation==="halfPageWithButtonOverlays"}
+		{:else if slice.variation==="halfPage"||slice.variation==="halfPageWithButtonOverlays" || (slice.variation==="basic"&&viewportWidth<768)}
 		<div class="bg-black absolute w-screen h-screen flex flex-col {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
@@ -168,7 +168,7 @@
 
 				</div>
 				{/if}
-				{#if slice.variation==="basic"||slice.variation==="bigText"}
+				{#if (slice.variation==="basic"&&viewportWidth>=768)||slice.variation==="bigText"}
 					<div class="flex flex-col md:flex-row gap-8">
 						{#if slice.primary.button_text_1}
 							<DefaultButton text={slice.primary.button_text_1||""} href={(isFilled.link(slice.primary.button_link_1)?slice.primary.button_link_1.url:"")}/>
@@ -182,7 +182,7 @@
 			{#if slice.variation==="teams"}
 
 			<div class="w-full h-screen pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-hidden py-32 md:pb-0">
-				<div class="text-white large-paragraph">
+				<div class="text-white large-paragraph md:absolute md:top-8 md:right-8">
 					Management Team
 				</div>
 				{#each slice.items as item, i (i)}

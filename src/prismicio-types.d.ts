@@ -570,6 +570,17 @@ export interface FullScreenSlideSliceBasicPrimary {
 	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
 	 */
 	button_link_2: prismic.LinkField;
+
+	/**
+	 * isImageLeft field in *FullScreenSlide → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: full_screen_slide.primary.isimageleft
+	 * - **Documentation**: https://prismic.io/docs/field#boolean
+	 */
+	isimageleft: prismic.BooleanField;
 }
 
 /**

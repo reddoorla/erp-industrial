@@ -329,6 +329,15 @@
             "placeholder": "",
             "select": null
           }
+        },
+        "isimageleft": {
+          "type": "Boolean",
+          "config": {
+            "label": "isImageLeft",
+            "default_value": false,
+            "placeholder_true": "true",
+            "placeholder_false": "false"
+          }
         }
       },
       "items": {}
