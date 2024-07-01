@@ -75,9 +75,7 @@ afterNavigate(() => {
 		<meta name="twitter:card" content="summary_large_image" />
 	{/if}
 </svelte:head>
-<div class="w-screen h-screen z-10">
 
-</div>
 
 <main bind:this={main} class="{isSnappy ? "snap-y snap-mandatory" : ""} h-screen overflow-scroll m-0 scroll-smooth overscroll-none">
 
@@ -88,12 +86,12 @@ afterNavigate(() => {
 <div class="w-screen h-screen bg-black fixed" in:fade out:fade={{duration:2000}}></div>
 {/if}
 
-<!-- {#if showLandscapeModal}
+{#if showLandscapeModal}
 <div transition:fade class="w-screen h-screen fixed bg-black flex justify-center items-center top-0 left-0">
 	<h3 class="text-white">
 		Please Switch to Portrait Mode
 	</h3>
 
 </div>
-{/if} -->
+{/if}
 <PrismicPreview {repositoryName} />
