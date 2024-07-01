@@ -31,7 +31,18 @@ afterNavigate(() => {
 
 	let isTransitioning = false;
 
-	
+	onMount(()=>{
+		const checkScreenOrientation = () => {
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && (window.innerWidth > window.innerHeight) == true && screen.orientation.type !== 'portrait-primary') 
+				window.alert("please switch to portrait mode");
+
+		}
+		checkScreenOrientation();
+
+		window.addEventListener("orientationchange", function() {
+			checkScreenOrientation()	
+		}, false);
+	})
 
 
 </script>
