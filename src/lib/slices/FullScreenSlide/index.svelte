@@ -68,7 +68,10 @@
 					{/key}
 				</div>
 		{:else if slice.variation==="halfPage"||slice.variation==="halfPageWithButtonOverlays" || (slice.variation==="basic"&&viewportWidth<768)}
-		<div class="bg-black absolute w-screen h-screen flex flex-col {slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"}">
+		<div class="bg-black absolute w-screen h-screen flex flex-col {
+			//@ts-ignore
+			slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"
+		}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
 			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[4%] md:p-[12%] overflow-y-auto md:overflow-hidden py-32 md:pb-0">
