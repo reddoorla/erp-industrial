@@ -89,6 +89,7 @@ const handleMouseMove = (event: MouseEvent) => {
 {#key slice}
   
   <div class="w-screen h-screen overflow-hidden snap-end fixed top-0" in:fade={{delay:400}} out:fade>
+	
 
 	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
 	{#if videoId&&isFilled.embed(slice.primary.video_embed)&&viewportWidth>768}
@@ -126,7 +127,7 @@ const handleMouseMove = (event: MouseEvent) => {
 	</ContentWidth>
   </div>
   <div class="w-screen h-screen sticky snap-end overflow-hidden" on:click={handleClick} on:mousemove={handleMouseMove} aria-hidden >
-
+	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-8 right-8" />
   </div>
 
   {/key}
