@@ -108,7 +108,7 @@ const handleMouseMove = (event: MouseEvent) => {
 
 
 	<ContentWidth class="h-full relative justify-end z-30">
-		<div class="md:w-11/12 max-w-screen-lg relative h-full flex flex-col justify-end overflow-hidden py-16 lg:py-32">
+		<div class="md:w-11/12 max-w-screen-lg relative h-full flex flex-col justify-end overflow-hidden py-32 sm:py-16 lg:py-32">
 		{#if isMounted}
 		<div transition:fade>
 		<ContentBox 
@@ -127,7 +127,7 @@ const handleMouseMove = (event: MouseEvent) => {
 	</ContentWidth>
   </div>
   <div class="w-screen h-screen sticky snap-end overflow-hidden" on:click={handleClick} on:mousemove={handleMouseMove} aria-hidden >
-	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-20 md:bottom-8 right-8" />
+	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-32 md:bottom-8 right-8" />
   </div>
 
   {/key}
