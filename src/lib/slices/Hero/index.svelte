@@ -127,7 +127,7 @@ const handleMouseMove = (event: MouseEvent) => {
 	</ContentWidth>
   </div>
   <div class="w-screen h-screen sticky snap-end overflow-hidden" on:click={handleClick} on:mousemove={handleMouseMove} aria-hidden >
-	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-8 right-8" />
+	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-20 md:bottom-8 right-8" />
   </div>
 
   {/key}
