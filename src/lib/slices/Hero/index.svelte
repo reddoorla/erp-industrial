@@ -107,7 +107,7 @@ const handleMouseMove = (event: MouseEvent) => {
 
 
 	<ContentWidth class="h-full relative justify-end z-30">
-		<div class="md:w-11/12 max-w-screen-lg relative h-full flex flex-col justify-end overflow-hidden py-32">
+		<div class="md:w-11/12 max-w-screen-lg relative h-full flex flex-col justify-end overflow-hidden py-12 lg:py-32">
 		{#if isMounted}
 		<div transition:fade>
 		<ContentBox 
