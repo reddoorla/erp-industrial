@@ -7,7 +7,7 @@
 <style>
     button, a{
 
-        font-size: 8px;
+        font-size: 10px;
 
 letter-spacing: 2px;
 text-transform: uppercase;
