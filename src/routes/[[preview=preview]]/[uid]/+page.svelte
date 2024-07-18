@@ -44,7 +44,7 @@
 </script>
 
 <svelte:head> 
-    <title>ERP Industrial</title>
+    <title>ERP Industrials</title>
 </svelte:head>
 
 <Nav {navLinks} bind:isLogoLarge={isLogoLarge}/>
