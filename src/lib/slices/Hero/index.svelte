@@ -103,14 +103,6 @@ const handleMouseMove = (event: MouseEvent) => {
 	></iframe>
 	{:else}
 	<div transition:fade class="w-full h-full absolute top-0 left-0" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 14.68%, rgba(0, 0, 0, 0.50) 69.9%)"></div>
-	<iframe 
-	title="background video" 
-	src={`https://player.vimeo.com/video/${videoId}?background=1&muted=1&autoplay=1&loop=1&autopause=0`}
-	class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9 ? 'h-screen min-w-full' : 'w-screen min-h-full'}"
-	frameborder="0"
-	allowfullscreen
-	
-  ></iframe>
 	{/if}
 
 
