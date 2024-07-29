@@ -257,7 +257,7 @@
 					{/if}
 				
 					
-					<DefaultButton text="Close" class="absolute bottom-20 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=-1}/>
+					<DefaultButton text="Close" class="absolute bottom-4 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=-1}/>
 				</ContentWidth>
 			{/if}
 			{#if slice.variation==="teams"}
