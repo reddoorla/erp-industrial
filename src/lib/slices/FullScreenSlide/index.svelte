@@ -161,7 +161,8 @@
 							icon={item.icon.url||""}
 							labelText={item.eyebrow||""}
 							paragraphText={item.body_text||""}
-							class="text-white h-full justify-between"
+							class="text-white h-full justify-between text-left"
+							float="left"
 						/>
 					
 					{/each}
