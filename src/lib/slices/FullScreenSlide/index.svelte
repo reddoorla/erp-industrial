@@ -186,7 +186,7 @@
 			{#if slice.variation==="teams"}
 
 			<div class="w-full h-screen pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-hidden py-32 md:pb-0">
-				<div class="text-white large-paragraph md:absolute md:top-8 md:right-8">
+				<div class="text-white large-paragraph md:absolute md:top-8">
 					Management Team
 				</div>
 				{#each slice.items as item, i (i)}
