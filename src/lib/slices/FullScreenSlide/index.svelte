@@ -74,7 +74,7 @@
 		}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
 			{#if isActiveSection}
-			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[4%] md:p-[12%] overflow-y-auto md:overflow-hidden py-32 md:pb-0">
+			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[4%] md:p-[6%] overflow-y-scroll md:overflow-hidden py-32 mt-32 md:pb-0">
 				{#if activeOverlay===-1}
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
 				<h2 in:fade={{delay:600}} out:fade class="text-white whitespace-pre-line my-8">{slice.primary.title||""}</h2>
@@ -276,7 +276,7 @@
 								</div>
 							</div>
 							
-							<div class="md:w-1/2 text-white flex flex-col justify-end items-end py-32">
+							<div class="md:w-1/2 text-white flex flex-col overflow-y-scroll items-end">
 								<PrismicRichText field={slice.items[activeOverlay].body_text} />
 							</div>
 							<div class="md:hidden pb-64">
