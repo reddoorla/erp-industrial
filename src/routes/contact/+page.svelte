@@ -239,7 +239,10 @@ button{
     </div>
 
 	</ContentWidth>
+  <div class="h-[20vh]"></div>
 </section>
+
 {#if viewportWidth>768}
+
 <Footer />
 {/if}
