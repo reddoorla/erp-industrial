@@ -92,7 +92,7 @@ const handleMouseMove = (event: MouseEvent) => {
 	
 
 	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
-	{#if videoId&&isFilled.embed(slice.primary.video_embed)&&viewportWidth>768}
+	{#if videoId&&isFilled.embed(slice.primary.video_embed)}
 	<iframe 
 	  title="background video" 
 	  src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0`}
