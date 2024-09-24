@@ -7,7 +7,7 @@ export async function load({ params, fetch, cookies }) {
 
 	const page = await client.getByUID('page', params.uid);
 	const nav = await client.getSingle('nav');
-
+	if(page){
 	return {
 		page,
 		nav,
@@ -16,6 +16,19 @@ export async function load({ params, fetch, cookies }) {
 		meta_title: page.data.meta_title,
 		meta_image: page.data.meta_image.url
 	};
+	}
+	else{
+		const homepage = await client.getByUID('page', 'home');
+
+		return {
+			homepage,
+			nav,
+			title: asText(homepage.data.title),
+			meta_description: homepage.data.meta_description,
+			meta_title: homepage.data.meta_title,
+			meta_image: homepage.data.meta_image.url
+		};
+	}
 }
 
 export async function entries() {
