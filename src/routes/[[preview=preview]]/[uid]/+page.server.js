@@ -21,7 +21,7 @@ export async function load({ params, fetch, cookies }) {
 		const homepage = await client.getByUID('page', 'home');
 
 		return {
-			homepage,
+			page: homepage,
 			nav,
 			title: asText(homepage.data.title),
 			meta_description: homepage.data.meta_description,
