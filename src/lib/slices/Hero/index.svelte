@@ -16,6 +16,8 @@
 
 	let videoId="";
 
+	let activeOverlay = false;
+
 	if(slice.primary.video_embed.embed_url)
 		videoId = slice.primary.video_embed?.embed_url.split('/').pop()||"";
 
@@ -47,7 +49,7 @@ const handleMouseMove = (event: MouseEvent) => {
   // Dispatch mouseout event for elements no longer hovered
   hoveredElements.forEach((element) => {
 	if (!currentHoveredElements.has(element)) {
-		if(element.tagName==="A"&&!element.classList.contains('nav-link')){
+		if(element.tagName==="A"||element.tagName==="BUTTON"&&!element.classList.contains('nav-link')){
 		element.classList.remove('bg-erp-blue');
 		element.classList.add('bg-black');
 		document.getElementsByTagName("body")[0].style.cursor = "auto";
@@ -58,7 +60,7 @@ const handleMouseMove = (event: MouseEvent) => {
   // Dispatch mouseover event for newly hovered elements
   currentHoveredElements.forEach((element) => {
 	if (!hoveredElements.has(element)) {
-		if(element.tagName==="A"&&!element.classList.contains('nav-link')){
+		if(element.tagName==="A"||element.tagName==="BUTTON"&&!element.classList.contains('nav-link')){
 		element.classList.remove('bg-black');
 		element.classList.add('bg-erp-blue');
 		document.getElementsByTagName("body")[0].style.cursor = "pointer";
@@ -86,9 +88,44 @@ const handleMouseMove = (event: MouseEvent) => {
 </script>
 
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
+
+{#if activeOverlay}
+		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur" in:fade={{delay:300}} out:fade>		
+		
+			
+				<ContentWidth class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-8">
+					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"/>
+				
+					{#if viewportWidth>1024}
+					<iframe 
+	  					title="background video" 
+	 					src={`https://player.vimeo.com/video/939250244?background=1&muted=0&autoplay=1`}
+	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
+	  					frameborder="0"
+						allow="autoplay"
+						
+					></iframe>
+					{:else}
+					<iframe 
+	  					title="background video" 
+	 					src={`https://player.vimeo.com/video/939250244`}
+	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
+	  					frameborder="0"
+						
+					></iframe>
+					{/if}
+				
+					
+					<DefaultButton text="Close" class="absolute bottom-4 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=false}/>
+				</ContentWidth>
+		
+			
+		</div>
+		{/if}
+
 {#key slice}
   
-  <div class="w-screen h-screen overflow-hidden snap-end fixed top-0" in:fade={{delay:400}} out:fade>
+  <div class="w-screen h-screen overflow-hidden snap-end fixed top-0" in:fade={{delay:400}} out:fade >
 	
 
 	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
@@ -120,7 +157,10 @@ const handleMouseMove = (event: MouseEvent) => {
 		{#if slice.primary.button_text}
 			<DefaultButton text={slice.primary.button_text || ''} href={(isFilled.link(slice.primary.button_link)?slice.primary.button_link.url : "")}/>
 		{/if}
-	</div>
+		{#if slice.primary.title === "Who We Are"}
+			<DefaultButton text="Watch" on:click={()=>activeOverlay=true} />
+		{/if}
+		</div>
 		{/if}
 		</div>
 	</ContentWidth>
