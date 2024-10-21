@@ -276,7 +276,7 @@
 								</div>
 							</div>
 							
-							<div class="min-h-96 md:w-1/2 text-white flex flex-col overflow-y-scroll items-end">
+							<div class="min-h-96 py-8 md:w-1/2 text-white flex flex-col overflow-y-scroll items-end">
 								<PrismicRichText field={slice.items[activeOverlay].body_text} />
 							</div>
 							<div class="md:hidden pb-64">
