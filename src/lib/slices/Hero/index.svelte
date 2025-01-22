@@ -128,7 +128,7 @@ const handleMouseMove = (event: MouseEvent) => {
   <div class="w-screen h-screen overflow-hidden snap-end fixed top-0" in:fade={{delay:400}} out:fade >
 	
 
-	<PrismicImage field={slice.primary.loading_placeholder} class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
+	<PrismicImage field={slice.primary.loading_placeholder} loading="eager" class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
 	{#if videoId&&isFilled.embed(slice.primary.video_embed)}
 	<iframe 
 	  title="background video" 
