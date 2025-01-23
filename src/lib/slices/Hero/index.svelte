@@ -165,7 +165,7 @@ const handleMouseMove = (event: MouseEvent) => {
 		</div>
 	</ContentWidth>
   </div>
-  <div class="w-screen h-screen sticky snap-end overflow-hidden" on:click={handleClick} on:mousemove={handleMouseMove} aria-hidden >
+  <div class="w-screen h-screen sticky snap-end overflow-hidden" on:click={handleClick} on:mousemove={handleMouseMove} aria-hidden="true" >
 	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-32 md:bottom-8 right-8" />
   </div>
 
