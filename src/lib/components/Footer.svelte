@@ -2,9 +2,7 @@
 	import ContentWidth from "./ContentWidth.svelte";
     import logoFull from "../assets/fullLogo.png"
     import loopnet from "../assets/icons/loopnet.svg"
-    import { faFacebookF, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 	import DefaultButton from "./Buttons/DefaultButton.svelte";
-	import { text } from "@sveltejs/kit";
 
     let viewportWidth:number;
     
