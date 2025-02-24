@@ -3,22 +3,30 @@
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';
 	import "../app.css"
-	import Footer from '$lib/components/Footer.svelte';
 
 
 
-import { afterNavigate, beforeNavigate, disableScrollHandling } from '$app/navigation';
+
+import { afterNavigate, goto, beforeNavigate, disableScrollHandling } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 let main:HTMLElement
 let showLandscapeModal = false;
 
-beforeNavigate(()=>	isTransitioning=true)
+beforeNavigate(({ cancel, to, from })=>	{
+	if(!isTransitioning){
+		cancel();
+		isTransitioning=true;
+		if(to)
+			setTimeout(()=>goto(to.url.pathname),400);
+	}
+
+	
+});
 
 
 afterNavigate(() => {
-    disableScrollHandling();
 
     setTimeout(() => {
         main.scrollTo({ top: 0, behavior: 'instant' });
@@ -37,10 +45,7 @@ afterNavigate(() => {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const isLandscape = window.innerWidth > window.innerHeight;
     const isNotPortrait = screen.orientation.type !== 'portrait-primary';
-	console.log(navigator.userAgent)
-	console.log(isMobile)
-	console.log(isNotPortrait)
-	console.log(isLandscape)
+
 
     if (isMobile && isLandscape && isNotPortrait) {
     	console.log("Please switch to portrait mode");
@@ -87,7 +92,7 @@ afterNavigate(() => {
 	
 </main>
 {#if isTransitioning}
-<div class="w-screen h-screen bg-black fixed" in:fade out:fade={{duration:2000}}></div>
+	<div class="w-screen h-screen bg-black fixed top-0 left-0 z-40" in:fade out:fade={{duration:1200}}></div>
 {/if}
 
 {#if showLandscapeModal}
