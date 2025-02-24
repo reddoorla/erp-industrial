@@ -17,7 +17,7 @@
 
 	let activeOverlay = -1;
 	let section:HTMLElement|undefined;
-	let isActiveSection = false;
+	let isStacked = false;
 	let viewportWidth:number;
 	
 
@@ -27,17 +27,18 @@
 		videoId=slice.primary.video_embed.embed_url.split('/').pop();
 		}
 
-	const checkActive = () => {
+	const checkStacked = () => {
 		if(section){
 			const rect = section.getBoundingClientRect();
-			isActiveSection = rect.top < 100 && rect.top > -rect.height + 100;
+		
+			isStacked = rect.top < 100 && rect.top > -rect.height + 100;
 		}
 
-		if(isActiveSection)
+		if(isStacked)
 			isNavLight.set(slice.primary.isnavlight);
 	}
 
-	onMount( () => section?.parentElement?.addEventListener("scroll", checkActive));
+	onMount( () => section?.parentElement?.addEventListener("scroll", checkStacked));
 
 
 	let contentBoxPropsArray:any[]=[];
@@ -58,7 +59,7 @@
 <svelte:window bind:innerWidth={viewportWidth} />
 
 
-<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} style="position: {isActiveSection && slice.primary.doesStack ? 'sticky' : 'relative'}" class="snap-start {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden" in:fade={{delay:400}} out:fade>
+<section bind:this={section} data-slice-type={slice.slice_type} data-slice-variation={slice.variation} style="position: {isStacked && slice.primary.doesStack ? 'sticky' : 'relative'}" class="snap-start {slice.primary.doesStack?"top-0":""} {slice.variation==="embed"? "bg-white" : "bg-black"} overflow-hidden" in:fade={{delay:400}} out:fade>
 	<FullPageSlide backgroundImage={slice.variation==="embed" ? null : slice.primary.background_image } >
 		{#if slice.variation==="embed"}
 				<ContentWidth class="text-center h-12 md:h-56 flex flex-col justify-center items-center overflow-hidden py-10 md:pb-0">
@@ -75,7 +76,7 @@
 			slice.primary.isImageLeft?"lg:flex-row":"lg:flex-row-reverse"
 		}">
 			<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover"/>
-			{#if isActiveSection}
+			{#if isStacked}
 			<div class="h-3/4 lg:h-auto lg:w-1/2 p-[4%] md:p-[6%] overflow-y-scroll md:overflow-hidden py-32 mt-32 md:pb-0">
 				{#if activeOverlay===-1}
 				<h5 transition:fade class="text-white mb-16">{slice.primary.eyebrow||""}</h5>
@@ -109,10 +110,10 @@
 		</div>
 				
 			
-		{:else if isActiveSection}
+		{:else if isStacked}
 
 		<div class="absolute w-screen h-screen top-0 left-0" 
-     		class:backdrop-blur={slice.primary.isBackgroundBlurred&&isActiveSection}
+     		class:backdrop-blur={slice.primary.isBackgroundBlurred&&isStacked}
     	 transition:fade={{duration:1000}}>
 		</div>
 		<ContentWidth class="h-full relative justify-end z-30 overflow-hidden py-32">

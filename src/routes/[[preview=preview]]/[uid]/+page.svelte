@@ -33,14 +33,7 @@
 
 	})
 
-	$: {
-	data;
-	if(isMounted)
-	setTimeout(() => {
-        scrollTo({ top: 0, behavior: 'instant' });
-    }, 50);
 
-}
 </script>
 
 <svelte:head> 
