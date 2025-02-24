@@ -14,12 +14,11 @@ import { afterNavigate, goto, beforeNavigate, disableScrollHandling } from '$app
 let main:HTMLElement
 let showLandscapeModal = false;
 
-beforeNavigate(({ cancel, to, from })=>	{
+beforeNavigate(({ cancel, to })=>	{
 	if(!isTransitioning){
 		cancel();
 		isTransitioning=true;
-		if(to)
-			setTimeout(()=>goto(to.url.pathname),400);
+		if(to)setTimeout(()=>goto(to.url.pathname),400);
 	}
 
 	
@@ -92,7 +91,7 @@ afterNavigate(() => {
 	
 </main>
 {#if isTransitioning}
-	<div class="w-screen h-screen bg-black fixed top-0 left-0 z-40" in:fade out:fade={{duration:1200}}></div>
+	<div class="w-screen h-screen bg-black fixed top-0 left-0 z-40" transition:fade></div>
 {/if}
 
 {#if showLandscapeModal}
