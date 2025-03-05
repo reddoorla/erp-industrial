@@ -15,11 +15,12 @@ let main:HTMLElement
 let showLandscapeModal = false;
 
 beforeNavigate(({ cancel, to })=>	{
-	if(!isTransitioning){
+	if(!isTransitioning && to?.route.id){
 		cancel();
 		isTransitioning=true;
-		if(to)setTimeout(()=>goto(to.url.pathname),400);
+		if(to)setTimeout(()=>goto(to.url),400);
 	}
+
 
 	
 });
