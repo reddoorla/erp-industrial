@@ -52,7 +52,7 @@ text-transform: uppercase;
         </div>
         <div class="h-full w-1/6 flex flex-col gap-4">
             <a href="https://icx.efrontcloud.com/@9894/ERP/login.aspx" class="footer-link">PE INVESTOR PORTAL</a>
-            <a href="https://starportal2.phxa.com/ERP/#/index" class="footer-link">DST INVESTOR PORTAL</a>
+            <a href="https://starportal2.star.vistra.com/erp/#/index" class="footer-link">DST INVESTOR PORTAL</a>
             <a href="https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161" class="footer-link">TENANT PORTAL</a>
         </div>
         <div class="h-full w-1/12"></div>
@@ -74,9 +74,9 @@ text-transform: uppercase;
                 <a href="/about" class="footer-link">ABOUT</a>
                 <a href="/portfolio" class="footer-link">INDUSTRIAL PORTFOLIO</a>
                 <a href="/investors" class="footer-link">INVESTORS</a>
-                <a href="/" class="footer-link">PE INVESTOR PORTAL</a>
-                <a href="/" class="footer-link">DST INVESTOR PORTAL</a>
-                <a href="/" class="footer-link">TENANT PORTAL</a>
+                <a href="https://icx.efrontcloud.com/@9894/ERP/login.aspx" class="footer-link">PE INVESTOR PORTAL</a>
+                <a href="https://starportal2.star.vistra.com/erp/#/index" class="footer-link">DST INVESTOR PORTAL</a>
+                <a href="https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161" class="footer-link">TENANT PORTAL</a>
                 <div class="w-full flex flex-row h-6 gap-6 text-subtle-blue">
                     <a href="https://linkedin.com" class="text-xl"><i class="fa-brands fa-linkedin-in"></i></a>
                     <a href="https://facebook.com" class="text-lg -translate-y-[2px]"><i class="fa-brands fa-facebook-f"></i></a>
