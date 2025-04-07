@@ -103,3 +103,6 @@ main, div{
     -ms-overflow-style: none;
 }
 
+.grecaptcha-badge{
+    display: hidden !important;
+}

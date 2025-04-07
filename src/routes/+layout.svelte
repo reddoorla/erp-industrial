@@ -35,6 +35,12 @@ afterNavigate(() => {
 	setTimeout(()=>{
 		isTransitioning=false;
 	},800)
+
+	if(document){
+		Array.from(document.getElementsByClassName('grecaptcha-badge')).forEach(e => {
+			e.remove();
+		});
+	}
 });
 	let isSnappy = true;
 
