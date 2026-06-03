@@ -48,5 +48,8 @@
 		"@vimeo/player": "^2.25.0",
 		"svelte-gestures": "^4.0.0"
 	},
-	"packageManager": "pnpm@10.33.1"
+	"packageManager": "pnpm@10.33.1",
+	"engines": {
+		"node": ">=20"
+	}
 }
