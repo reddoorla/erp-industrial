@@ -33,7 +33,11 @@
 		"tailwindcss": "^4.3.0",
 		"typescript": "^6.0.3",
 		"typescript-svelte-plugin": "^0.3.52",
-		"vite": "^8.0.10"
+		"vite": "^8.0.10",
+		"@reddoorla/maintenance": "^0.25.0",
+		"@lhci/cli": "^0.15.1",
+		"@playwright/test": "^1.60.0",
+		"@axe-core/playwright": "^4.11.3"
 	},
 	"type": "module",
 	"dependencies": {
