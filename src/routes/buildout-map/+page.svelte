@@ -1,23 +1,24 @@
 <script lang="ts">
-	import Nav from "$lib/components/Nav.svelte";
-	import { onMount } from "svelte";
+	import Nav from '$lib/components/Nav.svelte';
+	import { onMount } from 'svelte';
 
-
-onMount(()=>{
-  //@ts-ignore
-  BuildOut.embed({    token:     "bdecc802689ae7f3e2007fdaf2ffdb31f711a99e",  plugin:    "inventory",
-				target:    "buildout"
-			});
-})
+	onMount(() => {
+		//@ts-ignore
+		BuildOut.embed({
+			token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
+			plugin: 'inventory',
+			target: 'buildout'
+		});
+	});
 </script>
 
 <svelte:head>
-    <title>ERP Properties</title>
+	<title>ERP Properties</title>
 </svelte:head>
 
-<div class="w-screen h-screen bg-white fixed top-0"> 
-    <Nav isLogoLarge={false}/>
-<div class="mt-[20vh]">
-  <div id="buildout"  style="max-width:1440px; margin:auto; height:80vh;"></div>
+<div class="w-screen h-screen bg-white fixed top-0">
+	<Nav isLogoLarge={false} />
+	<div class="mt-[20vh]">
+		<div id="buildout" style="max-width:1440px; margin:auto; height:80vh;"></div>
+	</div>
 </div>
-</div>  

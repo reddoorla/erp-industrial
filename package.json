@@ -14,15 +14,19 @@
 		"slicemachine": "start-slicemachine"
 	},
 	"devDependencies": {
+		"@axe-core/playwright": "^4.11.3",
+		"@lhci/cli": "^0.15.1",
+		"@playwright/test": "^1.60.0",
+		"@reddoorla/maintenance": "^0.25.0",
 		"@slicemachine/adapter-sveltekit": "^0.3.65",
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"@sveltejs/kit": "^2.59.0",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
 		"@tailwindcss/postcss": "^4.3.0",
 		"concurrently": "^8.2.2",
-		"eslint": "^8.57.1",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.46.1",
+		"eslint": "^10.4.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.19.0",
 		"postcss": "^8.5.1",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
@@ -33,11 +37,7 @@
 		"tailwindcss": "^4.3.0",
 		"typescript": "^6.0.3",
 		"typescript-svelte-plugin": "^0.3.52",
-		"vite": "^8.0.10",
-		"@reddoorla/maintenance": "^0.25.0",
-		"@lhci/cli": "^0.15.1",
-		"@playwright/test": "^1.60.0",
-		"@axe-core/playwright": "^4.11.3"
+		"vite": "^8.0.10"
 	},
 	"type": "module",
 	"dependencies": {

@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 	import type { RichTextSlice } from '../../../prismicio-types';
 	let { slice }: { slice: RichTextSlice } = $props();
 	import { PrismicRichText } from '@prismicio/svelte';
@@ -18,7 +18,8 @@
 	.container {
 		max-width: 600px;
 		margin: 6em auto;
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+		font-family:
+			-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
 			'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 	}
 </style>

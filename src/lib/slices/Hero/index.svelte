@@ -1,171 +1,196 @@
-<script lang='ts'>
-	  let { slice, ...rest }: { slice: HeroSlice; [key: string]: unknown } = $props();
-import { onMount } from "svelte";
-	import { fade } from "svelte/transition"
-	import { PrismicImage } from "@prismicio/svelte";
-	import ContentWidth from "$lib/components/ContentWidth.svelte";
-	import ContentBox from "$lib/components/ContentBox.svelte";
-	import type { HeroSlice } from "../../../prismicio-types";
+<script lang="ts">
+	let { slice, ...rest }: { slice: HeroSlice; [key: string]: unknown } = $props();
+	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { PrismicImage } from '@prismicio/svelte';
+	import ContentWidth from '$lib/components/ContentWidth.svelte';
+	import ContentBox from '$lib/components/ContentBox.svelte';
+	import type { HeroSlice } from '../../../prismicio-types';
 
-    let viewportWidth = $state(0);
-    let viewportHeight = $state(0);
+	let viewportWidth = $state(0);
+	let viewportHeight = $state(0);
 
-	import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
-	import { isFilled } from "@prismicio/helpers";
+	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
+	import { isFilled } from '@prismicio/helpers';
 
-	let videoId = $state("");
+	let videoId = $state('');
 
 	let activeOverlay = $state(false);
 
-	if(slice.primary.video_embed.embed_url)
-		videoId = slice.primary.video_embed?.embed_url.split('/').pop()||"";
+	if (slice.primary.video_embed.embed_url)
+		videoId = slice.primary.video_embed?.embed_url.split('/').pop() || '';
 
-	let bottomPane:HTMLElement;
+	let bottomPane: HTMLElement;
 
 	let isMounted = $state(false);
 
 	// const sendToBottomPane = () =>{
 	// 	if(bottomPane?.getBoundingClientRect().top>10){
-	// 		bottomPane.parentElement?.scrollTo(0, viewportHeight*2)	
+	// 		bottomPane.parentElement?.scrollTo(0, viewportHeight*2)
 	// 	}
 	// }
 
-		onMount(()=>{
-			setTimeout(()=>isMounted=true,25)
+	onMount(() => {
+		setTimeout(() => (isMounted = true), 25);
+	});
 
-		})
+	let hoveredElements: Set<HTMLElement> = new Set();
 
-		let hoveredElements: Set<HTMLElement> = new Set();
+	const handleMouseMove = (event: MouseEvent) => {
+		const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
+		const currentHoveredElements: Set<HTMLElement> = new Set(
+			elementsUnder.filter((element) => element !== event.currentTarget) as HTMLElement[]
+		);
 
-const handleMouseMove = (event: MouseEvent) => {
-  const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
-  const currentHoveredElements: Set<HTMLElement> = new Set(
-	elementsUnder.filter(
-	  (element) => element !== event.currentTarget
-	) as HTMLElement[]
-  );
+		// Dispatch mouseout event for elements no longer hovered
+		hoveredElements.forEach((element) => {
+			if (!currentHoveredElements.has(element)) {
+				if (
+					element.tagName === 'A' ||
+					(element.tagName === 'BUTTON' && !element.classList.contains('nav-link'))
+				) {
+					element.classList.remove('bg-erp-blue');
+					element.classList.add('bg-black');
+					document.getElementsByTagName('body')[0].style.cursor = 'auto';
+				}
+			}
+		});
 
-  // Dispatch mouseout event for elements no longer hovered
-  hoveredElements.forEach((element) => {
-	if (!currentHoveredElements.has(element)) {
-		if(element.tagName==="A"||element.tagName==="BUTTON"&&!element.classList.contains('nav-link')){
-		element.classList.remove('bg-erp-blue');
-		element.classList.add('bg-black');
-		document.getElementsByTagName("body")[0].style.cursor = "auto";
-		}
-	}
-  });
+		// Dispatch mouseover event for newly hovered elements
+		currentHoveredElements.forEach((element) => {
+			if (!hoveredElements.has(element)) {
+				if (
+					element.tagName === 'A' ||
+					(element.tagName === 'BUTTON' && !element.classList.contains('nav-link'))
+				) {
+					element.classList.remove('bg-black');
+					element.classList.add('bg-erp-blue');
+					document.getElementsByTagName('body')[0].style.cursor = 'pointer';
+				}
+			}
+		});
 
-  // Dispatch mouseover event for newly hovered elements
-  currentHoveredElements.forEach((element) => {
-	if (!hoveredElements.has(element)) {
-		if(element.tagName==="A"||element.tagName==="BUTTON"&&!element.classList.contains('nav-link')){
-		element.classList.remove('bg-black');
-		element.classList.add('bg-erp-blue');
-		document.getElementsByTagName("body")[0].style.cursor = "pointer";
+		hoveredElements = currentHoveredElements;
+	};
 
-	}
-	}
-  });
-
- 
-  hoveredElements = currentHoveredElements;
-};
-
-
-	const handleClick = (event:MouseEvent) => {
-    // Manually propagate the click event to the elements underneath
-    const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
-    elementsUnder.forEach((element : Element) => {
-      if (element !== event.currentTarget) {
-        (element as HTMLElement).click();
-      }
-    });
-  }
-    
-
+	const handleClick = (event: MouseEvent) => {
+		// Manually propagate the click event to the elements underneath
+		const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
+		elementsUnder.forEach((element: Element) => {
+			if (element !== event.currentTarget) {
+				(element as HTMLElement).click();
+			}
+		});
+	};
 </script>
 
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
 
 {#if activeOverlay}
-		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur-sm" in:fade={{delay:300}} out:fade>		
-		
-			
-				<ContentWidth class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-8">
-					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"></i>
-				
-					{#if viewportWidth>1024}
-					<iframe 
-	  					title="background video" 
-	 					src={`https://player.vimeo.com/video/939250244?background=1&muted=0&autoplay=1`}
-	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
-	  					frameborder="0"
-						allow="autoplay"
-						
-					></iframe>
-					{:else}
-					<iframe 
-	  					title="background video" 
-	 					src={`https://player.vimeo.com/video/939250244`}
-	  					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
-	  					frameborder="0"
-						
-					></iframe>
-					{/if}
-				
-					
-					<DefaultButton text="Close" class="absolute bottom-4 mx-[4%] md:mx-auto max-w-[92%]" onclick={()=>activeOverlay=false}/>
-				</ContentWidth>
-		
-			
-		</div>
-		{/if}
+	<div
+		class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur-sm"
+		in:fade={{ delay: 300 }}
+		out:fade
+	>
+		<ContentWidth
+			class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-8"
+		>
+			<i
+				class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"
+			></i>
+
+			{#if viewportWidth > 1024}
+				<iframe
+					title="background video"
+					src={`https://player.vimeo.com/video/939250244?background=1&muted=0&autoplay=1`}
+					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
+					frameborder="0"
+					allow="autoplay"
+				></iframe>
+			{:else}
+				<iframe
+					title="background video"
+					src={`https://player.vimeo.com/video/939250244`}
+					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
+					frameborder="0"
+				></iframe>
+			{/if}
+
+			<DefaultButton
+				text="Close"
+				class="absolute bottom-4 mx-[4%] md:mx-auto max-w-[92%]"
+				onclick={() => (activeOverlay = false)}
+			/>
+		</ContentWidth>
+	</div>
+{/if}
 
 {#key slice}
-  
-  <div class="w-screen h-screen overflow-hidden snap-end fixed top-0" in:fade={{delay:400}} out:fade >
-	
-
-	<PrismicImage field={slice.primary.loading_placeholder} loading="eager" class="object-cover absolute aspect-video {viewportHeight*16 >viewportWidth*9 ? 'h-full min-w-full' : 'w-full min-h-full'}"/>
-	{#if videoId&&isFilled.embed(slice.primary.video_embed)}
-	<iframe 
-	  title="background video" 
-	  src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0`}
-	  class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9 ? 'h-screen min-w-full' : 'w-screen min-h-full'}"
-	  frameborder="0"
-	  allowfullscreen
-	  
-	></iframe>
-	{:else}
-	<div transition:fade class="w-full h-full absolute top-0 left-0" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 14.68%, rgba(0, 0, 0, 0.50) 69.9%)"></div>
-	{/if}
-
-
-	<ContentWidth class="h-full relative justify-end z-30">
-		<div class="md:w-11/12 max-w-(--breakpoint-lg) relative h-full flex flex-col justify-end overflow-hidden py-32 sm:py-16 lg:py-32">
-		{#if isMounted}
-		<div transition:fade>
-		<ContentBox 
-			titleText={slice.primary.title||""}
-			titleTag="h1"
-			paragraphText={slice.primary.body_text||""}
-			float="left"
-			class="text-white z-20 text-left"
+	<div
+		class="w-screen h-screen overflow-hidden snap-end fixed top-0"
+		in:fade={{ delay: 400 }}
+		out:fade
+	>
+		<PrismicImage
+			field={slice.primary.loading_placeholder}
+			loading="eager"
+			class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9
+				? 'h-full min-w-full'
+				: 'w-full min-h-full'}"
 		/>
-		{#if slice.primary.button_text}
-			<DefaultButton text={slice.primary.button_text || ''} href={(isFilled.link(slice.primary.button_link)?slice.primary.button_link.url : "")}/>
+		{#if videoId && isFilled.embed(slice.primary.video_embed)}
+			<iframe
+				title="background video"
+				src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0`}
+				class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9
+					? 'h-screen min-w-full'
+					: 'w-screen min-h-full'}"
+				frameborder="0"
+				allowfullscreen
+			></iframe>
+		{:else}
+			<div
+				transition:fade
+				class="w-full h-full absolute top-0 left-0"
+				style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 14.68%, rgba(0, 0, 0, 0.50) 69.9%)"
+			></div>
 		{/if}
-		{#if slice.primary.title === "Who We Are"}
-			<DefaultButton text="Watch" onclick={()=>activeOverlay=true} />
-		{/if}
-		</div>
-		{/if}
-		</div>
-	</ContentWidth>
-  </div>
-  <div class="w-screen h-screen sticky snap-end overflow-hidden" onclick={handleClick} onmousemove={handleMouseMove} aria-hidden="true" >
-	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-32 md:bottom-8 right-8"></i>
-  </div>
 
-  {/key}
+		<ContentWidth class="h-full relative justify-end z-30">
+			<div
+				class="md:w-11/12 max-w-(--breakpoint-lg) relative h-full flex flex-col justify-end overflow-hidden py-32 sm:py-16 lg:py-32"
+			>
+				{#if isMounted}
+					<div transition:fade>
+						<ContentBox
+							titleText={slice.primary.title || ''}
+							titleTag="h1"
+							paragraphText={slice.primary.body_text || ''}
+							float="left"
+							class="text-white z-20 text-left"
+						/>
+						{#if slice.primary.button_text}
+							<DefaultButton
+								text={slice.primary.button_text || ''}
+								href={isFilled.link(slice.primary.button_link) ? slice.primary.button_link.url : ''}
+							/>
+						{/if}
+						{#if slice.primary.title === 'Who We Are'}
+							<DefaultButton text="Watch" onclick={() => (activeOverlay = true)} />
+						{/if}
+					</div>
+				{/if}
+			</div>
+		</ContentWidth>
+	</div>
+	<div
+		class="w-screen h-screen sticky snap-end overflow-hidden"
+		onclick={handleClick}
+		onmousemove={handleMouseMove}
+		aria-hidden="true"
+	>
+		<i
+			class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-32 md:bottom-8 right-8"
+		></i>
+	</div>
+{/key}

@@ -1,7 +1,7 @@
-import { createSvelteConfig } from "@reddoorla/maintenance/configs/svelte";
-import adapter from "@sveltejs/adapter-auto";
+import { createSvelteConfig } from '@reddoorla/maintenance/configs/svelte';
+import adapter from '@sveltejs/adapter-auto';
 
 /** @type {import('@sveltejs/kit').Config} */
 export default createSvelteConfig({
-  kit: { adapter: adapter() },
+	kit: { adapter: adapter() }
 });
