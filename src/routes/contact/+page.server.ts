@@ -2,8 +2,8 @@ import { createClient } from '$lib/prismicio';
 import sgMail from '@sendgrid/mail';
 import type { Actions, PageServerLoad } from './$types';
 import { fail, type ActionFailure } from '@sveltejs/kit';
-
-sgMail.setApiKey(import.meta.env.VITE_SENDGRID_KEY);
+// Server-only secrets, read at runtime. Never exposed to the client (unlike VITE_-prefixed vars).
+import { env } from '$env/dynamic/private';
 
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	const client = createClient({ fetch, cookies });
@@ -31,6 +31,13 @@ export const actions: Actions = {
 			return fail(400, { error: 'no reCaptcha token' });
 		}
 
+		const sendgridKey = env.SENDGRID_KEY;
+		const recaptchaSecretKey = env.RECAPTCHA_SECRET_KEY;
+		if (!sendgridKey || !recaptchaSecretKey) {
+			console.error('Contact form misconfigured: SENDGRID_KEY / RECAPTCHA_SECRET_KEY not set');
+			return fail(500, { error: 'Server misconfiguration' });
+		}
+
 		switch (interest) {
 			case 'Leasing':
 				sendTo = ['Brennan Berry <BBerry@erpfunds.com>', 'tucksravine1@gmail.com'];
@@ -41,7 +48,7 @@ export const actions: Actions = {
 				break;
 
 			case 'Property Sales and Acquistions':
-				sendTo = ['Meghan Berry <MBerry@erpfunds.com>', 'tucksravine1@gmail.com'];
+				sendTo = [ 'tucksravine1@gmail.com'];
 				break;
 		}
 
@@ -50,7 +57,7 @@ export const actions: Actions = {
 
 		try {
 			const recaptchaResponse = await fetch(
-				`https://recaptchaenterprise.googleapis.com/v1/projects/energy-related-properties/assessments?key=${import.meta.env.VITE_RECAPTCHA_SECRET_KEY}`,
+				`https://recaptchaenterprise.googleapis.com/v1/projects/energy-related-properties/assessments?key=${recaptchaSecretKey}`,
 				{
 					method: 'POST',
 					headers: {
@@ -65,11 +72,8 @@ export const actions: Actions = {
 					})
 				}
 			);
-			console.log(import.meta.env.VITE_RECAPTCHA_SITE_KEY);
 
 			const recaptchaResult = await recaptchaResponse.json();
-			console.log(recaptchaResponse);
-			console.log(recaptchaResult);
 
 			if (!recaptchaResult.tokenProperties?.valid || recaptchaResult.riskAnalysis?.score < 0.5) {
 				return fail(400, { error: 'reCAPTCHA verification failed' });
@@ -88,8 +92,8 @@ export const actions: Actions = {
 		};
 
 		try {
+			sgMail.setApiKey(sendgridKey);
 			await sgMail.send(msg);
-			console.log('Email sent');
 			return { success: true };
 		} catch (error) {
 			console.error(error);
