@@ -1,9 +1,8 @@
 <script lang='ts'>
-	let { slice }: { slice: any } = $props();
+	import type { RichTextSlice } from '../../../prismicio-types';
+	let { slice }: { slice: RichTextSlice } = $props();
 	import { PrismicRichText } from '@prismicio/svelte';
 	import Label from './Label.svelte';
-
-	/** @type {import("@prismicio/client").Content.RichTextSlice} */
 </script>
 
 <section class="container">

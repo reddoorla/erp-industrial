@@ -1,5 +1,6 @@
 <script lang='ts'>
-	let { data }: { data: any } = $props();
+	import type { PageData } from './$types';
+	let { data }: { data: PageData } = $props();
 	import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from "@prismicio/helpers"
 	import { SliceZone } from '@prismicio/svelte';
@@ -19,7 +20,8 @@ afterNavigate(() => {
 	let navLinks = $state([{href:"",text:""}]);
 	let isLogoLarge = $state(true);
 
-	data.nav.data.links.forEach((link: any) => { navLinks.push({
+	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
+	data.nav.data.links.forEach((link: NavDocumentDataLinksItem) => { navLinks.push({
 			href: (prismicHelpers.isFilled.link(link.href) ? link.href.url||"#" : "#"),
 			text: (link.text||"")
 		})

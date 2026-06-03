@@ -62,21 +62,20 @@
       {/each}
     </div>
     <div class=" h-6 w-full flex justify-between z-10 absolute bottom-0 lg:bottom-[20%] xl:bottom-[30%] left-0">
-      <button onclick={slideRight} class="text-white flex align-middle justify-center cursor-pointer transition-all duration-300 active:-translate-y-2  hover:text-black">
-        <i class="fa-sharp fa-solid fa-chevron-left fa-2x"></i>
+      <button onclick={slideRight} class="text-white flex align-middle justify-center cursor-pointer transition-all duration-300 active:-translate-y-2  hover:text-black" aria-label="Previous slide">
+        <i class="fa-sharp fa-solid fa-chevron-left fa-2x" aria-hidden="true"></i>
       </button>
       <div class="h-10 flex align-middle justify-start ">
         {#each  contentBoxPropsArray as image, i}
             <button class="h-[10px] w-[10px] border-2  rounded-full transition-colors duration-1000 cursor-pointer active:translate-y-[-0.5px] hover:opacity-60 mr-4
             {(sliderIndex%contentBoxPropsArray.length>=0&&sliderIndex%contentBoxPropsArray.length===i)|| (sliderIndex%contentBoxPropsArray.length<=0&&contentBoxPropsArray.length+sliderIndex%contentBoxPropsArray.length===i) ? "bg-dark border-dark" : "border-light bg-light"}"
                 onclick={()=>sliderIndex=i}
-                aria-label="image {i} of {contentBoxPropsArray.length}"
-                aria-hidden
+                aria-label="Go to slide {i + 1}"
             ></button>
         {/each}
     </div>
-      <button onclick={slideLeft} class="text-white flex align-middle cursor-pointer transition-all duration-300 active:-translate-y-2 justify-center translate-y-[-5.5px] hover:text-black">
-        <i class="fa-sharp fa-solid fa-chevron-right fa-2x"></i>
+      <button onclick={slideLeft} class="text-white flex align-middle cursor-pointer transition-all duration-300 active:-translate-y-2 justify-center translate-y-[-5.5px] hover:text-black" aria-label="Next slide">
+        <i class="fa-sharp fa-solid fa-chevron-right fa-2x" aria-hidden="true"></i>
       </button>
     </div>
   </div>

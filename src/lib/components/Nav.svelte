@@ -40,7 +40,7 @@ text-transform: uppercase;
 
 
     <ContentWidth class="h-screen relative flex flex-col items-center justify-center gap-12">
-        <button class="absolute top-5 right-0 opacity-60 hover:opacity-100 transition-all z-50 text-white pointer-events-auto" onclick={toggleOverlayOff}>
+        <button class="absolute top-5 right-0 opacity-60 hover:opacity-100 transition-all z-50 text-white pointer-events-auto" onclick={toggleOverlayOff} aria-label="Close menu">
             <i class="fa-sharp fa-regular fa-xmark text-2xl text-white" in:fade={{delay: 600}} out:fade></i>
         </button>
 
@@ -65,7 +65,7 @@ text-transform: uppercase;
                 {/each}
             </div>
     {#if !isOverlayVisible}
-        <button class="lg:hidden ml-6 opacity-60 hover:opacity-100 transition-all pointer-events-auto text-2xl z-40" in:fade={{delay: 600}} out:fade onclick={toggleOverlayOn}>
+        <button class="lg:hidden ml-6 opacity-60 hover:opacity-100 transition-all pointer-events-auto text-2xl z-40" in:fade={{delay: 600}} out:fade onclick={toggleOverlayOn} aria-label="Open menu">
 
             <i class="fa-sharp fa-regular fa-bars h-8"></i>
 

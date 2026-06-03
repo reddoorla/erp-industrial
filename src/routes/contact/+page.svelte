@@ -1,5 +1,6 @@
 <script lang="ts">
-	  let { data }: { data: any } = $props();
+	import type { PageData } from './$types';
+	  let { data }: { data: PageData } = $props();
 import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from '@prismicio/helpers';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
@@ -22,7 +23,8 @@ import Nav from '$lib/components/Nav.svelte';
 
 	let navLinks = [{ href: '', text: '' }];
 
-	data.nav.data.links.forEach((link: any) => {
+	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
+	data.nav.data.links.forEach((link: NavDocumentDataLinksItem) => {
 		navLinks.push({
 			href: prismicHelpers.isFilled.link(link.href) ? link.href.url || '#' : '#',
 			text: link.text || ''

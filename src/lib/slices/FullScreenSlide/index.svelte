@@ -97,8 +97,8 @@ import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 						<DefaultButton text={"Go Back"} onclick={()=>activeOverlay=-1} filled={false}/>
 					</div>
 					
-					<button transition:fade  class="absolute top-8 right-16 bump hover:opacity-80 transition-opacity" onclick={()=>activeOverlay=-1}>
-						<i class="fa-solid fa-close fa-xl text-white"></i>
+					<button transition:fade  class="absolute top-8 right-16 bump hover:opacity-80 transition-opacity" onclick={()=>activeOverlay=-1} aria-label="Close">
+						<i class="fa-solid fa-close fa-xl text-white" aria-hidden="true"></i>
 					</button>
 					
 				{/if}
