@@ -54,7 +54,7 @@
 			reCaptchaToken = await executeReCaptcha();
 			const form = event.target as HTMLFormElement;
 			const formData = new FormData(form);
-			formData.append('recaptcha-token', reCaptchaToken);
+			formData.append('g-recaptcha-response', reCaptchaToken);
 			console.log(reCaptchaToken);
 
 			const response = await fetch(form.action, {
