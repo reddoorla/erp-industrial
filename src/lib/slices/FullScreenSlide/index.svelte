@@ -193,7 +193,7 @@
 					Management Team
 				</div>
 				{#each slice.items as item, i (i)}
-					<div class="md:w-1/3 pr-8 flex flex-col gap-8 md:items-start md:justify-end flex-shrink-0">
+					<div class="md:w-1/3 pr-8 flex flex-col gap-8 md:items-start md:justify-end shrink-0">
 						<PrismicImage field={item.headshot} class="md:w-48 rounded-full"/>
 						<h5 class="text-white whitespace-pre-line">{item.title}</h5>
 						<div class="large-paragraph text-white whitespace-nowrap">{item.name}</div>
@@ -209,7 +209,7 @@
 		</ContentWidth>
 		{/if}
 		{#if (slice.variation==="default"||slice.variation==="withVideoPopup"||slice.variation==="teams")&&activeOverlay!=-1 }
-		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black {slice.variation==="teams"?"":"bg-opacity-50"} backdrop-blur" in:fade={{delay:300}} out:fade>		
+		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black {slice.variation==="teams"?"":"bg-opacity-50"} backdrop-blur-sm" in:fade={{delay:300}} out:fade>		
 			{#if slice.variation==="default"}
 			{#key activeOverlay}
 			<div class="h-full w-full" out:fade in:fade={{delay:300}}>

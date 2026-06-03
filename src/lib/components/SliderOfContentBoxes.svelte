@@ -82,7 +82,7 @@
       </button>
       <div class="h-10 flex align-middle justify-start ">
         {#each  contentBoxPropsArray as image, i}
-            <button class="h-[10px] w-[10px] border-2  rounded-full transition-colors duration-1000 cursor-pointer active:-translate-y-[0.5px] hover:opacity-60 mr-4 
+            <button class="h-[10px] w-[10px] border-2  rounded-full transition-colors duration-1000 cursor-pointer active:translate-y-[-0.5px] hover:opacity-60 mr-4 
             {(sliderIndex%contentBoxPropsArray.length>=0&&sliderIndex%contentBoxPropsArray.length===i)|| (sliderIndex%contentBoxPropsArray.length<=0&&contentBoxPropsArray.length+sliderIndex%contentBoxPropsArray.length===i) ? "bg-dark border-dark" : "border-light bg-light"}"
                 on:click={()=>sliderIndex=i}
                 aria-label="image {i} of {contentBoxPropsArray.length}"
@@ -90,7 +90,7 @@
             ></button>
         {/each}
     </div>
-      <button on:click={slideLeft} class="text-white flex align-middle cursor-pointer transition-all duration-300 active:-translate-y-2 justify-center -translate-y-[5.5px] hover:text-black">
+      <button on:click={slideLeft} class="text-white flex align-middle cursor-pointer transition-all duration-300 active:-translate-y-2 justify-center translate-y-[-5.5px] hover:text-black">
         <i class="fa-sharp fa-solid fa-chevron-right fa-2x"/>
       </button>
     </div>

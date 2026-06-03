@@ -90,7 +90,7 @@ const handleMouseMove = (event: MouseEvent) => {
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
 
 {#if activeOverlay}
-		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur" in:fade={{delay:300}} out:fade>		
+		<div class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur-sm" in:fade={{delay:300}} out:fade>		
 		
 			
 				<ContentWidth class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-8">
@@ -144,7 +144,7 @@ const handleMouseMove = (event: MouseEvent) => {
 
 
 	<ContentWidth class="h-full relative justify-end z-30">
-		<div class="md:w-11/12 max-w-screen-lg relative h-full flex flex-col justify-end overflow-hidden py-32 sm:py-16 lg:py-32">
+		<div class="md:w-11/12 max-w-(--breakpoint-lg) relative h-full flex flex-col justify-end overflow-hidden py-32 sm:py-16 lg:py-32">
 		{#if isMounted}
 		<div transition:fade>
 		<ContentBox 
