@@ -1,108 +1,129 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/index.css';
 
+@config '../tailwind.config.js';
 
-body{
-    font-family: "neue-haas-grotesk-display", sans-serif;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-style: normal;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-gray-200, currentcolor);
+	}
 }
 
-h1{
-    font-size: 115px;
-    font-weight: 350;
-    line-height: 110%; /* 126.5px */
-
-/* text drop shadow */
-text-shadow: 2px 2px 120px 5px rgba(0, 0, 0, 0.15);
+body {
+	font-family: 'neue-haas-grotesk-display', sans-serif;
+	font-feature-settings:
+		'clig' off,
+		'liga' off;
+	font-style: normal;
 }
 
-h2{
-    font-size: 42px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 145%;
+h1 {
+	font-size: 115px;
+	font-weight: 350;
+	line-height: 110%; /* 126.5px */
+
+	/* text drop shadow */
+	text-shadow: 2px 2px 120px 5px rgba(0, 0, 0, 0.15);
 }
 
-h3{
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 24px; /* 171.429% */
-letter-spacing: 2px;
-text-transform: uppercase;
+h2 {
+	font-size: 42px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 145%;
 }
 
-h4{
-
+h3 {
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px; /* 171.429% */
+	letter-spacing: 2px;
+	text-transform: uppercase;
 }
 
-h5{
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px; /* 171.429% */
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    
+h4 {
 }
 
-p{
-    font-family: 'sequel-sans', sans-serif;
-    font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: 28px; /* 150% */
-letter-spacing: 0.75px;
+h5 {
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px; /* 171.429% */
+	letter-spacing: 2px;
+	text-transform: uppercase;
 }
 
-.large-paragraph{
-    font-size: 42px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 145%; /* 60.9px */
-    letter-spacing: 0.75px;
+p {
+	font-family: 'sequel-sans', sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 28px; /* 150% */
+	letter-spacing: 0.75px;
 }
 
-button, .button-text{
-    font-size: 12px;
-font-style: normal;
-font-weight: 700;
-line-height: 145%; /* 11.6px */
-letter-spacing: 2px;
-text-transform: uppercase;
+.large-paragraph {
+	font-size: 42px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 145%; /* 60.9px */
+	letter-spacing: 0.75px;
 }
 
-@media screen and ( max-width:768px ) {
-    h1{
-        font-size:48px;
-    }
-
-    .large-paragraph, h2{
-        font-size:32px;
-    }
-
-    p{
-        font-size: 16px;
-        line-height: 24px;
-    }
+button,
+.button-text {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 145%; /* 11.6px */
+	letter-spacing: 2px;
+	text-transform: uppercase;
 }
 
+@media screen and (max-width: 768px) {
+	h1 {
+		font-size: 48px;
+	}
 
-.index-container, #buildout iframe{
-    height: 100% !important;
+	.large-paragraph,
+	h2 {
+		font-size: 32px;
+	}
+
+	p {
+		font-size: 16px;
+		line-height: 24px;
+	}
 }
 
-main::-webkit-scrollbar, div::-webkit-scrollbar{
-    display: none;
+.index-container,
+#buildout iframe {
+	height: 100% !important;
 }
 
-main, div{
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+main::-webkit-scrollbar,
+div::-webkit-scrollbar {
+	display: none;
 }
 
-.grecaptcha-badge{
-    display: hidden !important;
+main,
+div {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.grecaptcha-badge {
+	display: hidden !important;
 }

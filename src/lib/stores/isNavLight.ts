@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export const isNavLight = writable(false); 
+export const isNavLight = writable(false);

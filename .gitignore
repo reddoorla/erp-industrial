@@ -8,3 +8,16 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# canonical entries from @reddoorla/maintenance sync-configs
+dist/
+coverage/
+.vitest-cache/
+playwright-report/
+test-results/
+.lighthouseci/
+.tsbuildinfo
+*.log
+.vercel/
+.netlify/
+.reddoor-a11y/
