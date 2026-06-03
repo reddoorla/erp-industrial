@@ -1,4 +1,5 @@
 <script lang="ts">
+	/* global BuildOut */
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	import Nav from '$lib/components/Nav.svelte';
@@ -36,7 +37,7 @@
 			},
 			{ once: true }
 		);
-		//@ts-ignore
+		// @ts-expect-error BuildOut global injected by external script
 		BuildOut.embed({
 			token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
 			plugin: 'inventory',

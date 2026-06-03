@@ -4,9 +4,8 @@
 	import { repositoryName } from '$lib/prismicio';
 	import '../app.css';
 
-	import { afterNavigate, goto, beforeNavigate, disableScrollHandling } from '$app/navigation';
+	import { afterNavigate, goto, beforeNavigate } from '$app/navigation';
 	import { fade } from 'svelte/transition';
-	import { onMount } from 'svelte';
 	import LandscapeModal from '$lib/components/LandscapeModal.svelte';
 
 	let main: HTMLElement;

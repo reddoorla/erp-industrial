@@ -6,8 +6,6 @@
 	import { SliceZone } from '@prismicio/svelte';
 	import { components } from '$lib/slices';
 	import { onMount } from 'svelte';
-	import { isNavLight } from '$lib/stores/isNavLight.js';
-	import { fade } from 'svelte/transition';
 	import Footer from '$lib/components/Footer.svelte';
 
 	let navLinks = $state([{ href: '', text: '' }]);
@@ -21,8 +19,6 @@
 		});
 	});
 
-	let isMounted = $state(false);
-
 	onMount(() => {
 		document.getElementsByTagName('main')[0].addEventListener(
 			'scroll',
@@ -31,8 +27,6 @@
 			},
 			{ once: true }
 		);
-
-		isMounted = true;
 	});
 </script>
 

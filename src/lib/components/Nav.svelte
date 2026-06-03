@@ -3,14 +3,11 @@
 	import logoFull from '$lib/assets/erp_logo_subtitled.svg';
 	import { isNavLight } from '$lib/stores/isNavLight';
 	import { fly, fade } from 'svelte/transition';
-	import { onMount } from 'svelte';
 
 	let {
 		navLinks = [] as { text: string; href: string }[],
 		isLogoLarge = $bindable(true)
 	}: { navLinks?: { text: string; href: string }[]; isLogoLarge?: boolean } = $props();
-
-	let activeSlice = 0;
 
 	let isOverlayVisible = $state(false);
 
@@ -38,7 +35,7 @@
 				></i>
 			</button>
 
-			{#each navLinks as item}
+			{#each navLinks as item (item.href)}
 				<a
 					href={item.href}
 					class="nav-link text-white pointer-events-auto"
@@ -70,7 +67,7 @@
 
 		<div class="flex flex-row">
 			<div class="hidden lg:flex flex-row justify-between items-center gap-10">
-				{#each navLinks as item}
+				{#each navLinks as item (item.href)}
 					<a href={item.href} class="nav-link pointer-events-auto">{item.text}</a>
 				{/each}
 			</div>

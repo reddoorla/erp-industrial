@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { swipe } from 'svelte-gestures';
 	import ContentBox from './ContentBox.svelte';
 	import type { ComponentProps } from 'svelte';
 
@@ -10,7 +9,7 @@
 
 	const SLIDER_INTERVAL_IN_MS = 5000;
 	let sliderIndex = $state(0);
-	let sliderInterval: NodeJS.Timeout;
+	let sliderInterval: ReturnType<typeof setTimeout>;
 	let sliderWidth = $derived(100 / contentBoxPropsArray.length / 5);
 	let isSlideAnimated = $state(true);
 
@@ -38,14 +37,6 @@
 		console.log(sliderIndex);
 	};
 
-	const handleSwipe = (
-		e: CustomEvent<{ direction: 'left' | 'top' | 'right' | 'bottom'; target: EventTarget }>
-	) => {
-		if (e.detail.direction === 'left') slideLeft();
-
-		if (e.detail.direction === 'right') slideRight();
-	};
-
 	onMount(() => {
 		sliderInterval = setInterval(() => slideLeft(), SLIDER_INTERVAL_IN_MS);
 	});
@@ -68,7 +59,7 @@
 			contentBoxPropsArray.length) *
 			sliderWidth}%);"
 	>
-		{#each quintupledPropsArray as contentBoxProps}
+		{#each quintupledPropsArray as contentBoxProps, i (i)}
 			<div class="h-full z-0" style="width: {sliderWidth}%;">
 				<ContentBox {...contentBoxProps} class="text-white" />
 			</div>
@@ -85,7 +76,7 @@
 			<i class="fa-sharp fa-solid fa-chevron-left fa-2x" aria-hidden="true"></i>
 		</button>
 		<div class="h-10 flex align-middle justify-start">
-			{#each contentBoxPropsArray as image, i}
+			{#each contentBoxPropsArray as _image, i (i)}
 				<button
 					class="h-[10px] w-[10px] border-2 rounded-full transition-colors duration-1000 cursor-pointer active:translate-y-[-0.5px] hover:opacity-60 mr-4
             {(sliderIndex % contentBoxPropsArray.length >= 0 &&

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import placeholderIcon from '../assets/fullLogo.png';
 	import DefaultButton from './Buttons/DefaultButton.svelte';
 	import { onMount } from 'svelte';
 
@@ -13,8 +12,6 @@
 		subtitleText = '',
 		paragraphText = '',
 		buttonText = '',
-		linkText = '',
-		linkHref = '',
 		backgroundColor = 'transparent',
 		float = 'center',
 		class: className = ''
@@ -27,8 +24,6 @@
 		subtitleText?: string;
 		paragraphText?: string;
 		buttonText?: string;
-		linkText?: string;
-		linkHref?: string;
 		backgroundColor?: string;
 		float?: string;
 		class?: string;

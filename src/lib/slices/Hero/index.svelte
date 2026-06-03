@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { slice, ...rest }: { slice: HeroSlice; [key: string]: unknown } = $props();
+	let { slice }: { slice: HeroSlice } = $props();
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { PrismicImage } from '@prismicio/svelte';
@@ -19,8 +19,6 @@
 
 	if (slice.primary.video_embed.embed_url)
 		videoId = slice.primary.video_embed?.embed_url.split('/').pop() || '';
-
-	let bottomPane: HTMLElement;
 
 	let isMounted = $state(false);
 
@@ -102,7 +100,7 @@
 			{#if viewportWidth > 1024}
 				<iframe
 					title="background video"
-					src={`https://player.vimeo.com/video/939250244?background=1&muted=0&autoplay=1`}
+					src="https://player.vimeo.com/video/939250244?background=1&muted=0&autoplay=1"
 					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
 					frameborder="0"
 					allow="autoplay"
@@ -110,7 +108,7 @@
 			{:else}
 				<iframe
 					title="background video"
-					src={`https://player.vimeo.com/video/939250244`}
+					src="https://player.vimeo.com/video/939250244"
 					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
 					frameborder="0"
 				></iframe>

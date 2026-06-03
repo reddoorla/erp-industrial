@@ -4,22 +4,8 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from '@prismicio/helpers';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
-	import { page } from '$app/stores';
-	import { enhance } from '$app/forms';
-	import type { ActionData, SubmitFunction } from './$types';
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import { fade } from 'svelte/transition';
-
-	interface FormData {
-		success: boolean;
-		// Add other properties if needed
-	}
-
-	let form: FormData | undefined;
-
-	page.subscribe(($page) => {
-		form = $page.form as FormData | undefined;
-	});
 
 	let navLinks = [{ href: '', text: '' }];
 
@@ -36,10 +22,10 @@
 	let isEmailFailed = $state(false);
 
 	async function executeReCaptcha(): Promise<string> {
-		//@ts-ignore
+		// @ts-expect-error grecaptcha is a global injected by reCAPTCHA enterprise script
 		if (typeof window.grecaptcha !== 'undefined' && window.grecaptcha.enterprise) {
 			try {
-				//@ts-ignore
+				// @ts-expect-error grecaptcha is a global injected by reCAPTCHA enterprise script
 				const token = await window.grecaptcha.enterprise.execute(
 					import.meta.env.VITE_RECAPTCHA_SITE_KEY,
 					{ action: 'submit' }
@@ -108,10 +94,10 @@
 	onMount(() => {
 		isNavLight.set(true);
 
-		//@ts-ignore
+		// @ts-expect-error window.onSubmit is a reCAPTCHA callback injected at runtime
 		window.onSubmit = (token) => {
 			console.log(token);
-			//@ts-ignore
+			// @ts-expect-error getElementById may return null but form is guaranteed present
 			document.getElementById('contact').submit();
 		};
 	});

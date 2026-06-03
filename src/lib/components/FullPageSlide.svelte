@@ -1,8 +1,5 @@
 <script lang="ts">
-	let {
-		backgroundImage = null,
-		...rest
-	}: { backgroundImage?: ImageFieldImage | null; [key: string]: unknown } = $props();
+	let { backgroundImage = null }: { backgroundImage?: ImageFieldImage | null } = $props();
 	import type { ImageFieldImage } from '@prismicio/client';
 	import { PrismicImage } from '@prismicio/svelte';
 

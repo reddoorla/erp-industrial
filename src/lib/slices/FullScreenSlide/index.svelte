@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { slice, ...rest }: { slice: FullScreenSlideSlice; [key: string]: unknown } = $props();
+	let { slice }: { slice: FullScreenSlideSlice } = $props();
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import ContentBox from '$lib/components/ContentBox.svelte';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
@@ -35,7 +35,9 @@
 
 	onMount(() => section?.parentElement?.addEventListener('scroll', checkStacked));
 
-	let contentBoxPropsArray = $state<any[]>([]);
+	let contentBoxPropsArray = $state<
+		{ icon: string; float: string; titleText: string; paragraphText: string }[]
+	>([]);
 
 	if (slice.variation === 'iconBoxes') {
 		slice.items.forEach((item) => {
@@ -73,12 +75,13 @@
 			</ContentWidth>
 			<div class="overflow-y-auto overflow-x-hidden md:-translate-y-12 mb-32">
 				{#key $page.url.pathname}
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					{@html slice.primary.external_embed}
 				{/key}
 			</div>
 		{:else if slice.variation === 'halfPage' || slice.variation === 'halfPageWithButtonOverlays' || (slice.variation === 'basic' && viewportWidth < 768)}
 			<div
-				class="bg-black absolute w-screen h-screen flex flex-col {//@ts-ignore
+				class="bg-black absolute w-screen h-screen flex flex-col {//@ts-expect-error isImageLeft exists on halfPage variation only
 				slice.primary.isImageLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'}"
 			>
 				<PrismicImage
@@ -125,11 +128,7 @@
 								<PrismicRichText field={slice.items[activeOverlay].overlay_body} />
 							</p>
 							<div in:fly={{ delay: 800, y: 20 }} out:fade class="mt-8">
-								<DefaultButton
-									text={'Go Back'}
-									onclick={() => (activeOverlay = -1)}
-									filled={false}
-								/>
+								<DefaultButton text="Go Back" onclick={() => (activeOverlay = -1)} filled={false} />
 							</div>
 
 							<button
@@ -177,7 +176,7 @@
 					</div>
 					<div class="flex flex-col md:flex-row gap-4" transition:fly={{ y: 20, delay: 300 }}>
 						{#if slice.variation === 'default'}
-							{#each slice.items as item, i}
+							{#each slice.items as item, i (i)}
 								{#if isFilled.link(item.button_link)}
 									<DefaultButton text={item.button_text || ''} href={item.button_link.url} />
 								{:else}
@@ -204,7 +203,7 @@
 						{#if slice.variation === 'iconBoxes'}
 							<div class="w-full flex flex-col md:flex-row gap-8 h-80">
 								{#if viewportWidth > 768}
-									{#each slice.items as item}
+									{#each slice.items as item, i (i)}
 										<ContentBox
 											icon={item.icon.url || ''}
 											labelText={item.eyebrow || ''}
@@ -285,7 +284,7 @@
 									<PrismicRichText field={slice.items[activeOverlay].body_text} />
 								</div>
 								<div class="flex flex-col md:flex-row gap-4 mx-[4%] md:mx-0">
-									{#each slice.items as item, i}
+									{#each slice.items as item, i (i)}
 										<DefaultButton
 											text={activeOverlay == i ? 'close' : item.button_text || ''}
 											onclick={() => {
