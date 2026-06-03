@@ -1,7 +1,6 @@
 <script lang="ts">
-    export let text = "BUTTON";
-    export let filled = true;
-    export let href = "";
+
+  let { text = "BUTTON", filled = true, href = "", ...rest, class: className = "" }: { text?: unknown; filled?: unknown; href?: unknown; [key: string]: unknown; class?: string } = $props();
 </script>
 
 <style>
@@ -39,7 +38,7 @@ text-transform: uppercase;
          "bg-black hover:bg-erp-blue active:bg-black  text-white" 
          : 
          "hover:bg-erp-blue border-white border-2 text-white active:bg-black " 
-         } w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 {$$props.class || ''}">
+         } w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 {className || ''}">
         {text}
 </a>
 
@@ -49,7 +48,7 @@ text-transform: uppercase;
          "bg-black hover:bg-erp-blue active:bg-black  text-white" 
          : 
          "hover:bg-erp-blue border-white border-2 text-white active:bg-black " 
-         } w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 {$$props.class || ''}">
+         } w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 {className || ''}">
         {text}
 </button>
 {/if}

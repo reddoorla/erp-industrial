@@ -1,6 +1,6 @@
 <script>
-	/** @type {import("@prismicio/client").RTLabelNode} */
-	export let node;
+	  let { node, ...rest } = $props();
+/** @type {import("@prismicio/client").RTLabelNode} */
 </script>
 
 {#if node.data.label === 'codespan'}

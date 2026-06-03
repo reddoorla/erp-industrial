@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { ImageFieldImage } from "@prismicio/client";
+	  let { backgroundImage = null, ...rest }: { backgroundImage?: ImageFieldImage|null; [key: string]: unknown } = $props();
+import type { ImageFieldImage } from "@prismicio/client";
 	import { PrismicImage } from "@prismicio/svelte";
-
-    export let backgroundImage:ImageFieldImage|null = null;
 
     let viewportWidth:number;
     let viewportHeight:number;

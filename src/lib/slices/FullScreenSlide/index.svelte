@@ -1,5 +1,6 @@
 <script lang='ts'>
-	import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
+	  let { slice, ...rest }: { slice: FullScreenSlideSlice; [key: string]: unknown } = $props();
+import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 	import ContentBox from "$lib/components/ContentBox.svelte";
 	import ContentWidth from "$lib/components/ContentWidth.svelte";
 	import FullPageSlide from "$lib/components/FullPageSlide.svelte";
@@ -11,9 +12,6 @@
 	import SliderOfContentBoxes from "$lib/components/SliderOfContentBoxes.svelte";
 	import { page } from "$app/stores";
 	import { isFilled } from "@prismicio/helpers";
-
-
-	export let slice:FullScreenSlideSlice;
 
 	let activeOverlay = -1;
 	let section:HTMLElement|undefined;
@@ -87,7 +85,7 @@
 						{#if isFilled.link(item.button_link)}
 							<DefaultButton text={item.button_text||""} href={(isFilled.link(item.button_link)?item.button_link.url:"")} filled={false}/>
 						{:else}
-							<DefaultButton text={item.button_text||""} on:click={()=>activeOverlay=i} filled={false}/>
+							<DefaultButton text={item.button_text||""} onclick={()=>activeOverlay=i} filled={false}/>
 						{/if}
 					{/each}
 				</div>
@@ -96,10 +94,10 @@
 					<h2 in:fade={{delay:401}} out:fade class="text-white whitespace-pre-line my-8">{slice.items[activeOverlay].overlay_title||""}</h2>
 					<p in:fly={{delay:600, y:20}} out:fade class="text-white"><PrismicRichText field={slice.items[activeOverlay].overlay_body} /></p>
 					<div in:fly={{delay:800, y:20}} out:fade class="mt-8">
-						<DefaultButton text={"Go Back"} on:click={()=>activeOverlay=-1} filled={false}/>
+						<DefaultButton text={"Go Back"} onclick={()=>activeOverlay=-1} filled={false}/>
 					</div>
 					
-					<button transition:fade  class="absolute top-8 right-16 bump hover:opacity-80 transition-opacity" on:click={()=>activeOverlay=-1}>
+					<button transition:fade  class="absolute top-8 right-16 bump hover:opacity-80 transition-opacity" onclick={()=>activeOverlay=-1}>
 						<i class="fa-solid fa-close fa-xl text-white" />
 					</button>
 					
@@ -143,7 +141,7 @@
 					{#if isFilled.link(item.button_link)}
 						<DefaultButton text={item.button_text||''} href={item.button_link.url}/>
 					{:else}
-						<DefaultButton text={item.button_text||''} on:click={()=>activeOverlay=i}/>
+						<DefaultButton text={item.button_text||''} onclick={()=>activeOverlay=i}/>
 					{/if}
 					{/each}
 				{/if}
@@ -151,9 +149,9 @@
 							<!-- {#if viewportWidth<1024}
 								<DefaultButton text="Watch" href={"https://vimeo.com/"+slice.primary.video_embed.embed_url.split('/').pop()}/>
 							{:else}
-								<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
+								<DefaultButton text="Watch" onclick={()=>{activeOverlay=0;}}/>
 							{/if} -->
-							<DefaultButton text="Watch" on:click={()=>{activeOverlay=0;}}/>
+							<DefaultButton text="Watch" onclick={()=>{activeOverlay=0;}}/>
 				{/if}
 				{#if slice.variation==="iconBoxes"}
 				<div class="w-full flex flex-col md:flex-row gap-8 h-80">
@@ -197,7 +195,7 @@
 						<PrismicImage field={item.headshot} class="md:w-48 rounded-full"/>
 						<h5 class="text-white whitespace-pre-line">{item.title}</h5>
 						<div class="large-paragraph text-white whitespace-nowrap">{item.name}</div>
-						<DefaultButton filled={false} on:click={()=>activeOverlay=i} text="bio"/>
+						<DefaultButton filled={false} onclick={()=>activeOverlay=i} text="bio"/>
 					</div>
 				{/each}
 
@@ -228,7 +226,7 @@
 						{#each slice.items as item, i}
 
 							<DefaultButton text={activeOverlay==i?'close':item.button_text||''} 
-								on:click={()=>{	
+								onclick={()=>{	
 									if(activeOverlay==i){activeOverlay= -1}
 									else{activeOverlay=i}}}/>
 						{/each}
@@ -261,7 +259,7 @@
 					{/if}
 				
 					
-					<DefaultButton text="Close" class="absolute bottom-4 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=-1}/>
+					<DefaultButton text="Close" class="absolute bottom-4 mx-[4%] md:mx-auto max-w-[92%]" onclick={()=>activeOverlay=-1}/>
 				</ContentWidth>
 			{/if}
 			{#if slice.variation==="teams"}
@@ -275,7 +273,7 @@
 									<div class="large-paragraph text-white whitespace-nowrap">{slice.items[activeOverlay].name}</div>
 								</div>
 								<div class="hidden md:block">
-									<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12 "/>
+									<DefaultButton text="close" onclick={()=>activeOverlay=-1} filled={false} class="h-12 "/>
 								</div>
 							</div>
 							
@@ -283,7 +281,7 @@
 								<PrismicRichText field={slice.items[activeOverlay].body_text} />
 							</div>
 							<div class="md:hidden pb-64">
-								<DefaultButton text="close" on:click={()=>activeOverlay=-1} filled={false} class="h-12"/>
+								<DefaultButton text="close" onclick={()=>activeOverlay=-1} filled={false} class="h-12"/>
 							</div>
 						</ContentWidth>
 					</div>

@@ -1,5 +1,6 @@
 <script lang='ts'>
-	import Nav from '$lib/components/Nav.svelte';
+	  let { data, ...rest }: { data: unknown; [key: string]: unknown } = $props();
+import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from "@prismicio/helpers"
 	import { SliceZone } from '@prismicio/svelte';
 	import { components } from '$lib/slices';
@@ -14,8 +15,6 @@ afterNavigate(() => {
         scrollTo({ top: 0, behavior: 'instant' });
     }, 50);
 });
-
-	export let data;
 
 	let navLinks=[{href:"",text:""}];
 	let isLogoLarge = true;

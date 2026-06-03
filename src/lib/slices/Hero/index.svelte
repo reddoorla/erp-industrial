@@ -1,5 +1,6 @@
 <script lang='ts'>
-	import { onMount } from "svelte";
+	  let { slice, ...rest }: { slice: HeroSlice; [key: string]: unknown } = $props();
+import { onMount } from "svelte";
 	import { fade } from "svelte/transition"
 	import { PrismicImage } from "@prismicio/svelte";
 	import ContentWidth from "$lib/components/ContentWidth.svelte";
@@ -11,8 +12,6 @@
 
 	import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 	import { isFilled } from "@prismicio/helpers";
-
-	export let slice:HeroSlice;
 
 	let videoId="";
 
@@ -116,7 +115,7 @@ const handleMouseMove = (event: MouseEvent) => {
 					{/if}
 				
 					
-					<DefaultButton text="Close" class="absolute bottom-4 mx-[4%] md:mx-auto max-w-[92%]" on:click={()=>activeOverlay=false}/>
+					<DefaultButton text="Close" class="absolute bottom-4 mx-[4%] md:mx-auto max-w-[92%]" onclick={()=>activeOverlay=false}/>
 				</ContentWidth>
 		
 			
@@ -158,14 +157,14 @@ const handleMouseMove = (event: MouseEvent) => {
 			<DefaultButton text={slice.primary.button_text || ''} href={(isFilled.link(slice.primary.button_link)?slice.primary.button_link.url : "")}/>
 		{/if}
 		{#if slice.primary.title === "Who We Are"}
-			<DefaultButton text="Watch" on:click={()=>activeOverlay=true} />
+			<DefaultButton text="Watch" onclick={()=>activeOverlay=true} />
 		{/if}
 		</div>
 		{/if}
 		</div>
 	</ContentWidth>
   </div>
-  <div class="w-screen h-screen sticky snap-end overflow-hidden" on:click={handleClick} on:mousemove={handleMouseMove} aria-hidden="true" >
+  <div class="w-screen h-screen sticky snap-end overflow-hidden" onclick={handleClick} onmousemove={handleMouseMove} aria-hidden="true" >
 	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-32 md:bottom-8 right-8" />
   </div>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Nav from '$lib/components/Nav.svelte';
+	  let { data, ...rest }: { data: unknown; [key: string]: unknown } = $props();
+import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from '@prismicio/helpers';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
     import { page } from '$app/stores';
@@ -8,7 +9,6 @@
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import { fade } from 'svelte/transition';
 
-	export let data;
     interface FormData {
     success: boolean;
     // Add other properties if needed
@@ -200,6 +200,7 @@ button{
         </div>
             
         {/if}
+		<!-- @migration-task: Svelte 5 removed event modifier syntax (`on:submit|preventDefault`). Rewrite inline, e.g. onclick={(e) => { e.preventDefault(); ... }}. -->
 		<form class="w-full flex flex-col gap-8" name="contact" id="contact" method="POST" on:submit|preventDefault={handleSubmit}>
 			<h5 class="text-white">SEND US A MESSAGE</h5>
 			<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">

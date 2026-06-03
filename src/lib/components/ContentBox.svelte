@@ -1,28 +1,25 @@
 <script lang='ts'>
-	import { fade } from "svelte/transition";
+	  let { icon = "", iconAltText = "logo", labelText = "", titleText = "", titleTag = "h3", subtitleText = "", paragraphText = "", buttonText = "", linkText = "", linkHref = "", backgroundColor = "transparent", float = "center", ...rest, class: className = "" }: { icon?: unknown; iconAltText?: unknown; labelText?: unknown; titleText?: unknown; titleTag?: unknown; subtitleText?: unknown; paragraphText?: unknown; buttonText?: unknown; linkText?: unknown; linkHref?: unknown; backgroundColor?: unknown; float?: unknown; [key: string]: unknown; class?: string } = $props();
+import { fade } from "svelte/transition";
     import placeholderIcon from "../assets/fullLogo.png"
     import DefaultButton from "./Buttons/DefaultButton.svelte";
 	import { onMount } from "svelte";
 
 
 
-export let icon = "";
-export let iconAltText = "logo"
-export let labelText = ""
-export let titleText = ""
-export let titleTag = "h3"
-export let subtitleText = ""
-export let paragraphText = ""
-export let buttonText = ""
-export let linkText=""
-export let linkHref=""
 
-export let backgroundColor="transparent"
-export let float = "center"
+
+
+
+
+
+
+
 let justify=float;
 let horizontalFloatMargin = "mx-auto"
 
-$:{
+// @migration-task: $effect won't trigger UI updates on plain `let` bindings — refine mutated locals to $state or split into per-variable $derived.
+$effect(() => {
     justify=float;
 if(float==="left")
     justify="start";
@@ -34,7 +31,7 @@ if(float==="left")
     horizontalFloatMargin="ml-0 mr-auto";
 if(float==="right")
     horizontalFloatMargin="ml-auto mr-0"
-}
+});
 let isMounted = false;
 
 onMount(()=>isMounted=true);
@@ -42,7 +39,7 @@ onMount(()=>isMounted=true);
 </script>
 
 {#if isMounted}
-<div class="w-full flex flex-col justify-{justify} text-{float} {$$props.class || ''}"
+<div class="w-full flex flex-col justify-{justify} text-{float} {className || ''}"
      style="background-color: {backgroundColor}"
 >
     {#if icon}
