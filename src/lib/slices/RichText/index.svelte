@@ -1,6 +1,6 @@
 <script lang='ts'>
-	  let { slice, ...rest }: { slice: unknown; [key: string]: unknown } = $props();
-import { PrismicRichText } from '@prismicio/svelte';
+	let { slice }: { slice: any } = $props();
+	import { PrismicRichText } from '@prismicio/svelte';
 	import Label from './Label.svelte';
 
 	/** @type {import("@prismicio/client").Content.RichTextSlice} */

@@ -7,22 +7,22 @@ import { onMount } from "svelte";
 	import ContentBox from "$lib/components/ContentBox.svelte";
 	import type { HeroSlice } from "../../../prismicio-types";
 
-    let viewportWidth:number;
-    let viewportHeight:number;
+    let viewportWidth = $state(0);
+    let viewportHeight = $state(0);
 
 	import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 	import { isFilled } from "@prismicio/helpers";
 
-	let videoId="";
+	let videoId = $state("");
 
-	let activeOverlay = false;
+	let activeOverlay = $state(false);
 
 	if(slice.primary.video_embed.embed_url)
 		videoId = slice.primary.video_embed?.embed_url.split('/').pop()||"";
 
 	let bottomPane:HTMLElement;
 
-	let isMounted = false;
+	let isMounted = $state(false);
 
 	// const sendToBottomPane = () =>{
 	// 	if(bottomPane?.getBoundingClientRect().top>10){
@@ -93,7 +93,7 @@ const handleMouseMove = (event: MouseEvent) => {
 		
 			
 				<ContentWidth class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-8">
-					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"/>
+					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"></i>
 				
 					{#if viewportWidth>1024}
 					<iframe 
@@ -165,7 +165,7 @@ const handleMouseMove = (event: MouseEvent) => {
 	</ContentWidth>
   </div>
   <div class="w-screen h-screen sticky snap-end overflow-hidden" onclick={handleClick} onmousemove={handleMouseMove} aria-hidden="true" >
-	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-32 md:bottom-8 right-8" />
+	<i class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-32 md:bottom-8 right-8"></i>
   </div>
 
   {/key}

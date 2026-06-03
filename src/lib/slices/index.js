@@ -3,8 +3,8 @@ import FullScreenSlide from './FullScreenSlide/index.svelte';
 import Hero from './Hero/index.svelte';
 import RichText from './RichText/index.svelte';
 
-export const components = {
+export const components = /** @type {any} */ ({
 	full_screen_slide: FullScreenSlide,
 	hero: Hero,
 	rich_text: RichText
-};
+});

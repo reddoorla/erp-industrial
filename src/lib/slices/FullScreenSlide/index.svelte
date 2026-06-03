@@ -13,14 +13,14 @@ import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 	import { page } from "$app/stores";
 	import { isFilled } from "@prismicio/helpers";
 
-	let activeOverlay = -1;
+	let activeOverlay = $state(-1);
 	let section:HTMLElement|undefined;
-	let isStacked = false;
-	let viewportWidth:number;
-	
+	let isStacked = $state(false);
+	let viewportWidth = $state(0);
 
 
-	let videoId:string|undefined;
+
+	let videoId = $state<string|undefined>(undefined);
 	if(slice.variation==="withVideoPopup"){
 		videoId=slice.primary.video_embed.embed_url.split('/').pop();
 		}
@@ -39,7 +39,7 @@ import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 	onMount( () => section?.parentElement?.addEventListener("scroll", checkStacked));
 
 
-	let contentBoxPropsArray:any[]=[];
+	let contentBoxPropsArray = $state<any[]>([]);
 
 	if(slice.variation==="iconBoxes"){
 		slice.items.forEach((item)=>{
@@ -98,7 +98,7 @@ import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 					</div>
 					
 					<button transition:fade  class="absolute top-8 right-16 bump hover:opacity-80 transition-opacity" onclick={()=>activeOverlay=-1}>
-						<i class="fa-solid fa-close fa-xl text-white" />
+						<i class="fa-solid fa-close fa-xl text-white"></i>
 					</button>
 					
 				{/if}
@@ -237,7 +237,7 @@ import DefaultButton from "$lib/components/Buttons/DefaultButton.svelte";
 			{/if}
 			{#if slice.variation==="withVideoPopup"&&videoId}
 				<ContentWidth class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-8">
-					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"/>
+					<i class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"></i>
 				
 					{#if viewportWidth>1024}
 					<iframe 

@@ -1,6 +1,6 @@
 <script lang='ts'>
-	  let { data, ...rest }: { data: unknown; [key: string]: unknown } = $props();
-import Nav from '$lib/components/Nav.svelte';
+	let { data }: { data: any } = $props();
+	import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from "@prismicio/helpers"
 	import { SliceZone } from '@prismicio/svelte';
 	import { components } from '$lib/slices';
@@ -9,16 +9,16 @@ import Nav from '$lib/components/Nav.svelte';
 	import { fade } from 'svelte/transition';
 	import Footer from '$lib/components/Footer.svelte';
 
-	let navLinks=[{href:"",text:""}];
-	let isLogoLarge = true;
+	let navLinks = $state([{href:"",text:""}]);
+	let isLogoLarge = $state(true);
 
-	data.nav.data.links.forEach((link)=>{ navLinks.push({
+	data.nav.data.links.forEach((link: any) => { navLinks.push({
 			href: (prismicHelpers.isFilled.link(link.href) ? link.href.url||"#" : "#"),
 			text: (link.text||"")
 		})
 	});
 
-	let isMounted = false;
+	let isMounted = $state(false);
 
 	onMount(()=>{
 		document.getElementsByTagName('main')[0].addEventListener("scroll", ()=>{
@@ -32,7 +32,7 @@ import Nav from '$lib/components/Nav.svelte';
 
 </script>
 
-<svelte:head> 
+<svelte:head>
     <title>ERP Industrials</title>
 </svelte:head>
 

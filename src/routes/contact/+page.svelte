@@ -1,5 +1,5 @@
 <script lang="ts">
-	  let { data, ...rest }: { data: unknown; [key: string]: unknown } = $props();
+	  let { data }: { data: any } = $props();
 import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from '@prismicio/helpers';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
@@ -22,16 +22,16 @@ import Nav from '$lib/components/Nav.svelte';
 
 	let navLinks = [{ href: '', text: '' }];
 
-	data.nav.data.links.forEach((link) => {
+	data.nav.data.links.forEach((link: any) => {
 		navLinks.push({
 			href: prismicHelpers.isFilled.link(link.href) ? link.href.url || '#' : '#',
 			text: link.text || ''
 		});
 	});
 
-    let isEmailSent = false;
-    let isEmailSending = false;
-    let isEmailFailed = false;
+    let isEmailSent = $state(false);
+    let isEmailSending = $state(false);
+    let isEmailFailed = $state(false);
 
 
 
@@ -122,7 +122,7 @@ window.onSubmit = (token) => {
 
 
 
-let viewportWidth:number;
+let viewportWidth = $state(0);
 </script>
 
 
@@ -200,8 +200,7 @@ button{
         </div>
             
         {/if}
-		<!-- @migration-task: Svelte 5 removed event modifier syntax (`on:submit|preventDefault`). Rewrite inline, e.g. onclick={(e) => { e.preventDefault(); ... }}. -->
-		<form class="w-full flex flex-col gap-8" name="contact" id="contact" method="POST" on:submit|preventDefault={handleSubmit}>
+		<form class="w-full flex flex-col gap-8" name="contact" id="contact" method="POST" onsubmit={(e) => { e.preventDefault(); handleSubmit(e); }}>
 			<h5 class="text-white">SEND US A MESSAGE</h5>
 			<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">
 				<input type="email" name="email" placeholder="Your Email" class="md:w-[45%]" />
@@ -213,7 +212,7 @@ button{
 				</select>
 			</div>
 			<div class="w-full">
-				<textarea name="message" class="w-full h-48" placeholder="Your Message" />
+				<textarea name="message" class="w-full h-48" placeholder="Your Message"></textarea>
 			</div>
 			<button
 				class="g-recaptcha hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"

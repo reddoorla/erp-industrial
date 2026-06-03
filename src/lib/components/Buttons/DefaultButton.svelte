@@ -1,6 +1,17 @@
 <script lang="ts">
-
-  let { text = "BUTTON", filled = true, href = "", ...rest, class: className = "" }: { text?: unknown; filled?: unknown; href?: unknown; [key: string]: unknown; class?: string } = $props();
+  let {
+    text = "BUTTON",
+    filled = true,
+    href = "",
+    onclick = undefined,
+    class: className = ""
+  }: {
+    text?: string;
+    filled?: boolean;
+    href?: string;
+    onclick?: ((e: MouseEvent) => void) | undefined;
+    class?: string;
+  } = $props();
 </script>
 
 <style>
@@ -35,19 +46,19 @@ text-transform: uppercase;
 {#if href}
 <a      {href}
         class="{filled ?
-         "bg-black hover:bg-erp-blue active:bg-black  text-white" 
-         : 
-         "hover:bg-erp-blue border-white border-2 text-white active:bg-black " 
+         "bg-black hover:bg-erp-blue active:bg-black  text-white"
+         :
+         "hover:bg-erp-blue border-white border-2 text-white active:bg-black "
          } w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 {className || ''}">
         {text}
 </a>
 
 {:else}
-<button on:click
+<button {onclick}
         class="{filled ?
-         "bg-black hover:bg-erp-blue active:bg-black  text-white" 
-         : 
-         "hover:bg-erp-blue border-white border-2 text-white active:bg-black " 
+         "bg-black hover:bg-erp-blue active:bg-black  text-white"
+         :
+         "hover:bg-erp-blue border-white border-2 text-white active:bg-black "
          } w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 {className || ''}">
         {text}
 </button>
