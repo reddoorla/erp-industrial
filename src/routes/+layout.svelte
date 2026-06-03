@@ -55,7 +55,7 @@
 <main
 	bind:this={main}
 	class="{isSnappy
-		? 'snap-y snap-mandatory'
+		? 'snap-y snap-proximity'
 		: ''} h-screen overflow-scroll m-0 scroll-smooth overscroll-none"
 >
 	<slot />

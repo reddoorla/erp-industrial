@@ -1,7 +1,12 @@
 <script lang="ts">
-	let { backgroundImage = null }: { backgroundImage?: ImageFieldImage | null } = $props();
+	import type { Snippet } from 'svelte';
 	import type { ImageFieldImage } from '@prismicio/client';
 	import { PrismicImage } from '@prismicio/svelte';
+
+	let {
+		backgroundImage = null,
+		children
+	}: { backgroundImage?: ImageFieldImage | null; children?: Snippet } = $props();
 
 	let viewportWidth = $state(0);
 	let viewportHeight = $state(0);
@@ -25,5 +30,5 @@
 		></i>
 	{/if}
 
-	<slot />
+	{@render children?.()}
 </div>

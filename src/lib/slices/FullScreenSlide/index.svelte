@@ -7,33 +7,21 @@
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
 	import type { FullScreenSlideSlice } from '../../../prismicio-types';
 	import { fade, fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
-	import { isNavLight } from '$lib/stores/isNavLight';
 	import SliderOfContentBoxes from '$lib/components/SliderOfContentBoxes.svelte';
+	import { slideObserver } from '$lib/actions/slideObserver';
 	import { page } from '$app/stores';
 	import { isFilled } from '@prismicio/helpers';
 
 	let activeOverlay = $state(-1);
-	let section: HTMLElement | undefined;
-	let isStacked = $state(false);
+	// Latches true the first time the slide scrolls into view, so entrance transitions play exactly
+	// once and never replay on the way back up. CSS `position: sticky` handles the stacking itself.
+	let hasEntered = $state(false);
 	let viewportWidth = $state(0);
 
 	let videoId = $state<string | undefined>(undefined);
 	if (slice.variation === 'withVideoPopup') {
 		videoId = slice.primary.video_embed.embed_url.split('/').pop();
 	}
-
-	const checkStacked = () => {
-		if (section) {
-			const rect = section.getBoundingClientRect();
-
-			isStacked = rect.top < 100 && rect.top > -rect.height + 100;
-		}
-
-		if (isStacked) isNavLight.set(slice.primary.isnavlight);
-	};
-
-	onMount(() => section?.parentElement?.addEventListener('scroll', checkStacked));
 
 	let contentBoxPropsArray = $state<
 		{ icon: string; float: string; titleText: string; paragraphText: string }[]
@@ -54,10 +42,10 @@
 <svelte:window bind:innerWidth={viewportWidth} />
 
 <section
-	bind:this={section}
+	use:slideObserver={{ navLight: slice.primary.isnavlight, onEnter: () => (hasEntered = true) }}
 	data-slice-type={slice.slice_type}
 	data-slice-variation={slice.variation}
-	style="position: {isStacked && slice.primary.doesStack ? 'sticky' : 'relative'}"
+	style="position: {slice.primary.doesStack ? 'sticky' : 'relative'}"
 	class="snap-start {slice.primary.doesStack ? 'top-0' : ''} {slice.variation === 'embed'
 		? 'bg-white'
 		: 'bg-black'} overflow-hidden"
@@ -88,7 +76,7 @@
 					field={slice.primary.background_image}
 					class="lg:w-1/2 h-1/4 lg:h-full object-cover"
 				/>
-				{#if isStacked}
+				{#if hasEntered}
 					<div
 						class="h-3/4 lg:h-auto lg:w-1/2 p-[4%] md:p-[6%] overflow-y-scroll md:overflow-hidden py-32 mt-32 md:pb-0"
 					>
@@ -143,10 +131,10 @@
 					</div>
 				{/if}
 			</div>
-		{:else if isStacked}
+		{:else if hasEntered}
 			<div
 				class="absolute w-screen h-screen top-0 left-0"
-				class:backdrop-blur={slice.primary.isBackgroundBlurred && isStacked}
+				class:backdrop-blur={slice.primary.isBackgroundBlurred && hasEntered}
 				transition:fade={{ duration: 1000 }}
 			></div>
 			<ContentWidth class="h-full relative justify-end z-30 overflow-hidden py-32">
