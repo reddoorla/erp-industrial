@@ -21,24 +21,32 @@
 	let isEmailSending = $state(false);
 	let isEmailFailed = $state(false);
 
+	// Public reCAPTCHA Enterprise site key — single source of truth for the loader script and
+	// execute() call so they can never drift (the previous env var was undefined locally, which
+	// caused "No reCAPTCHA clients exist"). Site keys are public by design.
+	const RECAPTCHA_SITE_KEY = '6LcgrQUqAAAAAGSwikmSpKfzVBS8SjC4Gd1GAKP_';
+
 	async function executeReCaptcha(): Promise<string> {
 		// @ts-expect-error grecaptcha is a global injected by reCAPTCHA enterprise script
-		if (typeof window.grecaptcha !== 'undefined' && window.grecaptcha.enterprise) {
-			try {
-				// @ts-expect-error grecaptcha is a global injected by reCAPTCHA enterprise script
-				const token = await window.grecaptcha.enterprise.execute(
-					import.meta.env.VITE_RECAPTCHA_SITE_KEY,
-					{ action: 'submit' }
-				);
-				console.log('reCAPTCHA token:', token);
-				return token;
-			} catch (error) {
-				console.error('reCAPTCHA execution failed:', error);
-				throw error;
-			}
-		} else {
+		const grecaptcha = window.grecaptcha?.enterprise;
+		if (!grecaptcha) {
 			console.error('reCAPTCHA is not loaded');
 			throw new Error('reCAPTCHA not loaded');
+		}
+		try {
+			// Ensure the client is registered before executing, else execute() can throw.
+			await new Promise<void>((resolve) => grecaptcha.ready(resolve));
+			// execute() hangs indefinitely if the current domain isn't allow-listed for the site key
+			// (e.g. localhost), so race it against a timeout instead of leaving Submit spinning forever.
+			return await Promise.race([
+				grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit' }) as Promise<string>,
+				new Promise<string>((_, reject) =>
+					setTimeout(() => reject(new Error('reCAPTCHA timed out')), 10000)
+				)
+			]);
+		} catch (error) {
+			console.error('reCAPTCHA execution failed:', error);
+			throw error;
 		}
 	}
 
@@ -93,13 +101,6 @@
 
 	onMount(() => {
 		isNavLight.set(true);
-
-		// @ts-expect-error window.onSubmit is a reCAPTCHA callback injected at runtime
-		window.onSubmit = (token) => {
-			console.log(token);
-			// @ts-expect-error getElementById may return null but form is guaranteed present
-			document.getElementById('contact').submit();
-		};
 	});
 
 	let viewportWidth = $state(0);
@@ -107,9 +108,7 @@
 
 <svelte:window bind:innerWidth={viewportWidth} />
 <svelte:head>
-	<script
-		src="https://www.google.com/recaptcha/enterprise.js?render=6LcgrQUqAAAAAGSwikmSpKfzVBS8SjC4Gd1GAKP_"
-	></script>
+	<script src="https://www.google.com/recaptcha/enterprise.js?render={RECAPTCHA_SITE_KEY}"></script>
 </svelte:head>
 
 <Nav {navLinks} isLogoLarge={false} />
@@ -167,10 +166,8 @@
 						<textarea name="message" class="w-full h-48" placeholder="Your Message"></textarea>
 					</div>
 					<button
-						class="g-recaptcha hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"
-						data-callback="onSubmit"
-						data-action="/contact"
-						data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+						type="submit"
+						class="hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"
 					>
 						{#if !isEmailSending}
 							Submit
