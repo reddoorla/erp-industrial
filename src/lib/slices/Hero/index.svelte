@@ -33,11 +33,28 @@
 	});
 
 	let hoveredElements: Set<HTMLElement> = new Set();
+	let moveRaf = 0;
+	let pendingMove: { x: number; y: number; target: HTMLElement } | null = null;
 
+	// rAF-throttled: the elementsFromPoint hover-tint now runs at most once per frame instead of on
+	// every single mousemove (the original was a hot path, especially over the playing Vimeo iframe).
 	const handleMouseMove = (event: MouseEvent) => {
-		const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
+		pendingMove = {
+			x: event.clientX,
+			y: event.clientY,
+			target: event.currentTarget as HTMLElement
+		};
+		if (moveRaf) return;
+		moveRaf = requestAnimationFrame(() => {
+			moveRaf = 0;
+			if (pendingMove) processHover(pendingMove.x, pendingMove.y, pendingMove.target);
+		});
+	};
+
+	const processHover = (x: number, y: number, currentTarget: HTMLElement) => {
+		const elementsUnder = document.elementsFromPoint(x, y);
 		const currentHoveredElements: Set<HTMLElement> = new Set(
-			elementsUnder.filter((element) => element !== event.currentTarget) as HTMLElement[]
+			elementsUnder.filter((element) => element !== currentTarget) as HTMLElement[]
 		);
 
 		// Dispatch mouseout event for elements no longer hovered

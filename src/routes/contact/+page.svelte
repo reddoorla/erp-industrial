@@ -121,7 +121,7 @@
 <Nav {navLinks} isLogoLarge={false} />
 
 <section class="h-dvh w-screen snap-end fixed top-0 overflow-y-auto">
-	<ContentWidth class="flex flex-col md:flex-row items-center justify-center mt-48">
+	<ContentWidth class="flex flex-col md:flex-row items-center justify-center mt-28 md:mt-48">
 		<div class="w-full md:w-1/3 flex flex-col gap-4">
 			<h2 class="text-white mb-4">We'd Love to Hear from You</h2>
 			<p class="text-white mb-12">
@@ -143,7 +143,7 @@
 				class="text-white inline-block hover:opacity-80 transition-opacity">info@erpfunds.com</a
 			>
 		</div>
-		<div class="w-full md:w-2/3 my-32 md:my-0 md:pl-16 relative">
+		<div class="w-full md:w-2/3 mt-10 mb-16 md:my-0 md:pl-16 relative">
 			{#if !isEmailSent}
 				{#if isEmailFailed}
 					<div
