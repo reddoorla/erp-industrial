@@ -149,6 +149,8 @@
 		<PrismicImage
 			field={slice.primary.loading_placeholder}
 			loading="eager"
+			fetchpriority="high"
+			imgixParams={{ auto: ['format', 'compress'] }}
 			class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9
 				? 'h-full min-w-full'
 				: 'w-full min-h-full'}"

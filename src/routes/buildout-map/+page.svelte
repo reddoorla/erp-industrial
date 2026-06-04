@@ -1,15 +1,16 @@
 <script lang="ts">
-	/* global BuildOut */
 	import Nav from '$lib/components/Nav.svelte';
+	import { withBuildOut } from '$lib/buildout';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		// @ts-expect-error BuildOut global injected by external script
-		BuildOut.embed({
-			token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
-			plugin: 'inventory',
-			target: 'buildout'
-		});
+		withBuildOut((BuildOut) =>
+			BuildOut.embed({
+				token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
+				plugin: 'inventory',
+				target: 'buildout'
+			})
+		);
 	});
 </script>
 

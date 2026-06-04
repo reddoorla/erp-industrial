@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* global BuildOut */
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	import Nav from '$lib/components/Nav.svelte';
@@ -7,6 +6,7 @@
 	import { SliceZone } from '@prismicio/svelte';
 	import { components } from '$lib/slices';
 	import Footer from '$lib/components/Footer.svelte';
+	import { withBuildOut } from '$lib/buildout';
 	import { onMount } from 'svelte';
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
@@ -37,12 +37,13 @@
 			},
 			{ once: true }
 		);
-		// @ts-expect-error BuildOut global injected by external script
-		BuildOut.embed({
-			token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
-			plugin: 'inventory',
-			target: 'buildout'
-		});
+		withBuildOut((BuildOut) =>
+			BuildOut.embed({
+				token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
+				plugin: 'inventory',
+				target: 'buildout'
+			})
+		);
 	});
 </script>
 

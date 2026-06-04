@@ -19,6 +19,7 @@
 		<PrismicImage
 			field={backgroundImage}
 			loading="lazy"
+			imgixParams={{ auto: ['format', 'compress'] }}
 			class="object-cover absolute w-screen h-dvh left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
 		/>
 		<div

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ContentWidth from './ContentWidth.svelte';
-	import logoFull from '../assets/fullLogo.png';
+	import logoFull from '../assets/fullLogo.webp';
 	import loopnet from '../assets/icons/loopnet.svg';
 	import DefaultButton from './Buttons/DefaultButton.svelte';
 

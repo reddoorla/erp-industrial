@@ -1,4 +1,5 @@
 @font-face {
 	font-family: 'sequel-sans';
 	src: url('sequel-sans.ttf');
+	font-display: swap;
 }
