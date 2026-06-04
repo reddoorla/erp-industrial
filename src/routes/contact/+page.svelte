@@ -59,11 +59,14 @@
 		isEmailFailed = false;
 
 		try {
-			reCaptchaToken = await executeReCaptcha();
 			const form = event.target as HTMLFormElement;
 			const formData = new FormData(form);
-			formData.append('g-recaptcha-response', reCaptchaToken);
-			console.log(reCaptchaToken);
+			// reCAPTCHA is enforced in production only; skipped in local dev so the form can be
+			// tested without allow-listing localhost on the Enterprise key.
+			if (!dev) {
+				reCaptchaToken = await executeReCaptcha();
+				formData.append('g-recaptcha-response', reCaptchaToken);
+			}
 
 			const response = await fetch(form.action, {
 				method: 'POST',
@@ -87,6 +90,7 @@
 	}
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
+	import { dev } from '$app/environment';
 	import { isNavLight } from '$lib/stores/isNavLight';
 	import Footer from '$lib/components/Footer.svelte';
 	import { onMount } from 'svelte';
