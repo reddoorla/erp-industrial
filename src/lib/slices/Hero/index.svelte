@@ -22,8 +22,6 @@
 	if (slice.primary.video_embed.embed_url)
 		videoId = slice.primary.video_embed?.embed_url.split('/').pop() || '';
 
-	let isMounted = $state(false);
-
 	// Background Vimeo embeds start at a low adaptive-bitrate rendition (grainy) and ramp up over
 	// the first few seconds. We keep the poster image over the iframe until the high rendition has
 	// actually buffered, so the user never sees the grain. 6s hard cap so the poster never sticks.
@@ -81,10 +79,8 @@
 	// }
 
 	onMount(() => {
-		const mountTimer = setTimeout(() => (isMounted = true), 25);
 		const teardownVideo = setupVideoReveal();
 		return () => {
-			clearTimeout(mountTimer);
 			teardownVideo();
 			if (moveRaf) cancelAnimationFrame(moveRaf);
 		};
@@ -240,26 +236,25 @@
 			<div
 				class="md:w-11/12 max-w-(--breakpoint-lg) relative h-full flex flex-col justify-end overflow-hidden py-32 sm:py-16 lg:py-32"
 			>
-				{#if isMounted}
-					<div transition:fade>
-						<ContentBox
-							titleText={slice.primary.title || ''}
-							titleTag="h1"
-							paragraphText={slice.primary.body_text || ''}
-							float="left"
-							class="text-white z-20 text-left"
+				<!-- Rendered unconditionally so the hero <h1> is in the server HTML (LCP). -->
+				<div transition:fade>
+					<ContentBox
+						titleText={slice.primary.title || ''}
+						titleTag="h1"
+						paragraphText={slice.primary.body_text || ''}
+						float="left"
+						class="text-white z-20 text-left"
+					/>
+					{#if slice.primary.button_text}
+						<DefaultButton
+							text={slice.primary.button_text || ''}
+							href={isFilled.link(slice.primary.button_link) ? slice.primary.button_link.url : ''}
 						/>
-						{#if slice.primary.button_text}
-							<DefaultButton
-								text={slice.primary.button_text || ''}
-								href={isFilled.link(slice.primary.button_link) ? slice.primary.button_link.url : ''}
-							/>
-						{/if}
-						{#if slice.primary.title === 'Who We Are'}
-							<DefaultButton text="Watch" onclick={() => (activeOverlay = true)} />
-						{/if}
-					</div>
-				{/if}
+					{/if}
+					{#if slice.primary.title === 'Who We Are'}
+						<DefaultButton text="Watch" onclick={() => (activeOverlay = true)} />
+					{/if}
+				</div>
 			</div>
 		</ContentWidth>
 	</div>
