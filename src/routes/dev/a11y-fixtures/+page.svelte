@@ -4,6 +4,9 @@
 		name="description"
 		content="Reddoor accessibility fixtures — semantic landmarks, heading hierarchy, and a stable target for @lhci/cli and Playwright + axe-core coverage. Not linked from the public site."
 	/>
+	<!-- Internal CI audit target (lighthouse/playwright-a11y configs hardcode this URL), so it must
+	     stay reachable in prod — but keep it out of search indexes. robots.txt also disallows /dev/. -->
+	<meta name="robots" content="noindex" />
 </svelte:head>
 
 <main>

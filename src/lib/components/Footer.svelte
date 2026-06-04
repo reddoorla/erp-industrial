@@ -17,7 +17,7 @@
 					href="/"
 					class="w-[25%] hover:opacity-80 transition-all duration-500 bump brightness-0 invert relative block"
 				>
-					<img src={logoFull} alt="logo" class="w-full" />
+					<img src={logoFull} alt="ERP Industrials" class="w-full" />
 				</a>
 			</div>
 			<div class="h-full w-1/6 flex flex-col gap-4">
@@ -66,7 +66,7 @@
 					href="/"
 					class="h-12 hover:opacity-80 transition-all duration-500 bump brightness-0 invert block translate-y-2 absolute top-4"
 				>
-					<img src={logoFull} alt="logo" class="h-12" />
+					<img src={logoFull} alt="ERP Industrials" class="h-12" />
 				</a>
 				<a href="/about" class="footer-link">ABOUT</a>
 				<a href="/portfolio" class="footer-link">INDUSTRIAL PORTFOLIO</a>

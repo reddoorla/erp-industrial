@@ -29,10 +29,6 @@
 	});
 </script>
 
-<svelte:head>
-	<title>ERP Industrials</title>
-</svelte:head>
-
 <Nav {navLinks} bind:isLogoLarge />
 
 <SliceZone slices={data.page.data.slices} {components} />

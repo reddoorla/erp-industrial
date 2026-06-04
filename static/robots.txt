@@ -1,7 +1,6 @@
-User-agent: Googlebot
-Disallow: /nogooglebot/
-
 User-agent: *
 Allow: /
+Disallow: /dev/
+Disallow: /slice-simulator
 
 Sitemap: https://www.erpfunds.com/sitemap.xml
