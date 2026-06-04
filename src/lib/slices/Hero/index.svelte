@@ -205,7 +205,9 @@
 				bind:this={videoIframe}
 				title="background video"
 				src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0`}
-				class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9
+				class="object-cover absolute aspect-video transition-opacity duration-700 {videoReady
+					? 'opacity-100'
+					: 'opacity-0'} {viewportHeight * 16 > viewportWidth * 9
 					? 'h-dvh min-w-full'
 					: 'w-screen min-h-full'}"
 				frameborder="0"
