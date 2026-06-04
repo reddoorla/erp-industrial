@@ -28,7 +28,7 @@ export const actions: Actions = {
 		const interest = formData.get('interest')?.toString() || '';
 		const message = formData.get('message')?.toString() || '';
 		const recaptchaToken = formData.get('g-recaptcha-response')?.toString() || '';
-		let sendTo = ['ERP Site Submission <tucker@reddoorla.com>'];
+		let sendTo = ['tucker@reddoorla.com'];
 
 		const resendApiKey = env.RESEND_API_KEY;
 		if (!resendApiKey) {
@@ -44,15 +44,15 @@ export const actions: Actions = {
 
 		switch (interest) {
 			case 'Leasing':
-				sendTo = ['Brennan Berry <BBerry@erpfunds.com>', 'tucksravine1@gmail.com'];
+				sendTo = ['Brennan Berry <BBerry@erpfunds.com>', 'tucker@reddoorla.com'];
 				break;
 
 			case 'Investor Relations':
-				sendTo = ['Pippi Espinoza <pespinoza@erpfunds.com>', 'tucksravine1@gmail.com'];
+				sendTo = ['Pippi Espinoza <pespinoza@erpfunds.com>', 'tucker@reddoorla.com'];
 				break;
 
 			case 'Property Sales and Acquistions':
-				sendTo = ['Meghan Berry <MBerry@erpfunds.com>', 'tucksravine1@gmail.com'];
+				sendTo = ['Meghan Berry <MBerry@erpfunds.com>', 'tucker@reddoorla.com'];
 				break;
 		}
 
