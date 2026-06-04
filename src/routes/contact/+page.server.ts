@@ -1,10 +1,12 @@
 import { createClient } from '$lib/prismicio';
-import sgMail from '@sendgrid/mail';
+import { Resend } from 'resend';
 import type { Actions, PageServerLoad } from './$types';
 import { fail, type ActionFailure } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 // Server-only secrets, read at runtime. Never exposed to the client (unlike VITE_-prefixed vars).
 import { env } from '$env/dynamic/private';
+
+const FROM_ADDRESS = 'ERP Site Submission <submissions@reddoorla.com>';
 
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	const client = createClient({ fetch, cookies });
@@ -28,9 +30,9 @@ export const actions: Actions = {
 		const recaptchaToken = formData.get('g-recaptcha-response')?.toString() || '';
 		let sendTo = ['ERP Site Submission <tucker@reddoorla.com>'];
 
-		const sendgridKey = env.SENDGRID_KEY;
-		if (!sendgridKey) {
-			console.error('Contact form misconfigured: SENDGRID_KEY not set');
+		const resendApiKey = env.RESEND_API_KEY;
+		if (!resendApiKey) {
+			console.error('Contact form misconfigured: RESEND_API_KEY not set');
 			return fail(500, { error: 'Server misconfiguration' });
 		}
 
@@ -50,12 +52,18 @@ export const actions: Actions = {
 				break;
 
 			case 'Property Sales and Acquistions':
-				sendTo = [ 'tucksravine1@gmail.com'];
+				sendTo = ['tucksravine1@gmail.com'];
 				break;
 		}
 
 		if (!email || !interest || !message || interest === 'Select Interest')
 			return fail(400, { error: 'Missing required fields' });
+
+		// In dev, route everything to a single test inbox if configured, so local testing never
+		// emails the real recipients above.
+		if (dev && env.CONTACT_TEST_EMAIL) {
+			sendTo = [env.CONTACT_TEST_EMAIL];
+		}
 
 		if (!dev) {
 			const recaptchaSecretKey = env.RECAPTCHA_SECRET_KEY;
@@ -93,17 +101,25 @@ export const actions: Actions = {
 			}
 		}
 
-		const msg = {
-			to: sendTo,
-			from: 'ERP Site Submission<tucker@reddoorla.com>',
-			replyTo: email,
-			subject: interest + ' Inquiry from ' + email,
-			text: message
-		};
-
 		try {
-			sgMail.setApiKey(sendgridKey);
-			await sgMail.send(msg);
+			const resend = new Resend(resendApiKey);
+			const { data, error } = await resend.emails.send({
+				from: FROM_ADDRESS,
+				to: sendTo,
+				replyTo: email,
+				subject: `${interest} Inquiry from ${email}`,
+				text: message
+			});
+
+			if (error) {
+				console.error('Resend error:', error);
+				return fail(500, { error: 'Failed to send email' });
+			}
+			if (!data?.id) {
+				console.error('Resend returned no message id');
+				return fail(500, { error: 'Failed to send email' });
+			}
+
 			return { success: true };
 		} catch (error) {
 			console.error(error);
