@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { slice }: { slice: HeroSlice } = $props();
 	import { onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
+	import { fade } from '$lib/transitions';
 	import { PrismicImage } from '@prismicio/svelte';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import ContentBox from '$lib/components/ContentBox.svelte';
@@ -30,8 +30,10 @@
 	let videoIframe = $state<HTMLIFrameElement>();
 	let videoReady = $state(false);
 
-	function setupVideoReveal() {
-		if (!videoIframe) return;
+	// Returns a teardown that destroys the Vimeo Player + clears timers, so SPA navigation away
+	// from the home page (which unmounts Hero) doesn't leak SDK instances/listeners/timers.
+	function setupVideoReveal(): () => void {
+		if (!videoIframe) return () => {};
 
 		let revealed = false;
 		const reveal = () => {
@@ -41,9 +43,11 @@
 		};
 
 		const hardCap = setTimeout(reveal, 6000);
+		let onReadyTimer: ReturnType<typeof setTimeout> | undefined;
+		let player: Player | undefined;
 
 		try {
-			const player = new Player(videoIframe);
+			player = new Player(videoIframe);
 			// Force a high rendition so the first frames aren't the grainy ramp-up.
 			player
 				.setQuality('1080p')
@@ -53,8 +57,8 @@
 						clearTimeout(hardCap);
 						reveal();
 					};
-					player.on('bufferend', onReady);
-					setTimeout(onReady, 1200);
+					player?.on('bufferend', onReady);
+					onReadyTimer = setTimeout(onReady, 1200);
 				})
 				.catch(() => {
 					/* some background embeds refuse setQuality — the 6s hard cap still reveals */
@@ -62,6 +66,12 @@
 		} catch {
 			/* SDK failed to init — the 6s hard cap still reveals */
 		}
+
+		return () => {
+			clearTimeout(hardCap);
+			if (onReadyTimer) clearTimeout(onReadyTimer);
+			player?.destroy().catch(() => {});
+		};
 	}
 
 	// const sendToBottomPane = () =>{
@@ -71,8 +81,13 @@
 	// }
 
 	onMount(() => {
-		setTimeout(() => (isMounted = true), 25);
-		setupVideoReveal();
+		const mountTimer = setTimeout(() => (isMounted = true), 25);
+		const teardownVideo = setupVideoReveal();
+		return () => {
+			clearTimeout(mountTimer);
+			teardownVideo();
+			if (moveRaf) cancelAnimationFrame(moveRaf);
+		};
 	});
 
 	let hoveredElements: Set<HTMLElement> = new Set();

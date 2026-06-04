@@ -1,7 +1,7 @@
 <script lang="ts">
 	import FullPageSlide from '$lib/components/FullPageSlide.svelte';
 	import { slideObserver } from '$lib/actions/slideObserver';
-	import { fade } from 'svelte/transition';
+	import { fade } from '$lib/transitions';
 	import type { FullScreenSlideSlice } from '../../../prismicio-types';
 	import EmbedSlide from './variations/EmbedSlide.svelte';
 	import HalfPageSlide from './variations/HalfPageSlide.svelte';

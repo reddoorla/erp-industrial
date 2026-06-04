@@ -3,15 +3,15 @@
 	import { withBuildOut } from '$lib/buildout';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
+	onMount(() =>
 		withBuildOut((BuildOut) =>
 			BuildOut.embed({
 				token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
 				plugin: 'inventory',
 				target: 'buildout'
 			})
-		);
-	});
+		)
+	);
 </script>
 
 <svelte:head>

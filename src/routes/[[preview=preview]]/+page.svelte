@@ -36,13 +36,18 @@
 			},
 			{ once: true }
 		);
-		withBuildOut((BuildOut) =>
-			BuildOut.embed({
-				token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
-				plugin: 'inventory',
-				target: 'buildout'
-			})
-		);
+		// Only embed if an embed slice actually rendered the #buildout target; otherwise the script
+		// initialises against a missing element. The returned cancel stops the poll on unmount.
+		const cancelBuildOut = document.getElementById('buildout')
+			? withBuildOut((BuildOut) =>
+					BuildOut.embed({
+						token: 'bdecc802689ae7f3e2007fdaf2ffdb31f711a99e',
+						plugin: 'inventory',
+						target: 'buildout'
+					})
+				)
+			: undefined;
+		return () => cancelBuildOut?.();
 	});
 </script>
 
