@@ -17,9 +17,9 @@
 	<title>ERP Properties</title>
 </svelte:head>
 
-<div class="w-screen h-screen bg-white fixed top-0">
+<div class="w-screen h-dvh bg-white fixed top-0">
 	<Nav isLogoLarge={false} />
-	<div class="mt-[20vh]">
-		<div id="buildout" style="max-width:1440px; margin:auto; height:80vh;"></div>
+	<div class="mt-[20dvh]">
+		<div id="buildout" style="max-width:1440px; margin:auto; height:80dvh;"></div>
 	</div>
 </div>

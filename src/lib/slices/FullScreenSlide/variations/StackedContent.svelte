@@ -46,7 +46,7 @@
 </script>
 
 <div
-	class="absolute w-screen h-screen top-0 left-0"
+	class="absolute w-screen h-dvh top-0 left-0"
 	class:backdrop-blur={slice.primary.isBackgroundBlurred}
 	transition:fade={{ duration: 1000 }}
 ></div>
@@ -133,7 +133,7 @@
 
 			{#if slice.variation === 'teams'}
 				<div
-					class="w-full h-screen pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-hidden py-32 md:pb-0"
+					class="w-full h-dvh pt-64 flex flex-col md:flex-row gap-8 overflow-y-auto md:overflow-hidden py-32 md:pb-0"
 				>
 					<div class="text-white large-paragraph md:absolute md:top-8">Management Team</div>
 					{#each slice.items as item, i (i)}

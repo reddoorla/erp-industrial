@@ -33,11 +33,28 @@
 	});
 
 	let hoveredElements: Set<HTMLElement> = new Set();
+	let moveRaf = 0;
+	let pendingMove: { x: number; y: number; target: HTMLElement } | null = null;
 
+	// rAF-throttled: the elementsFromPoint hover-tint now runs at most once per frame instead of on
+	// every single mousemove (the original was a hot path, especially over the playing Vimeo iframe).
 	const handleMouseMove = (event: MouseEvent) => {
-		const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
+		pendingMove = {
+			x: event.clientX,
+			y: event.clientY,
+			target: event.currentTarget as HTMLElement
+		};
+		if (moveRaf) return;
+		moveRaf = requestAnimationFrame(() => {
+			moveRaf = 0;
+			if (pendingMove) processHover(pendingMove.x, pendingMove.y, pendingMove.target);
+		});
+	};
+
+	const processHover = (x: number, y: number, currentTarget: HTMLElement) => {
+		const elementsUnder = document.elementsFromPoint(x, y);
 		const currentHoveredElements: Set<HTMLElement> = new Set(
-			elementsUnder.filter((element) => element !== event.currentTarget) as HTMLElement[]
+			elementsUnder.filter((element) => element !== currentTarget) as HTMLElement[]
 		);
 
 		// Dispatch mouseout event for elements no longer hovered
@@ -86,7 +103,7 @@
 
 {#if activeOverlay}
 	<div
-		class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur-sm"
+		class="w-screen h-dvh top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur-sm"
 		in:fade={{ delay: 300 }}
 		out:fade
 	>
@@ -125,7 +142,7 @@
 
 {#key slice}
 	<div
-		class="w-screen h-screen overflow-hidden snap-end fixed top-0"
+		class="w-screen h-dvh overflow-hidden snap-end fixed top-0"
 		in:fade={{ delay: 400 }}
 		out:fade
 	>
@@ -141,7 +158,7 @@
 				title="background video"
 				src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0`}
 				class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9
-					? 'h-screen min-w-full'
+					? 'h-dvh min-w-full'
 					: 'w-screen min-h-full'}"
 				frameborder="0"
 				allowfullscreen
@@ -182,7 +199,7 @@
 		</ContentWidth>
 	</div>
 	<div
-		class="w-screen h-screen sticky snap-end overflow-hidden"
+		class="w-screen h-dvh sticky snap-end overflow-hidden"
 		onclick={handleClick}
 		onmousemove={handleMouseMove}
 		aria-hidden="true"

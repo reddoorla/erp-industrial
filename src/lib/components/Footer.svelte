@@ -9,7 +9,7 @@
 
 <svelte:window bind:innerWidth={viewportWidth} />
 
-<div class="bg-black w-screen sticky snap-end h-screen top-0 md:h-[20vh] md:top-[80vh] z-40">
+<div class="bg-black w-screen sticky snap-end h-dvh top-0 md:h-[20dvh] md:top-[80dvh] z-40">
 	<ContentWidth class="flex flex-row pt-6 h-full py-32 md:py-6">
 		{#if viewportWidth > 768}
 			<div class="h-full w-1/3 relative">
@@ -61,7 +61,7 @@
 				</a>
 			</div>
 		{:else}
-			<div class="w-full h-full flex flex-col gap-8 justify-end relativve">
+			<div class="w-full h-full flex flex-col gap-8 justify-end relative">
 				<a
 					href="/"
 					class="h-12 hover:opacity-80 transition-all duration-500 bump brightness-0 invert block translate-y-2 absolute top-4"
@@ -81,14 +81,23 @@
 					href="https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161"
 					class="footer-link">TENANT PORTAL</a
 				>
-				<div class="w-full flex flex-row h-6 gap-6 text-subtle-blue">
-					<a href="https://linkedin.com" class="text-xl" aria-label="LinkedIn"
-						><i class="fa-brands fa-linkedin-in"></i></a
+				<div class="w-full flex flex-row items-center gap-2 text-subtle-blue">
+					<a
+						href="https://www.linkedin.com/company/erp-industrials/"
+						class="text-xl inline-flex items-center justify-center min-h-11 min-w-11"
+						aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a
 					>
-					<a href="https://facebook.com" class="text-lg translate-y-[-2px]" aria-label="Facebook"
-						><i class="fa-brands fa-facebook-f"></i></a
+					<a
+						href="https://www.facebook.com/ERPFunds/"
+						class="text-lg inline-flex items-center justify-center min-h-11 min-w-11"
+						aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a
 					>
-					<a href="https://loopnet.com" class="scale-105"><img src={loopnet} alt="loopnet" /></a>
+					<a
+						href="https://www.loopnet.com/company/erp-industrials/midland-tx/9rvtzp4l/"
+						class="inline-flex items-center justify-center min-h-11 min-w-11"
+						aria-label="LoopNet"
+						><img src={loopnet} class="scale-105" alt="ERP Industrials on LoopNet" /></a
+					>
 				</div>
 				<a href="/contact">
 					<DefaultButton text="Contact" filled={false} class="text-white border-2 border-white" />
@@ -101,6 +110,8 @@
 <style>
 	.footer-link {
 		color: var(--ffffff, #fff);
+		display: inline-block;
+		padding: 0.5rem 0;
 
 		font-feature-settings:
 			'clig' off,

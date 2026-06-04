@@ -10,21 +10,57 @@
 	}: { navLinks?: { text: string; href: string }[]; isLogoLarge?: boolean } = $props();
 
 	let isOverlayVisible = $state(false);
+	let overlayEl = $state<HTMLElement>();
 
 	const toggleOverlayOn = () => (isOverlayVisible = true);
 	const toggleOverlayOff = () => (isOverlayVisible = false);
 
 	let viewportWidth = $state(0);
+
+	// When the mobile menu is open: move focus into it, trap Tab, and close on Escape — so keyboard
+	// users can't tab "behind" the overlay. Focus returns to the trigger on close.
+	$effect(() => {
+		if (!isOverlayVisible || !overlayEl) return;
+		const node = overlayEl;
+		const previouslyFocused = document.activeElement as HTMLElement | null;
+		const getFocusable = () =>
+			Array.from(node.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'));
+		getFocusable()[0]?.focus();
+
+		const onKeydown = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				toggleOverlayOff();
+				return;
+			}
+			if (e.key !== 'Tab') return;
+			const items = getFocusable();
+			if (!items.length) return;
+			const first = items[0];
+			const last = items[items.length - 1];
+			if (e.shiftKey && document.activeElement === first) {
+				e.preventDefault();
+				last.focus();
+			} else if (!e.shiftKey && document.activeElement === last) {
+				e.preventDefault();
+				first.focus();
+			}
+		};
+		document.addEventListener('keydown', onKeydown);
+		return () => {
+			document.removeEventListener('keydown', onKeydown);
+			previouslyFocused?.focus?.();
+		};
+	});
 </script>
 
 <svelte:window bind:innerWidth={viewportWidth} />
 
 <!--overlay-->
 {#if isOverlayVisible}
-	<div class="w-screen h-screen fixed bg-dark z-30" transition:fly>
-		<ContentWidth class="h-screen relative flex flex-col items-center justify-center gap-12">
+	<div bind:this={overlayEl} class="w-screen h-dvh fixed bg-dark z-30" transition:fly>
+		<ContentWidth class="h-dvh relative flex flex-col items-center justify-center gap-12">
 			<button
-				class="absolute top-5 right-0 opacity-60 hover:opacity-100 transition-all z-50 text-white pointer-events-auto"
+				class="absolute top-3 right-0 flex items-center justify-center min-h-11 min-w-11 opacity-60 hover:opacity-100 transition-all z-50 text-white pointer-events-auto"
 				onclick={toggleOverlayOff}
 				aria-label="Close menu"
 			>
@@ -38,7 +74,7 @@
 			{#each navLinks as item (item.href)}
 				<a
 					href={item.href}
-					class="nav-link text-white pointer-events-auto"
+					class="nav-link text-white pointer-events-auto py-3 px-4"
 					onclick={toggleOverlayOff}>{item.text}</a
 				>
 			{/each}
@@ -73,13 +109,13 @@
 			</div>
 			{#if !isOverlayVisible}
 				<button
-					class="lg:hidden ml-6 opacity-60 hover:opacity-100 transition-all pointer-events-auto text-2xl z-40"
+					class="lg:hidden -mr-2 flex items-center justify-center min-h-11 min-w-11 opacity-60 hover:opacity-100 transition-all pointer-events-auto text-2xl z-40"
 					in:fade={{ delay: 600 }}
 					out:fade
 					onclick={toggleOverlayOn}
 					aria-label="Open menu"
 				>
-					<i class="fa-sharp fa-regular fa-bars h-8"></i>
+					<i class="fa-sharp fa-regular fa-bars"></i>
 				</button>
 			{/if}
 		</div>

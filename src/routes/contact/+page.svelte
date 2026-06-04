@@ -120,8 +120,8 @@
 
 <Nav {navLinks} isLogoLarge={false} />
 
-<section class="h-screen w-screen snap-end fixed top-0 overflow-y-auto">
-	<ContentWidth class="flex flex-col md:flex-row items-center justify-center mt-48">
+<section class="h-dvh w-screen snap-end fixed top-0 overflow-y-auto">
+	<ContentWidth class="flex flex-col md:flex-row items-center justify-center mt-28 md:mt-48">
 		<div class="w-full md:w-1/3 flex flex-col gap-4">
 			<h2 class="text-white mb-4">We'd Love to Hear from You</h2>
 			<p class="text-white mb-12">
@@ -133,11 +133,17 @@
 				400 W. Illinois Avenue, Suite 1630 <br /> Midland, TX 79701
 			</p>
 			<div class="button-text text-white">CALL</div>
-			<p class="text-white mb-4">432.242.8850</p>
+			<a
+				href="tel:+14322428850"
+				class="text-white mb-4 inline-block hover:opacity-80 transition-opacity">432.242.8850</a
+			>
 			<div class="button-text text-white">MESSAGE</div>
-			<p class="text-white">info@erpfunds.com</p>
+			<a
+				href="mailto:info@erpfunds.com"
+				class="text-white inline-block hover:opacity-80 transition-opacity">info@erpfunds.com</a
+			>
 		</div>
-		<div class="w-full md:w-2/3 my-32 md:my-0 md:pl-16 relative">
+		<div class="w-full md:w-2/3 mt-10 mb-16 md:my-0 md:pl-16 relative">
 			{#if !isEmailSent}
 				{#if isEmailFailed}
 					<div
@@ -196,7 +202,7 @@
 			{/if}
 		</div>
 	</ContentWidth>
-	<div class="h-[20vh]"></div>
+	<div class="h-[20dvh]"></div>
 </section>
 
 {#if viewportWidth > 768}

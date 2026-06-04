@@ -32,9 +32,6 @@ h1 {
 	font-size: 115px;
 	font-weight: 350;
 	line-height: 110%; /* 126.5px */
-
-	/* text drop shadow */
-	text-shadow: 2px 2px 120px 5px rgba(0, 0, 0, 0.15);
 }
 
 h2 {
@@ -51,9 +48,6 @@ h3 {
 	line-height: 24px; /* 171.429% */
 	letter-spacing: 2px;
 	text-transform: uppercase;
-}
-
-h4 {
 }
 
 h5 {
@@ -125,5 +119,17 @@ div {
 }
 
 .grecaptcha-badge {
-	display: hidden !important;
+	display: none !important;
+}
+
+/* Respect users who ask for less motion: neutralize CSS transitions/animations and smooth scroll. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }
