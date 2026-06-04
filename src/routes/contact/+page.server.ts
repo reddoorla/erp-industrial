@@ -5,8 +5,14 @@ import { fail, type ActionFailure } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 // Server-only secrets, read at runtime. Never exposed to the client (unlike VITE_-prefixed vars).
 import { env } from '$env/dynamic/private';
+import { RECAPTCHA_SITE_KEY } from '$lib/recaptcha';
 
 const FROM_ADDRESS = 'ERP Site Submission <submissions@reddoorla.com>';
+
+// The only interests the form offers; used to route recipients AND to reject anything else a
+// direct POST might submit.
+const VALID_INTERESTS = ['Leasing', 'Investor Relations', 'Property Sales and Acquistions'];
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	const client = createClient({ fetch, cookies });
@@ -56,8 +62,10 @@ export const actions: Actions = {
 				break;
 		}
 
-		if (!email || !interest || !message || interest === 'Select Interest')
-			return fail(400, { error: 'Missing required fields' });
+		// Validate server-side: the client `type="email"`/required attrs are trivially bypassed by a
+		// direct POST. Rejecting a malformed email also prevents CR/LF from reaching the subject/replyTo.
+		if (!EMAIL_RE.test(email) || !message.trim() || !VALID_INTERESTS.includes(interest))
+			return fail(400, { error: 'Missing or invalid required fields' });
 
 		// In dev, route everything to a single test inbox if configured, so local testing never
 		// emails the real recipients above.
@@ -83,7 +91,7 @@ export const actions: Actions = {
 						body: JSON.stringify({
 							event: {
 								token: recaptchaToken,
-								siteKey: import.meta.env.VITE_RECAPTCHA_SITE_KEY,
+								siteKey: RECAPTCHA_SITE_KEY,
 								expectedAction: 'SUBMIT'
 							}
 						})
@@ -92,7 +100,10 @@ export const actions: Actions = {
 
 				const recaptchaResult = await recaptchaResponse.json();
 
-				if (!recaptchaResult.tokenProperties?.valid || recaptchaResult.riskAnalysis?.score < 0.5) {
+				// Require an explicit numeric score: `riskAnalysis?.score < 0.5` fails OPEN when the
+				// score block is absent (degraded/malformed response), since `undefined < 0.5` is false.
+				const score = recaptchaResult.riskAnalysis?.score;
+				if (!recaptchaResult.tokenProperties?.valid || typeof score !== 'number' || score < 0.5) {
 					return fail(400, { error: 'reCAPTCHA verification failed' });
 				}
 			} catch (error) {
@@ -120,6 +131,7 @@ export const actions: Actions = {
 				return fail(500, { error: 'Failed to send email' });
 			}
 
+			console.log('Contact form sent via Resend:', data.id);
 			return { success: true };
 		} catch (error) {
 			console.error(error);
