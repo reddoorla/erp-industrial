@@ -52,7 +52,7 @@ export const actions: Actions = {
 				break;
 
 			case 'Property Sales and Acquistions':
-				sendTo = ['tucksravine1@gmail.com'];
+				sendTo = ['Meghan Berry <MBerry@erpfunds.com>', 'tucksravine1@gmail.com'];
 				break;
 		}
 
