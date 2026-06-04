@@ -19,10 +19,7 @@ const centred = new Map<HTMLElement, boolean>();
 function applyFrontmostNavColour() {
 	let frontmost: HTMLElement | null = null;
 	for (const node of centred.keys()) {
-		if (
-			!frontmost ||
-			frontmost.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING
-		) {
+		if (!frontmost || frontmost.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING) {
 			frontmost = node;
 		}
 	}

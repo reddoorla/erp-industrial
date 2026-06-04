@@ -25,7 +25,10 @@
 	class="bg-black absolute w-screen h-screen flex flex-col {//@ts-expect-error isImageLeft exists on halfPage variation only
 	slice.primary.isImageLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'}"
 >
-	<PrismicImage field={slice.primary.background_image} class="lg:w-1/2 h-1/4 lg:h-full object-cover" />
+	<PrismicImage
+		field={slice.primary.background_image}
+		class="lg:w-1/2 h-1/4 lg:h-full object-cover"
+	/>
 	{#if hasEntered}
 		<div
 			class="h-3/4 lg:h-auto lg:w-1/2 p-[4%] md:p-[6%] overflow-y-scroll md:overflow-hidden py-32 mt-32 md:pb-0"
