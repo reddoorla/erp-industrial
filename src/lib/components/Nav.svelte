@@ -2,7 +2,7 @@
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import logoFull from '$lib/assets/erp_logo_subtitled.svg';
 	import { isNavLight } from '$lib/stores/isNavLight';
-	import { fly, fade } from 'svelte/transition';
+	import { fly, fade } from '$lib/transitions';
 
 	let {
 		navLinks = [] as { text: string; href: string }[],
@@ -11,6 +11,7 @@
 
 	let isOverlayVisible = $state(false);
 	let overlayEl = $state<HTMLElement>();
+	let openButtonEl = $state<HTMLElement>();
 
 	const toggleOverlayOn = () => (isOverlayVisible = true);
 	const toggleOverlayOff = () => (isOverlayVisible = false);
@@ -48,7 +49,12 @@
 		document.addEventListener('keydown', onKeydown);
 		return () => {
 			document.removeEventListener('keydown', onKeydown);
-			previouslyFocused?.focus?.();
+			// The open trigger unmounts while the overlay is open, so the captured node is detached by
+			// close. Focus the re-rendered trigger after it remounts (fall back to the prior element).
+			requestAnimationFrame(() => {
+				if (openButtonEl) openButtonEl.focus();
+				else if (previouslyFocused?.isConnected) previouslyFocused.focus?.();
+			});
 		};
 	});
 </script>
@@ -109,6 +115,7 @@
 			</div>
 			{#if !isOverlayVisible}
 				<button
+					bind:this={openButtonEl}
 					class="lg:hidden -mr-2 flex items-center justify-center min-h-11 min-w-11 opacity-60 hover:opacity-100 transition-all pointer-events-auto text-2xl z-40"
 					in:fade={{ delay: 600 }}
 					out:fade

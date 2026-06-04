@@ -5,7 +5,7 @@
 	import * as prismicHelpers from '@prismicio/helpers';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
-	import { fade } from 'svelte/transition';
+	import { fade } from '$lib/transitions';
 	import { RECAPTCHA_SITE_KEY } from '$lib/recaptcha';
 
 	import type { NavDocumentDataLinksItem } from '../../prismicio-types';

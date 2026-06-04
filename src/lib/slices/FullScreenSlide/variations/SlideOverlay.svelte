@@ -3,7 +3,7 @@
 	import ContentBox from '$lib/components/ContentBox.svelte';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
-	import { fade } from 'svelte/transition';
+	import { fade } from '$lib/transitions';
 	import type { FullScreenSlideSlice } from '../../../../prismicio-types';
 
 	let {
@@ -14,7 +14,8 @@
 
 	let videoId = $state<string | undefined>(undefined);
 	if (slice.variation === 'withVideoPopup') {
-		videoId = slice.primary.video_embed.embed_url.split('/').pop();
+		// Optional-chain: an editor can leave the embed blank on a withVideoPopup slide.
+		videoId = slice.primary.video_embed.embed_url?.split('/').pop();
 	}
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
-	import { fade, fly } from 'svelte/transition';
+	import { fade, fly } from '$lib/transitions';
 	import { isFilled } from '@prismicio/helpers';
 	import type {
 		FullScreenSlideSliceHalfPage,

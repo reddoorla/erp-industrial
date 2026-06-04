@@ -4,7 +4,7 @@
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import SliderOfContentBoxes from '$lib/components/SliderOfContentBoxes.svelte';
 	import { PrismicImage } from '@prismicio/svelte';
-	import { fade, fly } from 'svelte/transition';
+	import { fade, fly } from '$lib/transitions';
 	import { isFilled } from '@prismicio/helpers';
 	import type {
 		FullScreenSlideSliceDefault,

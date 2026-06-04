@@ -5,7 +5,7 @@
 	import '../app.css';
 
 	import { afterNavigate, goto, beforeNavigate } from '$app/navigation';
-	import { fade } from 'svelte/transition';
+	import { fade } from '$lib/transitions';
 	import type { Snippet } from 'svelte';
 	import LandscapeModal from '$lib/components/LandscapeModal.svelte';
 
@@ -15,21 +15,41 @@
 	let isSnappy = $state(true);
 	let isTransitioning = $state(false);
 
-	beforeNavigate(({ cancel, to }) => {
-		if (!isTransitioning && to?.route.id) {
-			cancel();
-			isTransitioning = true;
-			if (to) setTimeout(() => goto(to.url), 400);
-		}
+	// Custom fade-to-black route transition: cancel the nav, show the overlay, then re-issue the
+	// real navigation after the fade. navTimer/pendingUrl keep it robust to interruption.
+	let navTimer: ReturnType<typeof setTimeout> | undefined;
+	let pendingUrl: string | undefined;
+
+	beforeNavigate(({ cancel, to, from }) => {
+		if (!to?.route.id) return; // external / unmatched route — navigate normally, no overlay
+		if (from && to.url.pathname === from.url.pathname) return; // same page (hash/query) — no fade
+
+		// Our own deferred goto reaching its target: let it proceed (don't re-defer → no loop).
+		if (isTransitioning && pendingUrl === to.url.href) return;
+
+		// First navigation, or a new click mid-transition: (re-)defer to the newest destination so
+		// rapid clicks land on the last one clicked instead of double-navigating.
+		cancel();
+		isTransitioning = true;
+		pendingUrl = to.url.href;
+		clearTimeout(navTimer);
+		navTimer = setTimeout(() => {
+			// If the navigation errors/redirects (no afterNavigate fires), clear the overlay so it can't stick.
+			goto(to.url).catch(() => {
+				isTransitioning = false;
+				pendingUrl = undefined;
+			});
+		}, 400);
 	});
 
 	afterNavigate(() => {
 		setTimeout(() => {
-			main.scrollTo({ top: 0, behavior: 'instant' });
+			main?.scrollTo({ top: 0, behavior: 'instant' });
 		}, 400);
 
 		setTimeout(() => {
 			isTransitioning = false;
+			pendingUrl = undefined;
 		}, 800);
 
 		if (document) {
