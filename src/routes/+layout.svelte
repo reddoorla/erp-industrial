@@ -6,9 +6,14 @@
 
 	import { afterNavigate, goto, beforeNavigate } from '$app/navigation';
 	import { fade } from 'svelte/transition';
+	import type { Snippet } from 'svelte';
 	import LandscapeModal from '$lib/components/LandscapeModal.svelte';
 
+	let { children }: { children?: Snippet } = $props();
+
 	let main: HTMLElement;
+	let isSnappy = $state(true);
+	let isTransitioning = $state(false);
 
 	beforeNavigate(({ cancel, to }) => {
 		if (!isTransitioning && to?.route.id) {
@@ -33,9 +38,6 @@
 			});
 		}
 	});
-	let isSnappy = true;
-
-	let isTransitioning = false;
 </script>
 
 <svelte:head>
@@ -58,7 +60,7 @@
 		? 'snap-y snap-proximity'
 		: ''} h-dvh overflow-scroll m-0 scroll-smooth overscroll-none"
 >
-	<slot />
+	{@render children?.()}
 </main>
 {#if isTransitioning}
 	<div class="w-screen h-dvh bg-black fixed top-0 left-0 z-40" transition:fade></div>
