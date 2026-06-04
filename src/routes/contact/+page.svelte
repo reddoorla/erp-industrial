@@ -6,6 +6,7 @@
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import { fade } from 'svelte/transition';
+	import { RECAPTCHA_SITE_KEY } from '$lib/recaptcha';
 
 	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
 	const navLinks = $derived(
@@ -18,11 +19,12 @@
 	let isEmailSent = $state(false);
 	let isEmailSending = $state(false);
 	let isEmailFailed = $state(false);
+	let thankYouHeading = $state<HTMLElement>();
 
-	// Public reCAPTCHA Enterprise site key — single source of truth for the loader script and
-	// execute() call so they can never drift (the previous env var was undefined locally, which
-	// caused "No reCAPTCHA clients exist"). Site keys are public by design.
-	const RECAPTCHA_SITE_KEY = '6LcgrQUqAAAAAGSwikmSpKfzVBS8SjC4Gd1GAKP_';
+	// Move focus to the confirmation when the form succeeds, so keyboard/SR users are told.
+	$effect(() => {
+		if (isEmailSent) thankYouHeading?.focus();
+	});
 
 	async function executeReCaptcha(): Promise<string> {
 		// @ts-expect-error grecaptcha is a global injected by reCAPTCHA enterprise script
@@ -52,6 +54,7 @@
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
+		if (isEmailSending) return; // guard against double-submit / Enter-spam → duplicate emails
 		isEmailSending = true;
 		isEmailSent = false;
 		isEmailFailed = false;
@@ -147,9 +150,10 @@
 					<div
 						class="absolute flex flex-col items-center justify-center -top-24 right-0 border-[#b21c0e] border-2 bg-black"
 						transition:fade
+						role="alert"
 					>
 						<h5 class="text-subtle-blue p-8">
-							Something went wrong. Please fill all fields and retry.
+							Something went wrong sending your message. Please check your details and try again.
 						</h5>
 					</div>
 				{/if}
@@ -165,20 +169,39 @@
 				>
 					<h5 class="text-white">SEND US A MESSAGE</h5>
 					<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">
-						<input type="email" name="email" placeholder="Your Email" class="md:w-[45%]" />
-						<select name="interest" class="md:w-[45%] cursor-pointer" placeholder="Select Interest">
-							<option class="text-gr">Select Interest</option>
+						<input
+							type="email"
+							name="email"
+							placeholder="Your Email"
+							aria-label="Your email"
+							required
+							class="md:w-[45%]"
+						/>
+						<select
+							name="interest"
+							class="md:w-[45%] cursor-pointer"
+							aria-label="Area of interest"
+							required
+						>
+							<option value="" disabled selected>Select Interest</option>
 							<option value="Leasing">Leasing</option>
 							<option value="Investor Relations">Investor Relations</option>
 							<option value="Property Sales and Acquistions">Property Sales and Acquisition</option>
 						</select>
 					</div>
 					<div class="w-full">
-						<textarea name="message" class="w-full h-48" placeholder="Your Message"></textarea>
+						<textarea
+							name="message"
+							class="w-full h-48"
+							placeholder="Your Message"
+							aria-label="Your message"
+							required
+						></textarea>
 					</div>
 					<button
 						type="submit"
-						class="hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2"
+						disabled={isEmailSending}
+						class="hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 disabled:cursor-not-allowed disabled:opacity-70"
 					>
 						{#if !isEmailSending}
 							Submit
@@ -190,7 +213,7 @@
 			{/if}
 			{#if isEmailSent}
 				<div class="w-full h-72 flex flex-col items-center justify-center gap-16">
-					<h5 class="text-white">THANK YOU!</h5>
+					<h5 class="text-white" bind:this={thankYouHeading} tabindex="-1">THANK YOU!</h5>
 					<p class="text-white">
 						We'll get back to you as soon as possible. In the meantime, explore our available
 						properties.
