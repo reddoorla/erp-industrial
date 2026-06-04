@@ -19,7 +19,7 @@
 </script>
 
 <div
-	class="w-screen h-screen top-0 left-0 fixed z-40 bg-black {slice.variation === 'teams'
+	class="w-screen h-dvh top-0 left-0 fixed z-40 bg-black {slice.variation === 'teams'
 		? ''
 		: 'bg-opacity-50'} backdrop-blur-sm"
 	in:fade={{ delay: 300 }}
@@ -95,7 +95,7 @@
 		{#key activeOverlay}
 			<div class="h-full w-full" out:fade in:fade={{ delay: 300 }}>
 				<ContentWidth
-					class="h-screen relative flex flex-col md:flex-row justify-start py-32 overflow-y-auto md:overflow-hidden md:justify-between z-40 pb-12 md:py-32"
+					class="h-dvh relative flex flex-col md:flex-row justify-start py-32 overflow-y-auto md:overflow-hidden md:justify-between z-40 pb-12 md:py-32"
 				>
 					<div class="w-full md:w-1/4 flex flex-col justify-between md:pt-24">
 						<div class="flex w-full flex-col justify-between gap-8 md:pb-12">

@@ -86,7 +86,7 @@
 
 {#if activeOverlay}
 	<div
-		class="w-screen h-screen top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur-sm"
+		class="w-screen h-dvh top-0 left-0 fixed z-40 bg-black bg-opacity-50 backdrop-blur-sm"
 		in:fade={{ delay: 300 }}
 		out:fade
 	>
@@ -125,7 +125,7 @@
 
 {#key slice}
 	<div
-		class="w-screen h-screen overflow-hidden snap-end fixed top-0"
+		class="w-screen h-dvh overflow-hidden snap-end fixed top-0"
 		in:fade={{ delay: 400 }}
 		out:fade
 	>
@@ -141,7 +141,7 @@
 				title="background video"
 				src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0`}
 				class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9
-					? 'h-screen min-w-full'
+					? 'h-dvh min-w-full'
 					: 'w-screen min-h-full'}"
 				frameborder="0"
 				allowfullscreen
@@ -182,7 +182,7 @@
 		</ContentWidth>
 	</div>
 	<div
-		class="w-screen h-screen sticky snap-end overflow-hidden"
+		class="w-screen h-dvh sticky snap-end overflow-hidden"
 		onclick={handleClick}
 		onmousemove={handleMouseMove}
 		aria-hidden="true"

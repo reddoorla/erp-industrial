@@ -21,10 +21,10 @@
 
 <!--overlay-->
 {#if isOverlayVisible}
-	<div class="w-screen h-screen fixed bg-dark z-30" transition:fly>
-		<ContentWidth class="h-screen relative flex flex-col items-center justify-center gap-12">
+	<div class="w-screen h-dvh fixed bg-dark z-30" transition:fly>
+		<ContentWidth class="h-dvh relative flex flex-col items-center justify-center gap-12">
 			<button
-				class="absolute top-5 right-0 opacity-60 hover:opacity-100 transition-all z-50 text-white pointer-events-auto"
+				class="absolute top-3 right-0 flex items-center justify-center min-h-11 min-w-11 opacity-60 hover:opacity-100 transition-all z-50 text-white pointer-events-auto"
 				onclick={toggleOverlayOff}
 				aria-label="Close menu"
 			>
@@ -38,7 +38,7 @@
 			{#each navLinks as item (item.href)}
 				<a
 					href={item.href}
-					class="nav-link text-white pointer-events-auto"
+					class="nav-link text-white pointer-events-auto py-3 px-4"
 					onclick={toggleOverlayOff}>{item.text}</a
 				>
 			{/each}
@@ -73,13 +73,13 @@
 			</div>
 			{#if !isOverlayVisible}
 				<button
-					class="lg:hidden ml-6 opacity-60 hover:opacity-100 transition-all pointer-events-auto text-2xl z-40"
+					class="lg:hidden -mr-2 flex items-center justify-center min-h-11 min-w-11 opacity-60 hover:opacity-100 transition-all pointer-events-auto text-2xl z-40"
 					in:fade={{ delay: 600 }}
 					out:fade
 					onclick={toggleOverlayOn}
 					aria-label="Open menu"
 				>
-					<i class="fa-sharp fa-regular fa-bars h-8"></i>
+					<i class="fa-sharp fa-regular fa-bars"></i>
 				</button>
 			{/if}
 		</div>

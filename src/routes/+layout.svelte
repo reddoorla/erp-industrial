@@ -56,12 +56,12 @@
 	bind:this={main}
 	class="{isSnappy
 		? 'snap-y snap-proximity'
-		: ''} h-screen overflow-scroll m-0 scroll-smooth overscroll-none"
+		: ''} h-dvh overflow-scroll m-0 scroll-smooth overscroll-none"
 >
 	<slot />
 </main>
 {#if isTransitioning}
-	<div class="w-screen h-screen bg-black fixed top-0 left-0 z-40" transition:fade></div>
+	<div class="w-screen h-dvh bg-black fixed top-0 left-0 z-40" transition:fade></div>
 {/if}
 
 <LandscapeModal />

@@ -22,7 +22,7 @@
 </script>
 
 <div
-	class="bg-black absolute w-screen h-screen flex flex-col {//@ts-expect-error isImageLeft exists on halfPage variation only
+	class="bg-black absolute w-screen h-dvh flex flex-col {//@ts-expect-error isImageLeft exists on halfPage variation only
 	slice.primary.isImageLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'}"
 >
 	<PrismicImage
