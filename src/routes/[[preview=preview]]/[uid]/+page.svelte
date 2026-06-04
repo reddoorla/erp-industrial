@@ -8,16 +8,15 @@
 	import { onMount } from 'svelte';
 	import Footer from '$lib/components/Footer.svelte';
 
-	let navLinks = $state([{ href: '', text: '' }]);
 	let isLogoLarge = $state(true);
 
 	import type { NavDocumentDataLinksItem } from '../../../prismicio-types';
-	data.nav.data.links.forEach((link: NavDocumentDataLinksItem) => {
-		navLinks.push({
+	const navLinks = $derived(
+		data.nav.data.links.map((link: NavDocumentDataLinksItem) => ({
 			href: prismicHelpers.isFilled.link(link.href) ? link.href.url || '#' : '#',
 			text: link.text || ''
-		});
-	});
+		}))
+	);
 
 	onMount(() => {
 		document.getElementsByTagName('main')[0].addEventListener(

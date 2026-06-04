@@ -7,15 +7,13 @@
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import { fade } from 'svelte/transition';
 
-	let navLinks = [{ href: '', text: '' }];
-
 	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
-	data.nav.data.links.forEach((link: NavDocumentDataLinksItem) => {
-		navLinks.push({
+	const navLinks = $derived(
+		data.nav.data.links.map((link: NavDocumentDataLinksItem) => ({
 			href: prismicHelpers.isFilled.link(link.href) ? link.href.url || '#' : '#',
 			text: link.text || ''
-		});
-	});
+		}))
+	);
 
 	let isEmailSent = $state(false);
 	let isEmailSending = $state(false);

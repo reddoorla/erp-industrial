@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import ContentBox from './ContentBox.svelte';
 	import type { ComponentProps } from 'svelte';
 
@@ -9,7 +9,7 @@
 
 	const SLIDER_INTERVAL_IN_MS = 5000;
 	let sliderIndex = $state(0);
-	let sliderInterval: ReturnType<typeof setTimeout>;
+	let sliderInterval: ReturnType<typeof setInterval>;
 	let sliderWidth = $derived(100 / contentBoxPropsArray.length / 5);
 	let isSlideAnimated = $state(true);
 
@@ -33,13 +33,13 @@
 		sliderInterval = setInterval(() => slideRight(), SLIDER_INTERVAL_IN_MS);
 		if (sliderIndex % contentBoxPropsArray.length == 0 && sliderIndex !== 0 && sliderIndex < 0)
 			resetSlider();
-
-		console.log(sliderIndex);
 	};
 
 	onMount(() => {
 		sliderInterval = setInterval(() => slideLeft(), SLIDER_INTERVAL_IN_MS);
 	});
+
+	onDestroy(() => clearInterval(sliderInterval));
 
 	const quintupledPropsArray = $derived([
 		...contentBoxPropsArray,
