@@ -13,6 +13,8 @@
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import { isFilled } from '@prismicio/helpers';
 
+	import Player from '@vimeo/player';
+
 	let videoId = $state('');
 
 	let activeOverlay = $state(false);
@@ -22,6 +24,46 @@
 
 	let isMounted = $state(false);
 
+	// Background Vimeo embeds start at a low adaptive-bitrate rendition (grainy) and ramp up over
+	// the first few seconds. We keep the poster image over the iframe until the high rendition has
+	// actually buffered, so the user never sees the grain. 6s hard cap so the poster never sticks.
+	let videoIframe = $state<HTMLIFrameElement>();
+	let videoReady = $state(false);
+
+	function setupVideoReveal() {
+		if (!videoIframe) return;
+
+		let revealed = false;
+		const reveal = () => {
+			if (revealed) return;
+			revealed = true;
+			videoReady = true;
+		};
+
+		const hardCap = setTimeout(reveal, 6000);
+
+		try {
+			const player = new Player(videoIframe);
+			// Force a high rendition so the first frames aren't the grainy ramp-up.
+			player
+				.setQuality('1080p')
+				.then(() => {
+					// Quality accepted — reveal once the new rendition has buffered, or shortly after.
+					const onReady = () => {
+						clearTimeout(hardCap);
+						reveal();
+					};
+					player.on('bufferend', onReady);
+					setTimeout(onReady, 1200);
+				})
+				.catch(() => {
+					/* some background embeds refuse setQuality — the 6s hard cap still reveals */
+				});
+		} catch {
+			/* SDK failed to init — the 6s hard cap still reveals */
+		}
+	}
+
 	// const sendToBottomPane = () =>{
 	// 	if(bottomPane?.getBoundingClientRect().top>10){
 	// 		bottomPane.parentElement?.scrollTo(0, viewportHeight*2)
@@ -30,6 +72,7 @@
 
 	onMount(() => {
 		setTimeout(() => (isMounted = true), 25);
+		setupVideoReveal();
 	});
 
 	let hoveredElements: Set<HTMLElement> = new Set();
@@ -151,12 +194,15 @@
 			loading="eager"
 			fetchpriority="high"
 			imgixParams={{ auto: ['format', 'compress'] }}
-			class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9
+			class="object-cover absolute aspect-video z-10 transition-opacity duration-700 {videoReady
+				? 'opacity-0 pointer-events-none'
+				: 'opacity-100'} {viewportHeight * 16 > viewportWidth * 9
 				? 'h-full min-w-full'
 				: 'w-full min-h-full'}"
 		/>
 		{#if videoId && isFilled.embed(slice.primary.video_embed)}
 			<iframe
+				bind:this={videoIframe}
 				title="background video"
 				src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0`}
 				class="object-cover absolute aspect-video {viewportHeight * 16 > viewportWidth * 9
