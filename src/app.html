@@ -15,8 +15,19 @@
 			sizes="16x16"
 			href="%sveltekit.assets%/new-favicon-16x16.png"
 		/>
-		<script src="https://kit.fontawesome.com/78a9146bce.js" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="//buildout.com/api.js?v8"></script>
+		<!-- Warm up third-party connections (fonts, icons, embeds, images) before they're requested -->
+		<link rel="preconnect" href="https://use.typekit.net" crossorigin />
+		<link rel="preconnect" href="https://p.typekit.net" crossorigin />
+		<link rel="preconnect" href="https://kit.fontawesome.com" />
+		<link rel="preconnect" href="https://ka-f.fontawesome.com" crossorigin />
+		<link rel="preconnect" href="https://images.prismic.io" />
+		<link rel="preconnect" href="https://player.vimeo.com" />
+		<link rel="dns-prefetch" href="https://buildout.com" />
+		<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+		<!-- Non-critical scripts: defer so they don't block first paint / the LCP heading -->
+		<script defer src="https://kit.fontawesome.com/78a9146bce.js" crossorigin="anonymous"></script>
+		<script defer src="https://buildout.com/api.js?v8"></script>
 		<script
 			async
 			defer
