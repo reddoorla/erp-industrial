@@ -73,9 +73,12 @@
 				body: formData
 			});
 
+			// SvelteKit form actions posted via fetch return HTTP 200 even for fail(); the real
+			// outcome is in the serialized result's `type`, so checking response.ok would treat
+			// every server-side failure as a success.
 			const result = await response.json();
 
-			if (response.ok) {
+			if (result?.type === 'success') {
 				isEmailSent = true;
 			} else {
 				isEmailFailed = true;
