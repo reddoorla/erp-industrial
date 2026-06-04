@@ -91,7 +91,7 @@
 		<a href="/" class="hover:opacity-100 transition-all duration-500 bump pointer-events-auto">
 			<img
 				src={logoFull}
-				alt="logo"
+				alt="ERP Industrials"
 				class="h-12 md:h-32 transition-all duration-700 ease-fast-slow hover:opacity-100 {$isNavLight
 					? 'brightness-0 invert'
 					: ''} {isLogoLarge
