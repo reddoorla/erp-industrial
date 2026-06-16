@@ -7,8 +7,7 @@ Marketing site for **ERP Industrials** (Energy Related Properties) — a SvelteK
 - **SvelteKit 2 / Svelte 5** (runes), **Vite**
 - **Tailwind CSS 4**
 - **Prismic** as the CMS (Slice Machine for slice modeling)
-- **Resend** for contact-form email delivery
-- **Google reCAPTCHA Enterprise** (score-based) on the contact form
+- **Central forms ingest** via [`@reddoorla/maintenance`](https://www.npmjs.com/package/@reddoorla/maintenance) — the contact form forwards to the shared dashboard pipeline (Airtable Submissions + status-aware notify)
 - **Netlify** hosting (`@sveltejs/adapter-netlify`)
 - **pnpm** package manager
 - Shared config + a11y/Lighthouse tooling via [`@reddoorla/maintenance`](https://www.npmjs.com/package/@reddoorla/maintenance)
@@ -24,27 +23,23 @@ The app runs at `http://localhost:5173`. Slice Machine runs alongside for editin
 
 ### Environment variables
 
-Create a `.env` (gitignored). Server secrets are read at runtime via `$env/dynamic/private`.
+Create a `.env` (gitignored — see `.env.example`). Server secrets are read at runtime via `$env/dynamic/private`.
 
-| Variable                   | Scope            | Purpose                                                                    |
-| -------------------------- | ---------------- | -------------------------------------------------------------------------- |
-| `RESEND_API_KEY`           | server (private) | Resend API key for contact-form email                                      |
-| `RECAPTCHA_SECRET_KEY`     | server (private) | Google Cloud API key for the reCAPTCHA Enterprise assessment               |
-| `VITE_RECAPTCHA_SITE_KEY`  | server           | reCAPTCHA Enterprise **site** key (public; used in the assessment body)    |
-| `CONTACT_TEST_EMAIL`       | server, dev-only | If set, all local form submissions route here (never emails real contacts) |
-| `VITE_PRISMIC_ENVIRONMENT` | build            | Prismic environment override (optional)                                    |
-
-For local contact-form testing you only need `RESEND_API_KEY` (and optionally `CONTACT_TEST_EMAIL`) — **reCAPTCHA is skipped in dev** (it's enforced in production only, via `$app/environment`'s `dev` flag), so you don't need to allow-list `localhost` on the reCAPTCHA key.
+| Variable                   | Scope            | Purpose                                          |
+| -------------------------- | ---------------- | ------------------------------------------------ |
+| `FORMS_INGEST_URL`         | server (private) | Central ingest endpoint (slug `erp-industrials`) |
+| `FORMS_INGEST_TOKEN`       | server (private) | Shared token authorizing the ingest POST         |
+| `VITE_PRISMIC_ENVIRONMENT` | build            | Prismic environment override (optional)          |
 
 ## Contact form
 
-`src/routes/contact/+page.server.ts` is a SvelteKit form action (runs as a Netlify function — it is **not** a Netlify "Form"):
+`src/routes/contact/+page.server.ts` is a SvelteKit form action that forwards the submission to the central `@reddoorla/maintenance` ingest (via `createIngestAction`):
 
-1. Verifies the reCAPTCHA Enterprise token (production only; score threshold 0.5).
-2. Routes to a recipient based on the selected interest (Leasing / Investor Relations / Property Sales), always copying `tucker@reddoorla.com`.
-3. Sends via Resend from `submissions@reddoorla.com` (the `reddoorla.com` domain must be verified in the Resend account behind `RESEND_API_KEY`).
+1. Spam is screened by a hidden honeypot + a fill-timing check built into `createIngestAction` (no reCAPTCHA, no Netlify "Form").
+2. The submission (including the selected `interest`) is POSTed to `FORMS_INGEST_URL` with `FORMS_INGEST_TOKEN`. The dashboard persists it to Airtable Submissions and sends a status-aware notification.
+3. Recipient routing by `interest` (Leasing / Investor Relations / Property Sales and Acquistions) is configured dashboard-side (Notify Routing) — not in this repo.
 
-The client checks the action result's `type` (not `response.ok`) — SvelteKit actions posted via `fetch` return HTTP 200 even on `fail()`.
+The form is progressively enhanced with `use:enhance`; success/error render from the action's `form` prop.
 
 ## Scripts
 

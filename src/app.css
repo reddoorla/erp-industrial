@@ -118,10 +118,6 @@ div {
 	-ms-overflow-style: none;
 }
 
-.grecaptcha-badge {
-	display: none !important;
-}
-
 /* Respect users who ask for less motion: neutralize CSS transitions/animations and smooth scroll. */
 @media (prefers-reduced-motion: reduce) {
 	*,

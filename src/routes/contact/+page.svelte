@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	let { data }: { data: PageData } = $props();
+	import { enhance } from '$app/forms';
+	import type { ActionData, PageData } from './$types';
+	let { data, form }: { data: PageData; form: ActionData } = $props();
 	import Nav from '$lib/components/Nav.svelte';
 	import * as prismicHelpers from '@prismicio/helpers';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import { fade } from '$lib/transitions';
-	import { RECAPTCHA_SITE_KEY } from '$lib/recaptcha';
 
 	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
 	const navLinks = $derived(
@@ -16,85 +16,15 @@
 		}))
 	);
 
-	let isEmailSent = $state(false);
-	let isEmailSending = $state(false);
-	let isEmailFailed = $state(false);
+	let submitting = $state(false);
 	let thankYouHeading = $state<HTMLElement>();
 
 	// Move focus to the confirmation when the form succeeds, so keyboard/SR users are told.
 	$effect(() => {
-		if (isEmailSent) thankYouHeading?.focus();
+		if (form?.success) thankYouHeading?.focus();
 	});
 
-	async function executeReCaptcha(): Promise<string> {
-		// @ts-expect-error grecaptcha is a global injected by reCAPTCHA enterprise script
-		const grecaptcha = window.grecaptcha?.enterprise;
-		if (!grecaptcha) {
-			console.error('reCAPTCHA is not loaded');
-			throw new Error('reCAPTCHA not loaded');
-		}
-		try {
-			// Ensure the client is registered before executing, else execute() can throw.
-			await new Promise<void>((resolve) => grecaptcha.ready(resolve));
-			// execute() hangs indefinitely if the current domain isn't allow-listed for the site key
-			// (e.g. localhost), so race it against a timeout instead of leaving Submit spinning forever.
-			return await Promise.race([
-				grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit' }) as Promise<string>,
-				new Promise<string>((_, reject) =>
-					setTimeout(() => reject(new Error('reCAPTCHA timed out')), 10000)
-				)
-			]);
-		} catch (error) {
-			console.error('reCAPTCHA execution failed:', error);
-			throw error;
-		}
-	}
-
-	let reCaptchaToken = '';
-
-	async function handleSubmit(event: Event) {
-		event.preventDefault();
-		if (isEmailSending) return; // guard against double-submit / Enter-spam → duplicate emails
-		isEmailSending = true;
-		isEmailSent = false;
-		isEmailFailed = false;
-
-		try {
-			const form = event.target as HTMLFormElement;
-			const formData = new FormData(form);
-			// reCAPTCHA is enforced in production only; skipped in local dev so the form can be
-			// tested without allow-listing localhost on the Enterprise key.
-			if (!dev) {
-				reCaptchaToken = await executeReCaptcha();
-				formData.append('g-recaptcha-response', reCaptchaToken);
-			}
-
-			const response = await fetch(form.action, {
-				method: 'POST',
-				body: formData
-			});
-
-			// SvelteKit form actions posted via fetch return HTTP 200 even for fail(); the real
-			// outcome is in the serialized result's `type`, so checking response.ok would treat
-			// every server-side failure as a success.
-			const result = await response.json();
-
-			if (result?.type === 'success') {
-				isEmailSent = true;
-			} else {
-				isEmailFailed = true;
-				console.error('Submission failed:', result);
-			}
-		} catch (error) {
-			console.error('Error during form submission:', error);
-			isEmailFailed = true;
-		} finally {
-			isEmailSending = false;
-		}
-	}
-
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
-	import { dev } from '$app/environment';
 	import { isNavLight } from '$lib/stores/isNavLight';
 	import Footer from '$lib/components/Footer.svelte';
 	import { onMount } from 'svelte';
@@ -115,9 +45,6 @@
 </script>
 
 <svelte:window bind:innerWidth={viewportWidth} />
-<svelte:head>
-	<script src="https://www.google.com/recaptcha/enterprise.js?render={RECAPTCHA_SITE_KEY}"></script>
-</svelte:head>
 
 <Nav {navLinks} isLogoLarge={false} />
 
@@ -145,8 +72,8 @@
 			>
 		</div>
 		<div class="w-full md:w-2/3 mt-10 mb-16 md:my-0 md:pl-16 relative">
-			{#if !isEmailSent}
-				{#if isEmailFailed}
+			{#if !form?.success}
+				{#if form?.error}
 					<div
 						class="absolute flex flex-col items-center justify-center -top-24 right-0 border-[#b21c0e] border-2 bg-black"
 						transition:fade
@@ -162,12 +89,28 @@
 					name="contact"
 					id="contact"
 					method="POST"
-					onsubmit={(e) => {
-						e.preventDefault();
-						handleSubmit(e);
+					use:enhance={() => {
+						submitting = true;
+						return async ({ update }) => {
+							await update();
+							submitting = false;
+						};
 					}}
 				>
 					<h5 class="text-white">SEND US A MESSAGE</h5>
+
+					<!-- Anti-bot: per-request timing token + a hidden honeypot. Naive bots
+					     fill the honeypot; a too-fast fill is caught by the timing screen. -->
+					<input type="hidden" name="ts" value={data.formTs} />
+					<input
+						type="text"
+						name="bot-field"
+						tabindex="-1"
+						autocomplete="off"
+						aria-hidden="true"
+						class="hidden"
+					/>
+
 					<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">
 						<input
 							type="email"
@@ -186,7 +129,8 @@
 							<option value="" disabled selected>Select Interest</option>
 							<option value="Leasing">Leasing</option>
 							<option value="Investor Relations">Investor Relations</option>
-							<option value="Property Sales and Acquistions">Property Sales and Acquisition</option>
+							<option value="Property Sales and Acquistions">Property Sales and Acquisitions</option
+							>
 						</select>
 					</div>
 					<div class="w-full">
@@ -200,10 +144,10 @@
 					</div>
 					<button
 						type="submit"
-						disabled={isEmailSending}
+						disabled={submitting}
 						class="hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 disabled:cursor-not-allowed disabled:opacity-70"
 					>
-						{#if !isEmailSending}
+						{#if !submitting}
 							Submit
 						{:else}
 							<div><i class="fa fa-spin fa-circle-o-notch fa-2xl leading-4 w-4"></i></div>
@@ -211,7 +155,7 @@
 					</button>
 				</form>
 			{/if}
-			{#if isEmailSent}
+			{#if form?.success}
 				<div class="w-full h-72 flex flex-col items-center justify-center gap-16">
 					<h5 class="text-white" bind:this={thankYouHeading} tabindex="-1">THANK YOU!</h5>
 					<p class="text-white">
