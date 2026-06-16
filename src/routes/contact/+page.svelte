@@ -129,7 +129,7 @@
 							<option value="" disabled selected>Select Interest</option>
 							<option value="Leasing">Leasing</option>
 							<option value="Investor Relations">Investor Relations</option>
-							<option value="Property Sales and Acquistions">Property Sales and Acquisition</option>
+							<option value="Property Sales and Acquistions">Property Sales and Acquisitions</option>
 						</select>
 					</div>
 					<div class="w-full">
