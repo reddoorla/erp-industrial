@@ -20,9 +20,6 @@ importers:
       '@vimeo/player':
         specifier: ^2.25.0
         version: 2.30.4
-      resend:
-        specifier: ^6.12.4
-        version: 6.12.4(@react-email/render@1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       svelte-gestures:
         specifier: ^4.0.0
         version: 4.0.0
@@ -37,8 +34,8 @@ importers:
         specifier: ^1.60.0
         version: 1.60.0
       '@reddoorla/maintenance':
-        specifier: ^0.28.0
-        version: 0.28.0(jiti@2.7.0)(playwright-core@1.60.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
+        specifier: ^0.40.0
+        version: 0.40.0(@sveltejs/kit@2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(jiti@2.7.0)(playwright-core@1.60.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
       '@slicemachine/adapter-sveltekit':
         specifier: ^0.3.65
         version: 0.3.96(@prismicio/types@0.2.9)(@sveltejs/kit@2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(prettier-plugin-svelte@3.5.2(prettier@3.8.3)(svelte@5.56.1(@typescript-eslint/types@8.60.1)))(prettier@3.8.3)(svelte@5.56.1(@typescript-eslint/types@8.60.1))
@@ -922,10 +919,15 @@ packages:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
       react-dom: ^18.0 || ^19.0 || ^19.0.0-rc
 
-  '@reddoorla/maintenance@0.28.0':
-    resolution: {integrity: sha512-Lc4qWBWKG5ZLVWrNGH6oSBIYNtEcPaH54k9kXWa3SkTbMpdcm0JjZnFnw3G3FNA9rgllk2cpNcSHm+SosVAcwA==}
+  '@reddoorla/maintenance@0.40.0':
+    resolution: {integrity: sha512-MDXpnhy8s2lZKdx1ws7Cu4riU1gj3m8i08g5GJE8jKMmVl0Rm1TIpwzgZPHyfyNNxLloDDrrfFRQtRkiZFsVsw==}
     engines: {node: '>=20'}
     hasBin: true
+    peerDependencies:
+      '@sveltejs/kit': ^2.0.0
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
 
   '@rolldown/binding-android-arm64@1.0.3':
     resolution: {integrity: sha512-454rs7jHngixp/NMxd5srYD57OnzSlZ/eFTETjORQHLwJG1lRtmNOJcBerZlfu4GjKqeq8aCCIQrMdHyhI51Hw==}
@@ -3341,9 +3343,6 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  postal-mime@2.7.4:
-    resolution: {integrity: sha512-0WdnFQYUrPGGTFu1uOqD2s7omwua8xaeYGdO6rb88oD5yJ/4pPHDA4sdWqfD8wQVfCny563n/HQS7zTFft+f/g==}
-
   postcss-load-config@3.1.4:
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
     engines: {node: '>= 10'}
@@ -3552,15 +3551,6 @@ packages:
   resend@4.8.0:
     resolution: {integrity: sha512-R8eBOFQDO6dzRTDmaMEdpqrkmgSjPpVXt4nGfWsZdYOet0kqra0xgbvTES6HmCriZEXbmGk3e0DiGIaLFTFSHA==}
     engines: {node: '>=18'}
-
-  resend@6.12.4:
-    resolution: {integrity: sha512-lRpJ2Hxd+ht+JPDm97juRcUp9HOMuZyxaRFRFmc9Tx8iNWiei94Dx9v6SWufgKk2667C/uCeKKspMotOHSpCSg==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      '@react-email/render': '*'
-    peerDependenciesMeta:
-      '@react-email/render':
-        optional: true
 
   restore-cursor@2.0.0:
     resolution: {integrity: sha512-6IzJLuGi4+R14vwagDHX+JrXmPVtPpn4mffDJ1UdR7/Edm87fl6yi8mMBIVvFtJaNTUvjughmW4hwLhRG7gC1Q==}
@@ -4981,7 +4971,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-promise-suspense: 0.3.4
 
-  '@reddoorla/maintenance@0.28.0(jiti@2.7.0)(playwright-core@1.60.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)':
+  '@reddoorla/maintenance@0.40.0(@sveltejs/kit@2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(jiti@2.7.0)(playwright-core@1.60.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)':
     dependencies:
       '@axe-core/playwright': 4.11.3(playwright-core@1.60.0)
       '@eslint/js': 10.0.1(eslint@10.4.1(jiti@2.7.0))
@@ -5004,6 +4994,8 @@ snapshots:
       svix: 1.95.1
       tinyglobby: 0.2.17
       typescript-eslint: 8.60.1(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
+    optionalDependencies:
+      '@sveltejs/kit': 2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0))
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -7739,8 +7731,6 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  postal-mime@2.7.4: {}
-
   postcss-load-config@3.1.4(postcss@8.5.15):
     dependencies:
       lilconfig: 2.1.0
@@ -7975,13 +7965,6 @@ snapshots:
     transitivePeerDependencies:
       - react
       - react-dom
-
-  resend@6.12.4(@react-email/render@1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
-    dependencies:
-      postal-mime: 2.7.4
-      standardwebhooks: 1.0.0
-    optionalDependencies:
-      '@react-email/render': 1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   restore-cursor@2.0.0:
     dependencies:
