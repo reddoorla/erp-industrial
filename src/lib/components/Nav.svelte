@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import logoFull from '$lib/assets/erp_logo_subtitled.svg';
+	import { Menu, X } from '@lucide/svelte';
 	import { isNavLight } from '$lib/stores/isNavLight';
 	import { fly, fade } from '$lib/transitions';
 
@@ -70,11 +71,9 @@
 				onclick={toggleOverlayOff}
 				aria-label="Close menu"
 			>
-				<i
-					class="fa-sharp fa-regular fa-xmark text-2xl text-white"
-					in:fade={{ delay: 600 }}
-					out:fade
-				></i>
+				<span class="text-2xl text-white" in:fade={{ delay: 600 }} out:fade>
+					<X class="size-[1em]" strokeWidth={1.75} />
+				</span>
 			</button>
 
 			{#each navLinks as item (item.href)}
@@ -122,7 +121,7 @@
 					onclick={toggleOverlayOn}
 					aria-label="Open menu"
 				>
-					<i class="fa-sharp fa-regular fa-bars"></i>
+					<Menu class="size-[1em]" strokeWidth={1.75} />
 				</button>
 			{/if}
 		</div>

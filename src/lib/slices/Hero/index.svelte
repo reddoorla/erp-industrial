@@ -5,6 +5,7 @@
 	import { PrismicImage } from '@prismicio/svelte';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import ContentBox from '$lib/components/ContentBox.svelte';
+	import { ArrowUp, LoaderCircle } from '@lucide/svelte';
 	import type { HeroSlice } from '../../../prismicio-types';
 
 	let viewportWidth = $state(0);
@@ -164,9 +165,10 @@
 		<ContentWidth
 			class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-8"
 		>
-			<i
-				class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"
-			></i>
+			<LoaderCircle
+				class="absolute left-1/2 right-1/2 -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6 size-[1.5em] animate-spin"
+				strokeWidth={2}
+			/>
 
 			{#if viewportWidth > 1024}
 				<iframe
@@ -264,8 +266,9 @@
 		onmousemove={handleMouseMove}
 		aria-hidden="true"
 	>
-		<i
-			class="fa-sharp fa-regular fa-arrow-up rotate-180 text-white opacity-40 fa-xl absolute bottom-32 md:bottom-8 right-8"
-		></i>
+		<ArrowUp
+			class="rotate-180 text-white opacity-40 absolute bottom-32 md:bottom-8 right-8 size-[1.5em]"
+			strokeWidth={1.75}
+		/>
 	</div>
 {/key}

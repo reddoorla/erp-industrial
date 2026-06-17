@@ -6,6 +6,7 @@
 	import * as prismicHelpers from '@prismicio/helpers';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
+	import { LoaderCircle } from '@lucide/svelte';
 	import { fade } from '$lib/transitions';
 
 	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
@@ -150,7 +151,9 @@
 						{#if !submitting}
 							Submit
 						{:else}
-							<div><i class="fa fa-spin fa-circle-o-notch fa-2xl leading-4 w-4"></i></div>
+							<div>
+								<LoaderCircle class="leading-4 w-4 size-[2em] animate-spin" strokeWidth={2} />
+							</div>
 						{/if}
 					</button>
 				</form>

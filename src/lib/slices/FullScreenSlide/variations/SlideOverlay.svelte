@@ -2,6 +2,7 @@
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import ContentBox from '$lib/components/ContentBox.svelte';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
+	import { LoaderCircle } from '@lucide/svelte';
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
 	import { fade } from '$lib/transitions';
 	import type { FullScreenSlideSlice } from '../../../../prismicio-types';
@@ -64,9 +65,10 @@
 		<ContentWidth
 			class="h-full flex justify-center items-center overflow-y-auto md:overflow-hidden py-32 md:pb-8"
 		>
-			<i
-				class="absolute left-1/2 right-1/2 fa fa-spin fa-circle-o-notch fa-xl -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6"
-			></i>
+			<LoaderCircle
+				class="absolute left-1/2 right-1/2 -translate-x-full -translate-y-full scale-[200%] text-white w-6 leading-6 size-[1.5em] animate-spin"
+				strokeWidth={2}
+			/>
 
 			{#if viewportWidth > 1024}
 				<iframe
