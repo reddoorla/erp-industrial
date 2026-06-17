@@ -152,10 +152,7 @@
 							Submit
 						{:else}
 							<div>
-								<LoaderCircle
-									class="leading-4 w-4 size-[2em] animate-spin"
-									strokeWidth={2}
-								/>
+								<LoaderCircle class="leading-4 w-4 size-[2em] animate-spin" strokeWidth={2} />
 							</div>
 						{/if}
 					</button>
