@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import ContentBox from './ContentBox.svelte';
+	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import type { ComponentProps } from 'svelte';
 
 	let {
@@ -73,7 +74,7 @@
 			class="text-white flex align-middle justify-center cursor-pointer transition-all duration-300 active:-translate-y-2 hover:text-black"
 			aria-label="Previous slide"
 		>
-			<i class="fa-sharp fa-solid fa-chevron-left fa-2x" aria-hidden="true"></i>
+			<ChevronLeft class="size-[2em]" strokeWidth={2} aria-hidden="true" />
 		</button>
 		<div class="h-10 flex align-middle justify-start">
 			{#each contentBoxPropsArray as _image, i (i)}
@@ -95,7 +96,7 @@
 			class="text-white flex align-middle cursor-pointer transition-all duration-300 active:-translate-y-2 justify-center translate-y-[-5.5px] hover:text-black"
 			aria-label="Next slide"
 		>
-			<i class="fa-sharp fa-solid fa-chevron-right fa-2x" aria-hidden="true"></i>
+			<ChevronRight class="size-[2em]" strokeWidth={2} aria-hidden="true" />
 		</button>
 	</div>
 </div>

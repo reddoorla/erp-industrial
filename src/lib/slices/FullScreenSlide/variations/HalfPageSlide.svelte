@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
+	import { X } from '@lucide/svelte';
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
 	import { fade, fly } from '$lib/transitions';
 	import { isFilled } from '@prismicio/helpers';
@@ -78,7 +79,7 @@
 					onclick={() => (activeOverlay = -1)}
 					aria-label="Close"
 				>
-					<i class="fa-solid fa-close fa-xl text-white" aria-hidden="true"></i>
+					<X class="size-[1.5em] text-white" strokeWidth={2} aria-hidden="true" />
 				</button>
 			{/if}
 		</div>
