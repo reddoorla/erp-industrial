@@ -40,7 +40,7 @@
 			</div>
 			<div class="h-full w-1/12"></div>
 			<div class="h-full w-1/4 flex flex-col gap-8">
-				<div class="w-full flex flex-row h-6 gap-6 text-subtle-blue">
+				<div class="w-full flex flex-row items-center gap-6 text-subtle-blue">
 					<a
 						href="https://www.linkedin.com/company/erp-industrials/"
 						class="text-xl"
@@ -51,10 +51,7 @@
 							/></svg
 						></a
 					>
-					<a
-						href="https://www.facebook.com/ERPFunds/"
-						class="text-lg translate-y-[-2px]"
-						aria-label="Facebook"
+					<a href="https://www.facebook.com/ERPFunds/" class="text-xl" aria-label="Facebook"
 						><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
 							><path
 								d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
@@ -63,7 +60,8 @@
 					>
 					<a
 						href="https://www.loopnet.com/company/erp-industrials/midland-tx/9rvtzp4l/"
-						class="scale-105"><img src={loopnet} alt="loopnet" /></a
+						aria-label="LoopNet"
+						><img src={loopnet} alt="ERP Industrials on LoopNet" class="size-[30px]" /></a
 					>
 				</div>
 				<a href="/contact">
@@ -104,7 +102,7 @@
 					>
 					<a
 						href="https://www.facebook.com/ERPFunds/"
-						class="text-lg inline-flex items-center justify-center min-h-11 min-w-11"
+						class="text-xl inline-flex items-center justify-center min-h-11 min-w-11"
 						aria-label="Facebook"
 						><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
 							><path
@@ -116,7 +114,7 @@
 						href="https://www.loopnet.com/company/erp-industrials/midland-tx/9rvtzp4l/"
 						class="inline-flex items-center justify-center min-h-11 min-w-11"
 						aria-label="LoopNet"
-						><img src={loopnet} class="scale-105" alt="ERP Industrials on LoopNet" /></a
+						><img src={loopnet} class="size-[30px]" alt="ERP Industrials on LoopNet" /></a
 					>
 				</div>
 				<a href="/contact">
