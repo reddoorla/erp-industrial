@@ -173,7 +173,7 @@
 			{#if viewportWidth > 1024}
 				<iframe
 					title="background video"
-					src="https://player.vimeo.com/video/939250244?background=1&muted=0&autoplay=1"
+					src="https://player.vimeo.com/video/939250244?background=1&muted=0&autoplay=1&dnt=1"
 					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
 					frameborder="0"
 					allow="autoplay"
@@ -181,7 +181,7 @@
 			{:else}
 				<iframe
 					title="background video"
-					src="https://player.vimeo.com/video/939250244"
+					src="https://player.vimeo.com/video/939250244?dnt=1"
 					class="object-cover aspect-video w-full md:w-4/5 mx-auto z-10"
 					frameborder="0"
 				></iframe>
@@ -217,7 +217,7 @@
 			<iframe
 				bind:this={videoIframe}
 				title="background video"
-				src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0`}
+				src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&autopause=0&dnt=1`}
 				class="object-cover absolute aspect-video transition-opacity duration-700 {videoReady
 					? 'opacity-100'
 					: 'opacity-0'} {viewportHeight * 16 > viewportWidth * 9

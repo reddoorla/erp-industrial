@@ -9,7 +9,7 @@
 	import type { Snippet } from 'svelte';
 	import LandscapeModal from '$lib/components/LandscapeModal.svelte';
 
-	let { children }: { children?: Snippet } = $props();
+	let { children, data }: { children?: Snippet; data: { isPreviewSession: boolean } } = $props();
 
 	let main: HTMLElement;
 	let isSnappy = $state(true);
@@ -82,4 +82,6 @@
 {/if}
 
 <LandscapeModal />
-<PrismicPreview {repositoryName} />
+{#if data.isPreviewSession}
+	<PrismicPreview {repositoryName} />
+{/if}
