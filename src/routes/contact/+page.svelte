@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { env } from '$env/dynamic/public';
+	import { loadTurnstile } from '$lib/turnstile';
 	import type { ActionData, PageData } from './$types';
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	import Nav from '$lib/components/Nav.svelte';
@@ -23,6 +25,37 @@
 	// Move focus to the confirmation when the form succeeds, so keyboard/SR users are told.
 	$effect(() => {
 		if (form?.success) thankYouHeading?.focus();
+	});
+
+	// Optional Cloudflare Turnstile — dark until PUBLIC_TURNSTILE_SITE_KEY is set;
+	// rendered explicitly (works on full load + SPA nav). createIngestAction reads
+	// the injected cf-turnstile-response input and forwards it for central verify.
+	const turnstileSiteKey = env.PUBLIC_TURNSTILE_SITE_KEY?.trim();
+	let turnstileEl = $state<HTMLDivElement>();
+
+	$effect(() => {
+		const el = turnstileEl;
+		if (!turnstileSiteKey || !el) return;
+		let widgetId: string | undefined;
+		let cancelled = false;
+		loadTurnstile()
+			.then((turnstile) => {
+				if (cancelled || !el.isConnected) return;
+				widgetId = turnstile.render(el, { sitekey: turnstileSiteKey });
+			})
+			.catch((err) => {
+				console.warn('[turnstile] widget did not render:', err);
+			});
+		return () => {
+			cancelled = true;
+			if (widgetId !== undefined) {
+				try {
+					window.turnstile?.remove(widgetId);
+				} catch {
+					// already torn down (e.g. by navigation)
+				}
+			}
+		};
 	});
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
@@ -143,6 +176,11 @@
 							required
 						></textarea>
 					</div>
+					{#if turnstileSiteKey}
+						<!-- Cloudflare Turnstile mount point; the effect renders it explicitly and
+						     injects a hidden cf-turnstile-response input that createIngestAction forwards. -->
+						<div class="cf-turnstile" bind:this={turnstileEl}></div>
+					{/if}
 					<button
 						type="submit"
 						disabled={submitting}
