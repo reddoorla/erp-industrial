@@ -34,8 +34,8 @@ importers:
         specifier: ^1.60.0
         version: 1.60.0
       '@reddoorla/maintenance':
-        specifier: ^0.65.0
-        version: 0.65.0(@sveltejs/kit@2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(jiti@2.7.0)(playwright-core@1.60.0)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
+        specifier: ^0.67.0
+        version: 0.67.0(@sveltejs/kit@2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(jiti@2.7.0)(playwright-core@1.60.0)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)
       '@slicemachine/adapter-sveltekit':
         specifier: ^0.3.65
         version: 0.3.96(@prismicio/types@0.2.9)(@sveltejs/kit@2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(prettier-plugin-svelte@3.5.2(prettier@3.8.3)(svelte@5.56.1(@typescript-eslint/types@8.60.1)))(prettier@3.8.3)(svelte@5.56.1(@typescript-eslint/types@8.60.1))
@@ -677,8 +677,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@reddoorla/maintenance@0.65.0':
-    resolution: {integrity: sha512-omvrHLq2LcmWs4nue+Y4JvH27wpIOdoV93MAIl0xB0hJvuLM96wTcn6ujFzUHkyaVjmr7UW5+Dtn53n0uz5vlg==}
+  '@reddoorla/maintenance@0.67.0':
+    resolution: {integrity: sha512-uh9VpkOeuZk0mNciP26P6HzNFvhzszHma+ZprvgZjMRi+nxczgPO/2yMTvJZM/DjwX4Zn5zBEjx+R4dIo4LN0g==}
     engines: {node: '>=20'}
     hasBin: true
     peerDependencies:
@@ -3317,7 +3317,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@reddoorla/maintenance@0.65.0(@sveltejs/kit@2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(jiti@2.7.0)(playwright-core@1.60.0)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)':
+  '@reddoorla/maintenance@0.67.0(@sveltejs/kit@2.62.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.1(@typescript-eslint/types@8.60.1))(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)(vite@8.0.16(@types/node@22.19.19)(jiti@2.7.0)(sass@1.100.0)))(jiti@2.7.0)(playwright-core@1.60.0)(svelte@5.56.1(@typescript-eslint/types@8.60.1))(typescript@6.0.3)':
     dependencies:
       '@axe-core/playwright': 4.11.3(playwright-core@1.60.0)
       '@eslint/js': 10.0.1(eslint@10.4.1(jiti@2.7.0))
