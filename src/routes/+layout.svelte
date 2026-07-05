@@ -20,7 +20,17 @@
 	let navTimer: ReturnType<typeof setTimeout> | undefined;
 	let pendingUrl: string | undefined;
 
-	beforeNavigate(({ cancel, to, from }) => {
+	beforeNavigate(({ cancel, to, from, type }) => {
+		if (type === 'popstate') {
+			// Browser Back/Forward: let it proceed. Re-issuing it via goto() would
+			// push a NEW history entry instead of going back, trapping the user. Also
+			// cancel any in-flight deferred goto so a mid-fade Back isn't overridden by
+			// the pending forward navigation.
+			clearTimeout(navTimer);
+			isTransitioning = false;
+			pendingUrl = undefined;
+			return;
+		}
 		if (!to?.route.id) return; // external / unmatched route — navigate normally, no overlay
 		if (from && to.url.pathname === from.url.pathname) return; // same page (hash/query) — no fade
 
