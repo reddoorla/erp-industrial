@@ -9,7 +9,7 @@
 
 <svelte:window bind:innerWidth={viewportWidth} />
 
-<div class="bg-black w-screen sticky snap-end h-dvh top-0 md:h-[20dvh] md:top-[80dvh] z-40">
+<footer class="bg-black w-screen sticky snap-end h-dvh top-0 md:h-[20dvh] md:top-[80dvh] z-40">
 	<ContentWidth class="flex flex-row pt-6 h-full py-32 md:py-6">
 		{#if viewportWidth > 768}
 			<div class="h-full w-1/3 relative">
@@ -123,7 +123,7 @@
 			</div>
 		{/if}
 	</ContentWidth>
-</div>
+</footer>
 
 <style>
 	.footer-link {
