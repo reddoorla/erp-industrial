@@ -1,13 +1,16 @@
 import { asText } from '@prismicio/client';
+import { error } from '@sveltejs/kit';
 
 import { createClient } from '$lib/prismicio';
 
 export async function load({ params, fetch, cookies }) {
 	const client = createClient({ fetch, cookies });
 
-	const page = await client.getByUID('page', params.uid);
 	const nav = await client.getSingle('nav');
-	if (page) {
+
+	try {
+		const page = await client.getByUID('page', params.uid);
+
 		return {
 			page,
 			nav,
@@ -16,17 +19,8 @@ export async function load({ params, fetch, cookies }) {
 			meta_title: page.data.meta_title,
 			meta_image: page.data.meta_image.url
 		};
-	} else {
-		const homepage = await client.getByUID('page', 'home');
-
-		return {
-			page: homepage,
-			nav,
-			title: asText(homepage.data.title),
-			meta_description: homepage.data.meta_description,
-			meta_title: homepage.data.meta_title,
-			meta_image: homepage.data.meta_image.url
-		};
+	} catch {
+		error(404, { message: 'Page not found' });
 	}
 }
 
