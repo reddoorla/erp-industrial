@@ -12,6 +12,10 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	const nav = await client.getSingle('nav');
 	return {
 		nav,
+		// This route has no Prismic doc, so give the shared <title>/<meta> in +layout.svelte a
+		// unique, sensible title instead of falling back to the bare site name (which would
+		// duplicate other title-less pages). Description falls back to DEFAULT_DESCRIPTION.
+		title: 'Contact — ERP Industrials',
 		// Per-request timestamp for the bot timing screen (see +page.svelte honeypot/ts).
 		formTs: Date.now()
 	};

@@ -11,6 +11,14 @@
 
 	let { children, data }: { children?: Snippet; data: { isPreviewSession: boolean } } = $props();
 
+	// Last-resort <meta name="description"> so every page ships a non-empty description even
+	// when its Prismic doc leaves meta_description empty (or the route has no Prismic doc, e.g.
+	// /contact and /buildout-map). Copy is derived from the site's own homepage/about wording —
+	// no invented facts or claims. A doc's real meta_description always wins over this.
+	const DEFAULT_DESCRIPTION =
+		'ERP Industrials is a commercial real estate investment firm in the Permian Basin, with office and industrial assets across Midland and Odessa, Texas.';
+	let metaDescription = $derived($page.data.meta_description || DEFAULT_DESCRIPTION);
+
 	let main: HTMLElement;
 	let isSnappy = $state(true);
 	let isTransitioning = $state(false);
@@ -66,9 +74,8 @@
 
 <svelte:head>
 	<title>{$page.data.title || 'ERP Industrials'}</title>
-	{#if $page.data.meta_description}
-		<meta name="description" content={$page.data.meta_description} />
-	{/if}
+	<meta name="description" content={metaDescription} />
+	<meta property="og:description" content={metaDescription} />
 	{#if $page.data.meta_title}
 		<meta property="og:title" content={$page.data.meta_title} />
 	{/if}
