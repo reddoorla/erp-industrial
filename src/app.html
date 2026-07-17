@@ -48,8 +48,11 @@
 		<meta name="msapplication-TileColor" content="#ffffff" />
 		<meta name="theme-color" content="#ffffff" />
 		<meta name="google-site-verification" content="YjIJ1D32doQRCwibNZ5Zy_La8tnJXyuBaFca_dLxMLY" />
-		<title>ERP Industrials</title>
 
+		<!-- The per-page <title> is set in src/routes/+layout.svelte via <svelte:head>.
+		     A static <title> here would render BEFORE %sveltekit.head% and, being the
+		     document's first <title>, would win on every page — making all pages share
+		     the same title. Leave the title to the layout. -->
 		%sveltekit.head%
 
 		<!-- Google tag (gtag.js) -->
