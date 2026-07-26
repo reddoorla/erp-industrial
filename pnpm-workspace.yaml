@@ -7,3 +7,12 @@ allowBuilds:
   protobufjs: true
   sharp: true
 minimumReleaseAge: 0
+overrides:
+  # GHSA-pxg6-pf52-xh8x — @sveltejs/kit pins cookie ^0.6.0 and @slicemachine/manager
+  # pins 0.5.0 even at latest; capped override until parents move to >=0.7.0.
+  'cookie@<0.7.0': ^0.7.2
+  # GHSA-w5hq-g745-h8pq — @prismicio/api-renderer@1.0.0 (under @slicemachine/manager's
+  # pinned @prismicio/mocks@2.0.0) still asks for uuid ^8; dev-only slicemachine chain.
+  'uuid@<11.1.1': ^11.1.1
+  # GHSA-5v7r-6r5c-r473 — @slicemachine/manager pins file-type ^18; dev-only chain.
+  'file-type@>=13.0.0 <21.3.1': ^21.3.1
