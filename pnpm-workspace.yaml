@@ -1,4 +1,3 @@
-# pnpm 11 reads settings from here (the package.json "pnpm" field is no longer read).
 allowBuilds:
   # migrate each package from the old onlyBuiltDependencies here as `name: true`
   '@parcel/watcher': true
@@ -10,7 +9,7 @@ minimumReleaseAge: 0
 overrides:
   # GHSA-pxg6-pf52-xh8x — @sveltejs/kit pins cookie ^0.6.0 and @slicemachine/manager
   # pins 0.5.0 even at latest; capped override until parents move to >=0.7.0.
-  'cookie@<0.7.0': ^0.7.2
+  'cookie@<0.7.0': ^1.0.0
   # GHSA-w5hq-g745-h8pq — @prismicio/api-renderer@1.0.0 (under @slicemachine/manager's
   # pinned @prismicio/mocks@2.0.0) still asks for uuid ^8; dev-only slicemachine chain.
   'uuid@<11.1.1': ^11.1.1
