@@ -173,8 +173,7 @@
 							class="w-full h-48"
 							placeholder="Your Message"
 							aria-label="Your message"
-							required
-						></textarea>
+							required></textarea>
 					</div>
 					{#if turnstileSiteKey}
 						<!-- Cloudflare Turnstile mount point; the effect renders it explicitly and
