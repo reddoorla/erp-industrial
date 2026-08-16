@@ -18,13 +18,13 @@ on:
   # `--apply`, and it holds no job that does.
   pull_request:
     paths:
-      - "customtypes/**"
-      - "src/lib/slices/**/model.json"
+      - 'customtypes/**'
+      - 'src/lib/slices/**/model.json'
   push:
     branches: [main]
     paths:
-      - "customtypes/**"
-      - "src/lib/slices/**/model.json"
+      - 'customtypes/**'
+      - 'src/lib/slices/**/model.json'
 
 jobs:
   prismic-models:
