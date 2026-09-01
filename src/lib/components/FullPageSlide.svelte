@@ -3,6 +3,7 @@
 	import type { ImageFieldImage } from '@prismicio/client';
 	import { ArrowUp } from '@lucide/svelte';
 	import { PrismicImage } from '@prismicio/svelte';
+	import { cappedWidths } from '@reddoorla/maintenance/images';
 
 	let {
 		backgroundImage = null,
@@ -19,6 +20,8 @@
 	{#if backgroundImage}
 		<PrismicImage
 			field={backgroundImage}
+			widths={cappedWidths(backgroundImage)}
+			sizes="100vw"
 			loading="lazy"
 			imgixParams={{ auto: ['format', 'compress'] }}
 			class="object-cover absolute w-screen h-dvh left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"

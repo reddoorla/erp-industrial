@@ -6,6 +6,7 @@
 	import { PrismicImage } from '@prismicio/svelte';
 	import { fade, fly } from '$lib/transitions';
 	import { isFilled } from '@prismicio/helpers';
+	import { cappedWidths } from '@reddoorla/maintenance/images';
 	import type {
 		FullScreenSlideSliceDefault,
 		FullScreenSlideSliceWithVideoPopup,
@@ -138,7 +139,13 @@
 					<div class="text-white large-paragraph md:absolute md:top-8">Management Team</div>
 					{#each slice.items as item, i (i)}
 						<div class="md:w-1/3 pr-8 flex flex-col gap-8 md:items-start md:justify-end shrink-0">
-							<PrismicImage field={item.headshot} class="md:w-48 rounded-full" />
+							<PrismicImage
+								field={item.headshot}
+								widths={cappedWidths(item.headshot, [192, 384, 576])}
+								sizes="(min-width: 768px) 192px, 60vw"
+								loading="lazy"
+								class="md:w-48 rounded-full"
+							/>
 							<h5 class="text-white whitespace-pre-line">{item.title}</h5>
 							<div class="large-paragraph text-white whitespace-nowrap">{item.name}</div>
 							<DefaultButton filled={false} onclick={() => (activeOverlay = i)} text="bio" />
