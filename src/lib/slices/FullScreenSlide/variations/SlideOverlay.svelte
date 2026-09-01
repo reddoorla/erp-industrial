@@ -6,6 +6,7 @@
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
 	import { fade } from '$lib/transitions';
 	import type { FullScreenSlideSlice } from '../../../../prismicio-types';
+	import { cappedWidths } from '@reddoorla/maintenance/images';
 
 	let {
 		slice,
@@ -104,6 +105,9 @@
 						<div class="flex w-full flex-col justify-between gap-8 md:pb-12">
 							<PrismicImage
 								field={slice.items[activeOverlay].headshot}
+								widths={cappedWidths(slice.items[activeOverlay].headshot, [144, 288, 576])}
+								sizes="(min-width: 768px) 288px, 144px"
+								loading="lazy"
 								class=" w-36 h-36 md:h-72  md:w-72 rounded-full max-w-none"
 							/>
 							<h5 class="text-white whitespace-pre-line">

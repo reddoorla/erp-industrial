@@ -15,6 +15,7 @@
 	import { isFilled } from '@prismicio/helpers';
 
 	import Player from '@vimeo/player';
+	import { cappedWidths } from '@reddoorla/maintenance/images';
 
 	let videoId = $state('');
 
@@ -204,6 +205,8 @@
 	>
 		<PrismicImage
 			field={slice.primary.loading_placeholder}
+			widths={cappedWidths(slice.primary.loading_placeholder)}
+			sizes="100vw"
 			loading="eager"
 			fetchpriority="high"
 			imgixParams={{ auto: ['format', 'compress'] }}

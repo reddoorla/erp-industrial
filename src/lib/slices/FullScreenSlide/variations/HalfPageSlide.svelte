@@ -4,6 +4,7 @@
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
 	import { fade, fly } from '$lib/transitions';
 	import { isFilled } from '@prismicio/helpers';
+	import { cappedWidths } from '@reddoorla/maintenance/images';
 	import type {
 		FullScreenSlideSliceHalfPage,
 		FullScreenSlideSliceHalfPageWithButtonOverlays,
@@ -28,6 +29,8 @@
 >
 	<PrismicImage
 		field={slice.primary.background_image}
+		widths={cappedWidths(slice.primary.background_image)}
+		sizes="(min-width: 1024px) 50vw, 100vw"
 		class="lg:w-1/2 h-1/4 lg:h-full object-cover"
 	/>
 	{#if hasEntered}
