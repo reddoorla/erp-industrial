@@ -29,8 +29,8 @@ importers:
         specifier: ^2.25.0
         version: 2.30.4
       svelte-gestures:
-        specifier: ^4.0.0
-        version: 4.0.0
+        specifier: ^5.0.0
+        version: 5.2.2
     devDependencies:
       '@axe-core/playwright':
         specifier: ^4.11.3
@@ -2651,8 +2651,8 @@ packages:
       svelte:
         optional: true
 
-  svelte-gestures@4.0.0:
-    resolution: {integrity: sha512-YrryRlKGY2CJm3AtEjFt9+RdQ7/pqNio4O7Apb9ed6oMBEkd6BFoOuv9mBApAEBIx08+iBDXQujbYCvakGePPw==}
+  svelte-gestures@5.2.2:
+    resolution: {integrity: sha512-Y+chXPaSx8OsPoFppUwPk8PJzgrZ7xoDJKXeiEc7JBqyKKzXer9hlf8F9O34eFuAWB4/WQEvccACvyBplESL7A==}
 
   svelte2tsx@0.7.61:
     resolution: {integrity: sha512-EpQ/+UHITBULeUojx/LLD3uTYasZXcX1BrqlrzfLUnT9vdUhaOWK59a3ryWcFU8L0sY1SP+gRhJ2Beiis98+qw==}
@@ -5382,7 +5382,7 @@ snapshots:
     optionalDependencies:
       svelte: 5.57.0(@typescript-eslint/types@8.69.0)
 
-  svelte-gestures@4.0.0: {}
+  svelte-gestures@5.2.2: {}
 
   svelte2tsx@0.7.61(svelte@5.57.0(@typescript-eslint/types@8.69.0))(typescript@6.0.3):
     dependencies:
