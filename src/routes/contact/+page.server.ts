@@ -1,5 +1,6 @@
 import { createClient } from '$lib/prismicio';
 import { createIngestAction } from '@reddoorla/maintenance/forms';
+import { replyCopyFor } from '$lib/server/reply-copy';
 // Server-only secrets, read at runtime. Never exposed to the client (unlike VITE_-prefixed vars).
 import { env } from '$env/dynamic/private';
 import type { Actions, PageServerLoad } from './$types';
@@ -32,12 +33,17 @@ export const actions: Actions = {
 			url: env.FORMS_INGEST_URL,
 			token: env.FORMS_INGEST_TOKEN
 		}),
-		buildPayload: (form, event) => ({
+		buildPayload: async (form, event) => ({
 			email: form.get('email')?.toString(),
 			message: form.get('message')?.toString(),
 			interest: form.get('interest')?.toString() || undefined, // → extraFields.interest, the routing key
 			// Full URL incl. query string so UTM/campaign params (?utm_source=…) are captured.
-			sourceUrl: event.url.href
+			sourceUrl: event.url.href,
+			// Confirmation-email copy the client wrote in Prismic, resolved
+			// server-side. Undefined until they fill the `form replies` document —
+			// the shared package then sends its own per-form-type default, so the
+			// site keeps replying exactly as it does today until copy exists.
+			_reply: await replyCopyFor(event, 'contact')
 		})
 	})
 };
