@@ -1,16 +1,19 @@
 <!--
-	Intentionally a legacy (non-runes) component: @prismicio/svelte's `components`
-	map is typed for legacy `SvelteComponent` classes, so this serializer must stay
-	`export let` + `<slot>` to satisfy that type. `<slot>` is not deprecated in
-	legacy mode, and this is a stateless render leaf — no reactivity hazard.
+	Rich-text `label` serializer. @prismicio/svelte 2 passes each `components`
+	entry the node plus a `children` snippet, so this is a runes component that
+	renders `children`. (The 1.x legacy `export let` + `<slot>` version would
+	still render and type-check under 2.x through Svelte 5's slot interop; this
+	is the native form, not a forced fix.)
 -->
-<script>
-	/** @type {import("@prismicio/client").RTLabelNode} */
-	export let node;
+<script lang="ts">
+	import type { RTLabelNode } from '@prismicio/client';
+	import type { RichTextComponentProps } from '@prismicio/svelte';
+
+	let { node, children }: RichTextComponentProps<RTLabelNode> = $props();
 </script>
 
 {#if node.data.label === 'codespan'}
-	<code><slot /></code>
+	<code>{@render children()}</code>
 {:else}
-	<span class={node.data.label}><slot /></span>
+	<span class={node.data.label}>{@render children()}</span>
 {/if}

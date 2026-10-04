@@ -12,12 +12,11 @@
 	let viewportHeight = $state(0);
 
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
-	import { isFilled } from '@prismicio/helpers';
+	import { asImageSrc, isFilled } from '@prismicio/client';
 
 	import Player from '@vimeo/player';
 	import BgVideo from '$lib/components/BgVideo.svelte';
 	import { mediaUrl } from '$lib/utils/mediaUrl';
-	import { asImageSrc } from '@prismicio/client';
 	import { cappedWidths } from '@reddoorla/maintenance/images';
 
 	let videoId = $state('');

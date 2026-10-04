@@ -5,7 +5,7 @@
 	import type { ActionData, PageData } from './$types';
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	import Nav from '$lib/components/Nav.svelte';
-	import * as prismicHelpers from '@prismicio/helpers';
+	import { isFilled } from '@prismicio/client';
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import DefaultButton from '$lib/components/Buttons/DefaultButton.svelte';
 	import { LoaderCircle } from '@lucide/svelte';
@@ -14,7 +14,7 @@
 	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
 	const navLinks = $derived(
 		data.nav.data.links.map((link: NavDocumentDataLinksItem) => ({
-			href: prismicHelpers.isFilled.link(link.href) ? link.href.url || '#' : '#',
+			href: isFilled.link(link.href) ? link.href.url || '#' : '#',
 			text: link.text || ''
 		}))
 	);

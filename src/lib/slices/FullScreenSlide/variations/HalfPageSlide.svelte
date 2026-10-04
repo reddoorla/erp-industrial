@@ -3,7 +3,7 @@
 	import { X } from '@lucide/svelte';
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
 	import { fade, fly } from '$lib/transitions';
-	import { isFilled } from '@prismicio/helpers';
+	import { isFilled } from '@prismicio/client';
 	import { cappedWidths } from '@reddoorla/maintenance/images';
 	import type {
 		FullScreenSlideSliceHalfPage,
