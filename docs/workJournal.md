@@ -118,3 +118,74 @@ read `4334703` and found 6 models matching. Then the Prismic connector, read-onl
 the same three custom types and three slices, every field's type and config
 equal across all nine `FullScreenSlide` variations. The compare script found the
 three differences planted in a scratch copy before it was believed.
+
+## 2026-10-04 — The hero loop plays from Prismic files, not Vimeo (#65, `1240751`; reddoor-maintenance decision 63)
+
+The fleet video rollout's first site after Williamson Construction. The
+home and investors heroes embedded Vimeo 939245404 ("erp intro", 42 s) as a
+`background=1` iframe through `@vimeo/player`; they now play the same clip
+from three files in Prismic through `BgVideo`, ported from
+williamson-construction-co. The "Who We Are" overlay (939250244, a content
+video with sound) is untouched and stays on Vimeo.
+
+**The master.** `ZZ_Archived Clients/Energy Related Properties/Website/
+02_Images/0_Final Website Images/Homepage/Intro-compressed.mp4` in Dropbox:
+2560×1440, 23.976 fps, 42.688 s. It matched Vimeo's 42 s by duration and,
+frame by frame against Vimeo's 1280px thumbnail, at 1.0 s with SSIM 0.795
+against neighbours near 0.40 and an unrelated control at 0.30; side by
+side the frames are the same shot. `reddoor-maint video` (phone cap
+1200k) wrote `erp-intro-1080.mp4` 22,847,460 bytes (4284 kbps),
+`erp-intro-1080.webm` 15,293,983 (2868 kbps) and `erp-intro-phone-720.mp4`
+6,424,787 (1205 kbps). Staged on draft deploy `6ac2c8f94a9bad9037301ad0`
+(never production), read back byte for byte, uploaded by
+`prismic-media-upload.yml` run 37238403106 (three `UPLOADED` lines in 6 s,
+which is also the first proof that this repo's `PRISMIC_WRITE_TOKEN`
+works with the Asset API), and read back again from the Prismic CDN.
+
+**Two defects review found that tests could not.** Round 1 of the
+adversarial review (three lenses) found both, and both are this slice's
+shape, not the component's. The hero is a `position: fixed` layer under an
+`aria-hidden` sticky overlay that relays clicks with `elementsFromPoint`
+and `.click()` on each element: an SVG has no `click()`, so a click on the
+control's icon threw before the relay reached the button, and has done the
+same over the scroll arrow since before this change. The relay now skips
+non-HTML elements and the icons take no pointer events. And a fixed layer
+is always in the viewport, so the ported "pause off screen" never paused;
+`BgVideo` gained an optional `observe` target and the Hero passes its
+in-flow sentinel. Round 2 found no blocker or major. Measured on
+production afterwards in Chromium: the video pauses when the next slide
+covers it, resumes on the way back, and a click on the control's centre
+pauses it.
+
+**Readings on production, 2026-10-04 ~23:05Z** (CDP byte sum, 8 s,
+unscrolled, two runs each): home at 390px 2.72 and 4.33 MB with the phone
+mp4 playing (5.5 s, 6.1 s in); home at 1440px 8.27 and 8.75 MB, the 1080
+webm playing; investors at 390px 3.60 and 3.57 MB; at 1440px 5.87 and
+5.05 MB. Zero console errors in those 8 s, zero `hydration_mismatch`, no
+Vimeo frame anywhere. The phone figure sits around the 3 MB line because
+the clip is 42 s and the operator keeps long loops whole (decision 67).
+The Vimeo baseline could not be read with the same instrument: the player
+runs in a cross-origin iframe whose requests the page's CDP session does
+not see, so there is no honest before-number in bytes. Lighthouse
+(desktop): Performance 86, Accessibility 98, Best Practices 74, SEO 100,
+LCP 1.2 s.
+
+**Best Practices 74 is not the video.** Its three failures are a Typekit
+font blocked by CORS (`use.typekit.net`, a console error after the 8 s
+window) and the Prismic preview toolbar's `io.prismic.previewSession`
+cookies on production (`third-party-cookies`, `inspector-issues`). Vimeo's
+Cloudflare cookies are gone. Both are older than this change and are left
+for their own fix.
+
+**Content.** Release `asLNBxIAAEu4DsAS`, published ~23:03Z, carried the
+three links on each hero. `diff_release` also listed home's first
+`full_screen_slide` as changed; every value matched, and only the order in
+which fields serialise differed. Production served the new files at
+23:04:02Z with no deploy triggered by hand.
+
+**Left as they are.** The poster is the loading placeholder at 1920w with
+no srcset, so phones fetch a desktop-sized still, and it loses the old
+image's `fetchpriority=high`; LCP still read 1.2 s. The control stays in
+the tab order while later slides cover the hero. Investors' poster is a
+different still from the clip's first frame, as it already was under
+Vimeo.
