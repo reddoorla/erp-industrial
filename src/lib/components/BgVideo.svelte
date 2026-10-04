@@ -10,6 +10,7 @@
 		poster?: string | null;
 		class?: string;
 		controlClass?: string;
+		observe?: Element | null;
 	};
 
 	let {
@@ -18,7 +19,8 @@
 		mobileMp4,
 		poster,
 		class: passedClasses = '',
-		controlClass = 'bottom-4 right-4'
+		controlClass = 'bottom-4 right-4',
+		observe = null
 	}: Props = $props();
 
 	let video = $state<HTMLVideoElement>();
@@ -50,11 +52,16 @@
 			if (event.matches) pause();
 		};
 		reduce?.addEventListener?.('change', onChange);
+		return () => reduce?.removeEventListener?.('change', onChange);
+	});
 
+	$effect(() => {
 		const el = video;
-		if (!el || typeof IntersectionObserver === 'undefined') {
+		const target = observe ?? el;
+		if (!el || !target) return;
+		if (typeof IntersectionObserver === 'undefined') {
 			if (motionOk) play();
-			return () => reduce?.removeEventListener?.('change', onChange);
+			return;
 		}
 		const io = new IntersectionObserver(
 			(entries) => {
@@ -66,11 +73,8 @@
 			},
 			{ rootMargin: '200px 0px' }
 		);
-		io.observe(el);
-		return () => {
-			io.disconnect();
-			reduce?.removeEventListener?.('change', onChange);
-		};
+		io.observe(target);
+		return () => io.disconnect();
 	});
 
 	function toggle() {
@@ -110,9 +114,9 @@
 		onclick={toggle}
 	>
 		{#if playing}
-			<Pause size={18} aria-hidden="true" />
+			<Pause size={18} aria-hidden="true" class="pointer-events-none" />
 		{:else}
-			<Play size={18} aria-hidden="true" />
+			<Play size={18} aria-hidden="true" class="pointer-events-none" />
 		{/if}
 	</button>
 {/if}

@@ -181,6 +181,17 @@ describe('BgVideo', () => {
 			expect(playSpy).not.toHaveBeenCalled();
 		});
 
+		it('observes the element it is given instead of itself, for a fixed layer', async () => {
+			const sentinel = document.createElement('div');
+			render(BgVideo, { props: { ...props, observe: sentinel } });
+			await tick();
+			expect(observed).toBe(sentinel);
+			io!([{ isIntersecting: true }]);
+			expect(playSpy).toHaveBeenCalledTimes(1);
+			io!([{ isIntersecting: false }]);
+			expect(pauseSpy).toHaveBeenCalledTimes(1);
+		});
+
 		it('stops observing on unmount', async () => {
 			const { unmount } = render(BgVideo, { props });
 			await tick();

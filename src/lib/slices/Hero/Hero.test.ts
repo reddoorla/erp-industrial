@@ -1,5 +1,6 @@
-import { describe, it, expect, afterEach, vi } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
+import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
+import { render, cleanup, fireEvent } from '@testing-library/svelte';
+import { tick } from 'svelte';
 import Hero from './index.svelte';
 import type { HeroSlice } from '../../../prismicio-types';
 
@@ -15,7 +16,29 @@ vi.mock('@vimeo/player', () => ({
 	}
 }));
 
-afterEach(() => cleanup());
+let observed: Element | undefined;
+
+beforeEach(() => {
+	observed = undefined;
+	window.IntersectionObserver = class {
+		observe(el: Element) {
+			observed = el;
+		}
+		disconnect() {}
+		unobserve() {}
+		takeRecords() {
+			return [];
+		}
+		root = null;
+		rootMargin = '';
+		thresholds = [];
+	} as unknown as typeof IntersectionObserver;
+});
+
+afterEach(() => {
+	cleanup();
+	vi.restoreAllMocks();
+});
 
 const media = (name: string) => ({
 	link_type: 'Media' as const,
@@ -68,6 +91,7 @@ describe('Hero background video', () => {
 		const iframe = container.querySelector('iframe');
 		expect(iframe?.getAttribute('src')).toContain('player.vimeo.com/video/939245404');
 		expect(container.querySelector('video')).toBeNull();
+		expect(container.querySelector('img[fetchpriority="high"]')).not.toBeNull();
 	});
 
 	it('plays its own files, with no Vimeo frame, once they are set', () => {
@@ -82,5 +106,24 @@ describe('Hero background video', () => {
 			'https://cdn.example/erp-intro-1080.mp4'
 		]);
 		expect(container.querySelector('video')?.getAttribute('poster')).toContain('w=1920');
+		expect(container.querySelector('img[fetchpriority="high"]')).toBeNull();
+	});
+
+	it('watches the in-flow sentinel, since the fixed hero layer is always in the viewport', async () => {
+		const { container } = render(Hero, { props: { slice: slice(true) } });
+		await tick();
+		expect(observed).toBe(container.querySelector('div[aria-hidden="true"].sticky'));
+	});
+
+	it('a relayed click on the control icon reaches the button', async () => {
+		const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue(undefined);
+		const { container, getByRole } = render(Hero, { props: { slice: slice(true) } });
+		await tick();
+		const button = getByRole('button', { name: 'Play background video' });
+		const svg = button.querySelector('svg')!;
+		const overlay = container.querySelector('div[aria-hidden="true"].sticky')!;
+		document.elementsFromPoint = () => [overlay, svg, button];
+		await fireEvent.click(overlay);
+		expect(play).toHaveBeenCalledTimes(1);
 	});
 });

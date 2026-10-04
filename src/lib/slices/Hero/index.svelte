@@ -29,6 +29,7 @@
 	const poster = $derived(asImageSrc(slice.primary.loading_placeholder, { w: 1920 }));
 
 	let activeOverlay = $state(false);
+	let heroSentinel = $state<HTMLElement>();
 
 	if (slice.primary.video_embed.embed_url)
 		videoId = slice.primary.video_embed?.embed_url.split('/').pop() || '';
@@ -157,8 +158,8 @@
 		// Manually propagate the click event to the elements underneath
 		const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
 		elementsUnder.forEach((element: Element) => {
-			if (element !== event.currentTarget) {
-				(element as HTMLElement).click();
+			if (element !== event.currentTarget && element instanceof HTMLElement) {
+				element.click();
 			}
 		});
 	};
@@ -235,6 +236,7 @@
 				{poster}
 				class="absolute inset-0 h-full w-full"
 				controlClass="right-8 bottom-44 md:bottom-20"
+				observe={heroSentinel}
 			/>
 		{:else if videoId && isFilled.embed(slice.primary.video_embed)}
 			<iframe
@@ -284,6 +286,7 @@
 		</ContentWidth>
 	</div>
 	<div
+		bind:this={heroSentinel}
 		class="w-screen h-dvh sticky snap-end overflow-hidden"
 		onclick={handleClick}
 		onmousemove={handleMouseMove}
