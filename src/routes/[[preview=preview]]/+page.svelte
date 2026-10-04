@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	import Nav from '$lib/components/Nav.svelte';
-	import * as prismicHelpers from '@prismicio/helpers';
+	import { isFilled } from '@prismicio/client';
 	import { SliceZone } from '@prismicio/svelte';
 	import { components } from '$lib/slices';
 	import Footer from '$lib/components/Footer.svelte';
@@ -23,7 +23,7 @@
 	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
 	const navLinks = $derived(
 		data.nav.data.links.map((link: NavDocumentDataLinksItem) => ({
-			href: prismicHelpers.isFilled.link(link.href) ? link.href.url || '#' : '#',
+			href: isFilled.link(link.href) ? link.href.url || '#' : '#',
 			text: link.text || ''
 		}))
 	);
