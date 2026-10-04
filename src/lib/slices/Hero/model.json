@@ -22,14 +22,41 @@
 				"video_embed": {
 					"type": "Embed",
 					"config": {
-						"label": "vimeo embed",
+						"label": "vimeo embed (used only when the three video files below are empty)",
 						"placeholder": ""
+					}
+				},
+				"video_mp4": {
+					"type": "Link",
+					"config": {
+						"label": "background video (mp4)",
+						"placeholder": "H.264 mp4, 1080p or less, from `reddoor-maint video`",
+						"select": "media",
+						"allowTargetBlank": false
+					}
+				},
+				"video_webm": {
+					"type": "Link",
+					"config": {
+						"label": "background video (webm)",
+						"placeholder": "VP9 webm, same clip, from `reddoor-maint video`",
+						"select": "media",
+						"allowTargetBlank": false
+					}
+				},
+				"video_mp4_mobile": {
+					"type": "Link",
+					"config": {
+						"label": "background video (mp4, phone)",
+						"placeholder": "720p phone mp4 (\u2026-phone-720.mp4) from `reddoor-maint video`",
+						"select": "media",
+						"allowTargetBlank": false
 					}
 				},
 				"loading_placeholder": {
 					"type": "Image",
 					"config": {
-						"label": "loading placeholder",
+						"label": "loading placeholder (also the video's poster)",
 						"constraint": {},
 						"thumbnails": []
 					}

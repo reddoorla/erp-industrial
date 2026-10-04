@@ -15,11 +15,21 @@
 	import { isFilled } from '@prismicio/helpers';
 
 	import Player from '@vimeo/player';
+	import BgVideo from '$lib/components/BgVideo.svelte';
+	import { mediaUrl } from '$lib/utils/mediaUrl';
+	import { asImageSrc } from '@prismicio/client';
 	import { cappedWidths } from '@reddoorla/maintenance/images';
 
 	let videoId = $state('');
 
+	const mp4 = $derived(mediaUrl(slice.primary.video_mp4));
+	const webm = $derived(mediaUrl(slice.primary.video_webm));
+	const mobileMp4 = $derived(mediaUrl(slice.primary.video_mp4_mobile));
+	const hasOwnVideo = $derived(Boolean(mp4 || webm || mobileMp4));
+	const poster = $derived(asImageSrc(slice.primary.loading_placeholder, { w: 1920 }));
+
 	let activeOverlay = $state(false);
+	let heroSentinel = $state<HTMLElement>();
 
 	if (slice.primary.video_embed.embed_url)
 		videoId = slice.primary.video_embed?.embed_url.split('/').pop() || '';
@@ -148,8 +158,8 @@
 		// Manually propagate the click event to the elements underneath
 		const elementsUnder = document.elementsFromPoint(event.clientX, event.clientY);
 		elementsUnder.forEach((element: Element) => {
-			if (element !== event.currentTarget) {
-				(element as HTMLElement).click();
+			if (element !== event.currentTarget && element instanceof HTMLElement) {
+				element.click();
 			}
 		});
 	};
@@ -203,20 +213,32 @@
 		in:fade={{ delay: 400 }}
 		out:fade
 	>
-		<PrismicImage
-			field={slice.primary.loading_placeholder}
-			widths={cappedWidths(slice.primary.loading_placeholder)}
-			sizes="100vw"
-			loading="eager"
-			fetchpriority="high"
-			imgixParams={{ auto: ['format', 'compress'] }}
-			class="object-cover absolute aspect-video z-10 transition-opacity duration-700 {videoReady
-				? 'opacity-0 pointer-events-none'
-				: 'opacity-100'} {viewportHeight * 16 > viewportWidth * 9
-				? 'h-full min-w-full'
-				: 'w-full min-h-full'}"
-		/>
-		{#if videoId && isFilled.embed(slice.primary.video_embed)}
+		{#if !hasOwnVideo}
+			<PrismicImage
+				field={slice.primary.loading_placeholder}
+				widths={cappedWidths(slice.primary.loading_placeholder)}
+				sizes="100vw"
+				loading="eager"
+				fetchpriority="high"
+				imgixParams={{ auto: ['format', 'compress'] }}
+				class="object-cover absolute aspect-video z-10 transition-opacity duration-700 {videoReady
+					? 'opacity-0 pointer-events-none'
+					: 'opacity-100'} {viewportHeight * 16 > viewportWidth * 9
+					? 'h-full min-w-full'
+					: 'w-full min-h-full'}"
+			/>
+		{/if}
+		{#if hasOwnVideo}
+			<BgVideo
+				{mp4}
+				{webm}
+				{mobileMp4}
+				{poster}
+				class="absolute inset-0 h-full w-full"
+				controlClass="right-8 bottom-44 md:bottom-20"
+				observe={heroSentinel}
+			/>
+		{:else if videoId && isFilled.embed(slice.primary.video_embed)}
 			<iframe
 				bind:this={videoIframe}
 				title="background video"
@@ -264,6 +286,7 @@
 		</ContentWidth>
 	</div>
 	<div
+		bind:this={heroSentinel}
 		class="w-screen h-dvh sticky snap-end overflow-hidden"
 		onclick={handleClick}
 		onmousemove={handleMouseMove}
