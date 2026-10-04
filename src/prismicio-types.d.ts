@@ -1314,7 +1314,7 @@ export interface HeroSliceDefaultPrimary {
 	title: prismic.KeyTextField;
 
 	/**
-	 * vimeo embed field in *Hero → Primary*
+	 * vimeo embed (used only when the three video files below are empty) field in *Hero → Primary*
 	 *
 	 * - **Field Type**: Embed
 	 * - **Placeholder**: *None*
@@ -1324,7 +1324,37 @@ export interface HeroSliceDefaultPrimary {
 	video_embed: prismic.EmbedField;
 
 	/**
-	 * loading placeholder field in *Hero → Primary*
+	 * background video (mp4) field in *Hero → Primary*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: H.264 mp4, 1080p or less, from `reddoor-maint video`
+	 * - **API ID Path**: hero.primary.video_mp4
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	video_mp4: prismic.LinkToMediaField;
+
+	/**
+	 * background video (webm) field in *Hero → Primary*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: VP9 webm, same clip, from `reddoor-maint video`
+	 * - **API ID Path**: hero.primary.video_webm
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	video_webm: prismic.LinkToMediaField;
+
+	/**
+	 * background video (mp4, phone) field in *Hero → Primary*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: 720p phone mp4 (…-phone-720.mp4) from `reddoor-maint video`
+	 * - **API ID Path**: hero.primary.video_mp4_mobile
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	video_mp4_mobile: prismic.LinkToMediaField;
+
+	/**
+	 * loading placeholder (also the video's poster) field in *Hero → Primary*
 	 *
 	 * - **Field Type**: Image
 	 * - **Placeholder**: *None*
