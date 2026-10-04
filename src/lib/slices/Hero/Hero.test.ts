@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
+import { describe, it, expect, afterEach, beforeEach, vi, onTestFinished } from 'vitest';
 import { render, cleanup, fireEvent } from '@testing-library/svelte';
 import { tick } from 'svelte';
 import Hero from './index.svelte';
@@ -122,7 +122,11 @@ describe('Hero background video', () => {
 		const button = getByRole('button', { name: 'Play background video' });
 		const svg = button.querySelector('svg')!;
 		const overlay = container.querySelector('div[aria-hidden="true"].sticky')!;
+		const original = document.elementsFromPoint;
 		document.elementsFromPoint = () => [overlay, svg, button];
+		onTestFinished(() => {
+			document.elementsFromPoint = original;
+		});
 		await fireEvent.click(overlay);
 		expect(play).toHaveBeenCalledTimes(1);
 	});
