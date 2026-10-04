@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, cleanup } from '@testing-library/svelte';
 import RichText from './index.svelte';
-import type { RichTextSlice } from '../../../prismicio-types';
+import type { RichTextSlice } from '../../../../prismicio-types';
 
 afterEach(() => cleanup());
 

@@ -6,7 +6,7 @@
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import ContentBox from '$lib/components/ContentBox.svelte';
 	import { ArrowUp, LoaderCircle } from '@lucide/svelte';
-	import type { HeroSlice } from '../../../prismicio-types';
+	import type { HeroSlice } from '../../../../prismicio-types';
 
 	let viewportWidth = $state(0);
 	let viewportHeight = $state(0);

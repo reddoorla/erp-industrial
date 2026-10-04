@@ -1,11 +1,11 @@
 import * as prismic from '@prismicio/client';
 import { enableAutoPreviews } from '@prismicio/svelte/kit';
-import sm from '../../slicemachine.config.json';
+import config from '../../prismic.config.json';
 
 /**
  * The project's Prismic repository name.
  */
-export const repositoryName = import.meta.env.VITE_PRISMIC_ENVIRONMENT || sm.repositoryName;
+export const repositoryName = import.meta.env.VITE_PRISMIC_ENVIRONMENT || config.repositoryName;
 
 /**
  * A list of Route Resolver objects that define how a document's `url` field is resolved.
@@ -26,7 +26,7 @@ const routes = [
  * @param {import('@prismicio/svelte/kit').CreateClientConfig} config - Configuration for the Prismic client.
  */
 export const createClient = ({ cookies, ...config } = {}) => {
-	const client = prismic.createClient(sm.apiEndpoint || repositoryName, {
+	const client = prismic.createClient(repositoryName, {
 		routes,
 		...config
 	});

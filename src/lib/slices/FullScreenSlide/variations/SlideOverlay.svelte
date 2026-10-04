@@ -5,7 +5,7 @@
 	import { LoaderCircle } from '@lucide/svelte';
 	import { PrismicImage, PrismicRichText } from '@prismicio/svelte';
 	import { fade } from '$lib/transitions';
-	import type { FullScreenSlideSlice } from '../../../../prismicio-types';
+	import type { FullScreenSlideSlice } from '../../../../../prismicio-types';
 	import { cappedWidths } from '@reddoorla/maintenance/images';
 
 	let {
