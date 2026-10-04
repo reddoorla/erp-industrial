@@ -189,3 +189,13 @@ image's `fetchpriority=high`; LCP still read 1.2 s. The control stays in
 the tab order while later slides cover the hero. Investors' poster is a
 different still from the clip's first frame, as it already was under
 Vimeo.
+
+## 2026-10-04 — The slice simulator leaves every Prismic page's bundle (branch `fix/simulator-chunk-and-encoded-framing`)
+
+Ported from reddoor-starter#168, following caltex-landing#70 and revogen#91; the reasoning and the fixes that failed are recorded in the starter. Since #66 put this site on `@prismicio/svelte` 2.2, the slices and both Prismic routes import `PrismicImage`, `PrismicRichText` and `SliceZone` from the package barrel, and `/slice-simulator` imports `SliceSimulator` from the same barrel. The barrel statically re-exports the simulator, so Rolldown put `@prismicio/simulator` into a chunk shared with the public pages, and home and `[uid]` preloaded it. `scripts/prismic-barrel.ts` declares that one re-export-only module side-effect-free, and Rolldown then binds each import to its own module. The file is the starter's, reformatted by this repo's prettier (tabs, single quotes, no trailing commas); the code is unchanged.
+
+Measured from the build manifest as each node's static-import closure, gzipped, before → after: home 70,185 → 66,001 and `[uid]` 69,762 → 65,581, about 4.2 KB each. Before, both reached the simulator chunk. After, only `/slice-simulator` does (64,794 → 65,105), and it carries the code in its own node. It is still prerendered. The root layout (39,179), `/contact` and `/buildout-map` never reached it and did not change beyond a byte or two of chunk hash.
+
+There is no framing change. The site has no `hooks.server` and sets no X-Frame-Options or CSP anywhere, and `vite preview` showed neither header on any path before or after, including `/slice%2Dsimulator`.
+
+The proof is `tests/smoke/slice-simulator.spec.ts`, which reads the build manifest from disk. It sits in Playwright rather than vitest because this repo's vitest only collects `src/**`. On `main` it failed the bundle check (1 of 3). On this branch it passes 3 of 3. With the plugin removed from `vite.config.js` and the site rebuilt, the bundle check fails again.
