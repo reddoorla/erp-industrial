@@ -14,7 +14,7 @@
 		FullScreenSlideSliceBigText,
 		FullScreenSlideSliceBasic,
 		FullScreenSlideSliceTeams
-	} from '../../../../prismicio-types';
+	} from '../../../../../prismicio-types';
 
 	type StackedVariant =
 		| FullScreenSlideSliceDefault

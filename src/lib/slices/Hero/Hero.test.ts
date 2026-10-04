@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach, beforeEach, vi, onTestFinished } from 
 import { render, cleanup, fireEvent } from '@testing-library/svelte';
 import { tick } from 'svelte';
 import Hero from './index.svelte';
-import type { HeroSlice } from '../../../prismicio-types';
+import type { HeroSlice } from '../../../../prismicio-types';
 
 vi.mock('@vimeo/player', () => ({
 	default: class {

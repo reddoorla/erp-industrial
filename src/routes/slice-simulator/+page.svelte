@@ -1,9 +1,11 @@
-<script>
-	import { SliceSimulator } from '@slicemachine/adapter-sveltekit/simulator';
-	import { SliceZone } from '@prismicio/svelte';
+<script lang="ts">
+	import { SliceSimulator, SliceZone } from '@prismicio/svelte';
 	import { components } from '$lib/slices';
+	import type { SliceZone as SliceZoneType } from '@prismicio/client';
 </script>
 
-<SliceSimulator let:slices>
-	<SliceZone {slices} {components} />
+<SliceSimulator>
+	{#snippet children({ slices }: { slices: SliceZoneType })}
+		<SliceZone {slices} {components} />
+	{/snippet}
 </SliceSimulator>

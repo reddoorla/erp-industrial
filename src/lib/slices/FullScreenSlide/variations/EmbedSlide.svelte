@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
 	import { page } from '$app/stores';
-	import type { FullScreenSlideSliceEmbed } from '../../../../prismicio-types';
+	import type { FullScreenSlideSliceEmbed } from '../../../../../prismicio-types';
 
 	let { slice }: { slice: FullScreenSlideSliceEmbed } = $props();
 </script>

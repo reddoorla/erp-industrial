@@ -9,7 +9,7 @@
 		FullScreenSlideSliceHalfPage,
 		FullScreenSlideSliceHalfPageWithButtonOverlays,
 		FullScreenSlideSliceBasic
-	} from '../../../../prismicio-types';
+	} from '../../../../../prismicio-types';
 
 	type HalfPageSlideVariant =
 		| FullScreenSlideSliceHalfPage

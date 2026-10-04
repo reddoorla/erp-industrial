@@ -11,11 +11,13 @@ pipeline in full.
 ## Commands
 
 ```bash
-pnpm dev          # Vite + Slice Machine, app on :5173
+pnpm dev          # Vite, app on :5173
 pnpm build        # production build (adapter-netlify)
 pnpm check        # svelte-kit sync + svelte-check
 pnpm lint         # prettier --check + eslint
+pnpm test         # vitest unit tests
 pnpm test:smoke   # Playwright smoke suite
+pnpm prismic:gen  # regenerate the Prismic types + slice index
 ```
 
 There is no single `verify` script here. CI is the fleet's reusable workflow
@@ -30,9 +32,21 @@ pushing if you want to know what CI will say.
   only the first, so a mention in prose consumes the real one, and the injected
   markup's own `-->` closes the comment early. That shipped here as #33 and
   rendered every route blank with no error anywhere. Nothing in CI catches it.
-- **`src/prismicio-types.d.ts` is generated** by Slice Machine and
-  prettier-ignored. Don't hand-edit it; regenerate.
-- **Don't touch `src/routes/slice-simulator/`** — Slice Machine owns it.
+- **`prismicio-types.d.ts` (project root) and `src/lib/slices/index.ts` are
+  generated** by the Prismic CLI (`pnpm prismic:gen`; Slice Machine is gone,
+  deprecated by Prismic 2026-09-18). Edit a model's JSON, regenerate, commit
+  both; the `prismic-codegen` job fails a PR whose generated files are stale.
+  Both are in `.prettierignore`. Code imports the types by relative path to the
+  root file (`'../../../../prismicio-types'` from `src/lib/slices/<Slice>/`),
+  which is also what brings its `@prismicio/client` augmentation into
+  svelte-check. Run by an agent, the CLI refuses without `--task-id` and
+  `--user-intent`, so an agent runs `pnpm exec prismic task-id` once, then
+  `pnpm exec prismic gen types --task-id <id> --user-intent "<the ask>"` and the
+  same for `gen slice-index`. Never `prismic push` or `prismic pull`: both
+  delete to match.
+- **`src/routes/slice-simulator/`** is the Type Builder's slice preview page
+  (`SliceSimulator` from `@prismicio/svelte`). Nothing on this site restricts
+  framing (no CSP, no `X-Frame-Options`), so it stays prerendered.
 - **Contact-form recipient routing is dashboard-side**, not in this repo. The
   form only posts `interest` to the central ingest; who receives it is
   configured in `@reddoorla/maintenance` Notify Routing.

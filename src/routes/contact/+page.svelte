@@ -11,7 +11,7 @@
 	import { LoaderCircle } from '@lucide/svelte';
 	import { fade } from '$lib/transitions';
 
-	import type { NavDocumentDataLinksItem } from '../../prismicio-types';
+	import type { NavDocumentDataLinksItem } from '../../../prismicio-types';
 	const navLinks = $derived(
 		data.nav.data.links.map((link: NavDocumentDataLinksItem) => ({
 			href: isFilled.link(link.href) ? link.href.url || '#' : '#',
