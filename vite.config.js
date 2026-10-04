@@ -1,8 +1,9 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
+import { prismicBarrel } from './scripts/prismic-barrel';
 
 export default defineConfig({
-	plugins: [sveltekit()],
+	plugins: [sveltekit(), prismicBarrel()],
 	server: {
 		fs: {
 			// Allow access to files from the project root.
