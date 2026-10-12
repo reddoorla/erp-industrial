@@ -199,3 +199,13 @@ Measured from the build manifest as each node's static-import closure, gzipped, 
 There is no framing change. The site has no `hooks.server` and sets no X-Frame-Options or CSP anywhere, and `vite preview` showed neither header on any path before or after, including `/slice%2Dsimulator`.
 
 The proof is `tests/smoke/slice-simulator.spec.ts`, which reads the build manifest from disk. It sits in Playwright rather than vitest because this repo's vitest only collects `src/**`. On `main` it failed the bundle check (1 of 3). On this branch it passes 3 of 3. With the plugin removed from `vite.config.js` and the site rebuilt, the bundle check fails again.
+
+## 2026-10-12 — Black is written in oklab so `bg-black/60` stays measurable by axe (reddoor-maintenance P1-31)
+
+`@reddoorla/maintenance` 0.102.0 added a `contrast-unmeasured` gate, and this site is still on `^0.95.1`. Without this change, the Renovate bump would turn the a11y step red. `BgVideo.svelte`'s `bg-black/60` compiles to `color-mix(in oklab, #000 60%, transparent)`, because this config sets `black: '#000'` and Tailwind reads it through `@config` and writes the value inline. lightningcss then folds that to `oklab(0% none none/.6)`. Chrome renders `none` as 0, but axe-core 4.13.0 cannot parse it, so contrast on that element was never measured. A fleet-wide build grep found the folded value on this site and nowhere else except reddoor-website, whose own fix is reddoor-website#260.
+
+The fix is `black: 'oklab(0 0 0)'`, the same as #260. The built CSS changes in exactly four rules: `bg-black/60` becomes `oklab(0% 0 0/.6)`, and `bg-black`, `active:bg-black` and `hover:text-black` go from `#000` to `oklab(0% 0 0)`. The build has no `none` left in it.
+
+I checked in Chromium that each old/new pair renders identical pixels. Element screenshots over white and over a colour gradient have the same sha256, and a solid-against-60% control does differ. In a probe with axe-core 4.13.0, the folded literal stays `colorParse`, and `oklab(0% 0 0/.6)` is measured.
+
+Honest accounting: the site's CI runs maintenance 0.95.1, which has no `contrast-unmeasured` rule, so a green run here proves nothing about this fix. The gate itself could not run end-to-end in the cloud session, because this repo's Playwright wants a Chromium build the container does not have. The proof will be the Renovate bump to 0.102+ going green.
