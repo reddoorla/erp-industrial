@@ -30,7 +30,7 @@ export default {
 		colors: {
 			transparent: 'transparent',
 			current: 'currentColor',
-			black: '#000',
+			black: 'oklab(0 0 0)',
 			white: '#fff',
 			light: '#E7E8EB',
 			dark: '#000',
