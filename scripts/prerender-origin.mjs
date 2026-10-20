@@ -50,7 +50,9 @@ export function scan(root) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
-	const env = { ...process.env, URL: PRODUCTION };
+	// Netlify's whole build environment, not only URL: a config can branch on
+	// NETLIFY or CONTEXT, and the output must be the one a production deploy makes.
+	const env = { ...process.env, NETLIFY: 'true', CONTEXT: 'production', URL: PRODUCTION };
 	delete env.VITEST;
 	const built = spawnSync('pnpm', ['exec', 'vite', 'build'], {
 		env,
@@ -58,6 +60,15 @@ if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.ar
 	});
 	if (built.status !== 0) process.exit(built.status ?? 1);
 	const { files, offenders, production } = scan('build');
+	if (offenders.length > 0) {
+		console.error(
+			`prerender-origin: ${offenders.length} built file(s) carry ${PLACEHOLDER}, ` +
+				`kit 3's prerender placeholder, instead of ${PRODUCTION}. Build absolute ` +
+				`URLs from page.url through $lib/seo's siteOrigin:\n  ` +
+				offenders.join('\n  ')
+		);
+		process.exit(1);
+	}
 	// The instrument's control: a build that emitted nothing, or that never
 	// took the production URL, would pass the placeholder check vacuously.
 	// Measured on the kit 2 build of 2026-10-20: 33 files outside
@@ -68,15 +79,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.ar
 		console.error(
 			`prerender-origin: expected a full build carrying ${PRODUCTION}; ` +
 				`saw ${files} files, ${production} naming it`
-		);
-		process.exit(1);
-	}
-	if (offenders.length > 0) {
-		console.error(
-			`prerender-origin: ${offenders.length} built file(s) carry ${PLACEHOLDER}, ` +
-				`kit 3's prerender placeholder, instead of ${PRODUCTION}. Build absolute ` +
-				`URLs from page.url through $lib/seo's siteOrigin:\n  ` +
-				offenders.join('\n  ')
 		);
 		process.exit(1);
 	}

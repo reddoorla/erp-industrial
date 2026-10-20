@@ -12,14 +12,15 @@
 //     prerendered canonical links (scripts/prerender-origin.mjs checks the
 //     built output itself);
 //   - an environment variable read in src/ but not declared in src/env.ts,
-//     which kit 3 turns into `undefined` with only a build warning;
+//     which kit 3 turns into `undefined` at runtime (svelte-check flags it in
+//     .ts and .svelte files, nothing flags it in a .js file);
 //   - a `$app/stores` import, whose stores throw `app_stores_removed`.
 //   - a matcher in src/params.ts returning a boolean, which kit 3 reads as a
 //     match whose value is `false`;
 //   - the upstream PrismicPreview, whose goto() options kit 3 rejects.
-// This repo's only test runner is Playwright (`pnpm test:smoke`), so the gate
-// is a spec here rather than reddoor-starter's vitest file, as in 1836dig. It
-// needs no browser.
+// It is a Playwright spec, as on caltex-landing and vineyard-custom-homes, so
+// CI runs it with the smoke suite (`pnpm test:smoke`); it needs no browser.
+// Vitest here covers src/ only.
 import { test, expect } from '@playwright/test';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -53,15 +54,24 @@ async function kitOptions(): Promise<Record<string, unknown>> {
 	return (setup.api as { options: Record<string, unknown> }).options;
 }
 
-async function withNetlifyEnv<T>(run: () => Promise<T>): Promise<T> {
-	const names = ['URL', 'DEPLOY_URL', 'DEPLOY_PRIME_URL', 'SITE_NAME'] as const;
+// Netlify's build sets all of these, and a config can branch on any of them
+// (this one already reads NETLIFY), so a check that sets only URL passes a
+// `paths.origin` guarded on NETLIFY or CONTEXT. Every deploy context is tried.
+const NETLIFY_CONTEXTS = ['production', 'deploy-preview', 'branch-deploy'] as const;
+const netlifyEnv = (context: string) => ({
+	NETLIFY: 'true',
+	CONTEXT: context,
+	URL: 'https://www.example.com',
+	DEPLOY_URL: 'https://6123abc--example-site.netlify.app',
+	DEPLOY_PRIME_URL: 'https://deploy-preview-4--example-site.netlify.app',
+	SITE_NAME: 'example-site'
+});
+
+async function withNetlifyEnv<T>(context: string, run: () => Promise<T>): Promise<T> {
+	const env = netlifyEnv(context);
+	const names = Object.keys(env) as (keyof typeof env)[];
 	const saved = Object.fromEntries(names.map((n) => [n, process.env[n]]));
-	Object.assign(process.env, {
-		URL: 'https://www.example.com',
-		DEPLOY_URL: 'https://6123abc--example-site.netlify.app',
-		DEPLOY_PRIME_URL: 'https://deploy-preview-4--example-site.netlify.app',
-		SITE_NAME: 'example-site'
-	});
+	Object.assign(process.env, env);
 	try {
 		return await run();
 	} finally {
@@ -80,8 +90,7 @@ test.describe('the SvelteKit config reaches the sveltekit() plugin', () => {
 
 	test('hands kit the adapter, and no CSP: this site has never opted into one', async () => {
 		// Kept as it was on kit 2 (createSvelteConfig without `csp`). Opting in
-		// is a behaviour change, not part of the kit 3 move; hooks.server.ts and
-		// netlify.toml are written around its absence.
+		// is a behaviour change, not part of the kit 3 move.
 		const options = await kitOptions();
 		expect((options.adapter as { name?: string }).name).toBe('@sveltejs/adapter-netlify');
 		// Kit fills every directive in with a default (undefined, or false for
@@ -109,7 +118,15 @@ test.describe('the SvelteKit config reaches the sveltekit() plugin', () => {
 test.describe('the origin', () => {
 	function productionOriginUnder(env: Record<string, string>): string | null {
 		const child: Record<string, string | undefined> = { ...process.env };
-		for (const name of ['URL', 'DEPLOY_URL', 'DEPLOY_PRIME_URL', 'SITE_NAME', 'CI', 'NETLIFY']) {
+		for (const name of [
+			'URL',
+			'DEPLOY_URL',
+			'DEPLOY_PRIME_URL',
+			'SITE_NAME',
+			'CI',
+			'NETLIFY',
+			'CONTEXT'
+		]) {
 			delete child[name];
 		}
 		const r = spawnSync(
@@ -129,11 +146,11 @@ test.describe('the origin', () => {
 	});
 
 	test("is the production URL's origin on Netlify, and reaches the app through the define", async () => {
-		expect(productionOriginUnder({ URL: 'https://www.example.com/' })).toBe(
-			'https://www.example.com'
-		);
+		expect(
+			productionOriginUnder({ ...netlifyEnv('production'), URL: 'https://www.example.com/' })
+		).toBe('https://www.example.com');
 		expect(productionOriginUnder({ URL: 'not a url' })).toBeNull();
-		const loaded = await withNetlifyEnv(() =>
+		const loaded = await withNetlifyEnv('production', () =>
 			loadConfigFromFile(
 				{ command: 'build', mode: 'production' },
 				join(repoRoot, 'vite.config.js'),
@@ -146,32 +163,35 @@ test.describe('the origin', () => {
 		);
 	});
 
-	test("is never kit's paths.origin or a CSRF list, so the form posts from any host it is served on", async () => {
-		const r = spawnSync(
-			process.execPath,
-			[
-				'-e',
-				`import("./sveltekit.config.js").then((m) => console.log(JSON.stringify({ paths: m.default.paths ?? null, csrf: m.default.csrf ?? null })))`
-			],
-			{
-				cwd: repoRoot,
-				env: { ...process.env, URL: 'https://www.example.com' },
-				encoding: 'utf-8'
-			}
-		);
-		expect(r.status, r.stderr).toBe(0);
-		expect(JSON.parse(r.stdout)).toEqual({ paths: null, csrf: null });
-		const options = await withNetlifyEnv(kitOptions);
-		expect((options.paths as { origin?: string }).origin).toBeUndefined();
-		expect((options.csrf as { trustedOrigins: string[] }).trustedOrigins).toEqual([]);
-	});
+	for (const context of NETLIFY_CONTEXTS) {
+		test(`is never kit's paths.origin or a CSRF list on a Netlify ${context} build, so the form posts from any host it is served on`, async () => {
+			const r = spawnSync(
+				process.execPath,
+				[
+					'-e',
+					`import("./sveltekit.config.js").then((m) => console.log(JSON.stringify({ paths: m.default.paths ?? null, csrf: m.default.csrf ?? null })))`
+				],
+				{
+					cwd: repoRoot,
+					env: { ...process.env, ...netlifyEnv(context) },
+					encoding: 'utf-8'
+				}
+			);
+			expect(r.status, r.stderr).toBe(0);
+			expect(JSON.parse(r.stdout)).toEqual({ paths: null, csrf: null });
+			const options = await withNetlifyEnv(context, kitOptions);
+			expect((options.paths as { origin?: string }).origin).toBeUndefined();
+			expect((options.csrf as { trustedOrigins: string[] }).trustedOrigins).toEqual([]);
+		});
+	}
 });
 
 function walk(dir: string, out: string[] = []): string[] {
 	for (const entry of readdirSync(dir)) {
 		const full = join(dir, entry);
 		if (statSync(full).isDirectory()) walk(full, out);
-		else if (/\.(svelte|ts|js)$/.test(entry) && !/\.(test|spec)\.ts$/.test(entry)) out.push(full);
+		else if (/\.(svelte|ts|js)$/.test(entry) && !/\.(test|spec)\.[jt]s$/.test(entry))
+			out.push(full);
 	}
 	return out;
 }
@@ -188,7 +208,9 @@ function envReads(source: string): { type: 'public' | 'private'; name: string }[
 		/import\s+\*\s+as\s+(\w+)\s+from\s+["']\$app\/env\/(public|private)["']/g
 	);
 	for (const [, binding, type] of namespaces) {
-		for (const [, name] of source.matchAll(new RegExp(`\\b${binding}\\.([A-Z][A-Z0-9_]*)`, 'g'))) {
+		for (const [, name] of source.matchAll(
+			new RegExp(`\\b${binding}\\??\\.([A-Z][A-Z0-9_]*)`, 'g')
+		)) {
 			add(type, name);
 		}
 		for (const [, name] of source.matchAll(
@@ -203,7 +225,7 @@ function envReads(source: string): { type: 'public' | 'private'; name: string }[
 		}
 	}
 	const named = source.matchAll(
-		/import\s*\{([^}]*)\}\s*from\s+["']\$app\/env\/(public|private)["']/g
+		/(?:import|export)\s*\{([^}]*)\}\s*from\s+["']\$app\/env\/(public|private)["']/g
 	);
 	for (const [, body, type] of named) {
 		for (const [, name] of body.matchAll(/(?:^|,)\s*([A-Z][A-Z0-9_]*)\b/g)) add(type, name);
@@ -226,6 +248,8 @@ test.describe('environment variables (kit 3 exposes only what src/env.ts declare
 			'import * as env from "$app/env/private";',
 			'import { NAMED_A, NAMED_B as b } from "$app/env/public";',
 			'env.DOTTED;',
+			'env?.OPTIONAL;',
+			'export { REEXPORTED } from "$app/env/private";',
 			'env["BRACKETED"];',
 			'const { DESTRUCTURED, RENAMED: r } = env;'
 		].join('\n');
@@ -238,6 +262,8 @@ test.describe('environment variables (kit 3 exposes only what src/env.ts declare
 				'private:BRACKETED',
 				'private:DESTRUCTURED',
 				'private:DOTTED',
+				'private:OPTIONAL',
+				'private:REEXPORTED',
 				'private:RENAMED',
 				'public:NAMED_A',
 				'public:NAMED_B'
@@ -255,6 +281,20 @@ test.describe('environment variables (kit 3 exposes only what src/env.ts declare
 				.map(({ type, name }) => `${relative(repoRoot, file)}: ${name} from $app/env/${type}`)
 		);
 		expect(missing).toEqual([]);
+	});
+
+	test('reads $app/env/* only in ways the scan above can check', () => {
+		// A namespace re-export (`export * as env from "$app/env/private"`) or a
+		// dynamic import hands the variables to code this scan cannot follow, so
+		// an undeclared read through either would pass "declares every variable".
+		const unscannable =
+			/export\s*\*\s*(?:as\s+\w+\s+)?from\s*["']\$app\/env\/|import\s*\(\s*["']\$app\/env\//;
+		// The instrument's own control.
+		expect(unscannable.test('export * as penv from "$app/env/private";')).toBe(true);
+		expect(unscannable.test('await import("$app/env/public");')).toBe(true);
+		expect(unscannable.test('import * as env from "$app/env/private";')).toBe(false);
+		const offenders = files.filter((file) => unscannable.test(readFileSync(file, 'utf8')));
+		expect(offenders.map((f) => relative(repoRoot, f))).toEqual([]);
 	});
 
 	test('imports nothing from $app/stores, whose stores throw app_stores_removed in kit 3', () => {
@@ -295,7 +335,10 @@ test.describe('routing on kit 3', () => {
 		// rejects in dev (goto_options_removed) and ignores in production
 		// (the page jumps to the top). reddoor-starter#188.
 		const offenders = walk(join(repoRoot, 'src')).filter((file) =>
-			/import\s*\{[^}]*\bPrismicPreview\b[^}]*\}\s*from\s*["']@prismicio\/svelte\/kit["']/.test(
+			// A named import or re-export of it, or a namespace import of the
+			// module, which this site has no other reason for (its other imports
+			// from it are named: enableAutoPreviews, redirectToPreviewURL).
+			/(?:import|export)\s*\{[^}]*\bPrismicPreview\b[^}]*\}\s*from\s*["']@prismicio\/svelte\/kit["']|(?:import|export)\s*\*\s*as\s+\w+\s+from\s*["']@prismicio\/svelte\/kit["']/.test(
 				readFileSync(file, 'utf8')
 			)
 		);
