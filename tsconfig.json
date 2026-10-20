@@ -1,5 +1,13 @@
 {
-	"extends": "./.svelte-kit/tsconfig.json",
+	// Kit 3 writes its generated config into node_modules as `$app/tsconfig`
+	// (kit 2: ./.svelte-kit/tsconfig.json) and no longer supplies `include`, so
+	// the list below is ours: what kit 2's generated include covered (src/,
+	// tests/ and vite.config.js) plus the config vite.config.js imports. Not
+	// "*": that would newly type-check tailwind.config.js, whose v3-only
+	// `safelist` Tailwind 4's Config type does not have.
+	"extends": "$app/tsconfig",
+	"include": ["src", "tests", "vite.config.js", "sveltekit.config.js"],
+	"exclude": ["src/service-worker"],
 	"compilerOptions": {
 		"allowJs": true,
 		"checkJs": true,
@@ -15,8 +23,6 @@
 			}
 		]
 	}
-	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias and https://kit.svelte.dev/docs/configuration#files
-	//
-	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
-	// from the referenced tsconfig.json - TypeScript does not merge them in
+	// Path aliases are handled by `alias` in sveltekit.config.js (deprecated in
+	// kit 3 in favour of package.json subpath imports).
 }
