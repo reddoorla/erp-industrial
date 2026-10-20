@@ -238,3 +238,5 @@ Also folded in:
 - The absent `/dev/animate-in` fixture is declared, so the CI a11y audit is back to `pass`.
 - The journal's lockfile sentence now lists the three kit 2 transitive packages that left.
 - The spec's comment no longer claims Playwright is the only runner here.
+
+Round 2 ran one reviewer across all three lenses. It found no major: the three `paths.origin` guards each fail their own context, a guard placed in `vite.config.js` (out of the spawned import's sight) still fails through `kitOptions`, and nothing leaks between contexts. Its minors are folded in. A bare `export * from '@prismicio/svelte/kit'` and a backtick ``import(`$app/env/private`)`` now fail their checks, each with a control line. The Netlify `URL` carries a trailing slash, so the define test tells the origin from the raw value. Playwright now runs 23: CI's 7 smoke tests plus the gate's 16.
