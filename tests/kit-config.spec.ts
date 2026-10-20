@@ -13,7 +13,7 @@
 //     built output itself);
 //   - an environment variable read in src/ but not declared in src/env.ts,
 //     which kit 3 turns into `undefined` at runtime (svelte-check flags it in
-//     .ts and .svelte files, nothing flags it in a .js file);
+//     every checked file, so this holds the line when `pnpm check` is skipped);
 //   - a `$app/stores` import, whose stores throw `app_stores_removed`.
 //   - a matcher in src/params.ts returning a boolean, which kit 3 reads as a
 //     match whose value is `false`;

@@ -29,7 +29,7 @@ SvelteKit 3's config is `sveltekit.config.js`, passed to `sveltekit(kitConfig)`
 in `vite.config.js`. Two checks hold it. `tests/kit-config.spec.ts` (in
 `test:smoke`, no browser) fails on a `svelte.config.js`, a `paths.origin`, an
 env var `src/` reads but `src/env.ts` does not declare (kit 3 exposes only
-declared ones; an undeclared read is silently `undefined`, and on the contact
+declared ones; an undeclared read is `undefined` at runtime, and on the contact
 form that means leads stop), a `$app/stores` import, or a boolean matcher.
 `scripts/prerender-origin.mjs` (first in `pnpm test`) builds with Netlify's
 `URL` and fails on any built file naming kit's `http://sveltekit-prerender`
