@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { capturedWith } from './ingest-capture';
+import { attemptMarker, capturedWith } from './ingest-capture';
 
 // The fleet's nightly form-e2e probe enters at /contact, waits for
 // html[data-hydrated], injects a hidden `testMode=true` input into the first
@@ -29,7 +29,8 @@ async function fillAndSubmit(page: Page, marker: string, { probe }: { probe: boo
 	await form.locator('[name="email"]').fill('monitor+e2e@reddoorla.com');
 	await form.locator('[name="interest"]').selectOption('Leasing');
 	await form.locator('[name="message"]').fill(marker);
-	// The action silently drops a fill faster than its 800 ms bot-timing floor.
+	// The action silently drops a submission made less than 800 ms after the page
+	// was server-rendered (its bot-timing screen, measured from the `ts` field).
 	await page.waitForTimeout(1200);
 	await page.locator('button[type="submit"], input[type="submit"]').first().click();
 }
@@ -37,7 +38,7 @@ async function fillAndSubmit(page: Page, marker: string, { probe }: { probe: boo
 test('a probe submission reaches ingest marked testMode, and shows role=status', async ({
 	page
 }, info) => {
-	const marker = `smoke probe ${info.testId}`;
+	const marker = attemptMarker('probe', info);
 	await fillAndSubmit(page, marker, { probe: true });
 	await expect(page.locator('[role="status"]').first()).toBeVisible();
 	const bodies = await capturedWith(marker);
@@ -46,10 +47,16 @@ test('a probe submission reaches ingest marked testMode, and shows role=status',
 });
 
 test('a visitor submission reaches ingest without testMode', async ({ page }, info) => {
-	const marker = `smoke visitor ${info.testId}`;
+	const marker = attemptMarker('visitor', info);
 	await fillAndSubmit(page, marker, { probe: false });
 	await expect(page.locator('[role="status"]').first()).toBeVisible();
 	const bodies = await capturedWith(marker);
 	expect(bodies).toHaveLength(1);
 	expect(bodies[0]).not.toHaveProperty('testMode');
+});
+
+test('/health declares forms.testMode, which lets the fleet probe submit', async ({ request }) => {
+	const res = await request.get('/health');
+	expect(res.ok()).toBe(true);
+	expect((await res.json()).forms.testMode).toBe(true);
 });
