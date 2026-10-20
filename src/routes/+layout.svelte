@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { PrismicPreview } from '@prismicio/svelte/kit';
-	import { page } from '$app/stores';
+	import PrismicPreview from '$lib/components/PrismicPreview.svelte';
+	import { page } from '$app/state';
+	import { siteOrigin } from '$lib/seo';
 	import { repositoryName } from '$lib/prismicio';
 	import '../app.css';
 
@@ -21,7 +22,7 @@
 	// no invented facts or claims. A doc's real meta_description always wins over this.
 	const DEFAULT_DESCRIPTION =
 		'ERP Industrials is a commercial real estate investment firm in the Permian Basin, with office and industrial assets across Midland and Odessa, Texas.';
-	let metaDescription = $derived($page.data.meta_description || DEFAULT_DESCRIPTION);
+	let metaDescription = $derived(page.data.meta_description || DEFAULT_DESCRIPTION);
 
 	let main: HTMLElement;
 	let isSnappy = $state(true);
@@ -77,17 +78,17 @@
 </script>
 
 <svelte:head>
-	<title>{$page.data.title || 'ERP Industrials'}</title>
+	<title>{page.data.title || 'ERP Industrials'}</title>
 	<meta name="description" content={metaDescription} />
 	<meta property="og:description" content={metaDescription} />
-	{#if $page.data.meta_title}
-		<meta property="og:title" content={$page.data.meta_title} />
+	{#if page.data.meta_title}
+		<meta property="og:title" content={page.data.meta_title} />
 	{/if}
-	{#if $page.data.meta_image}
-		<meta property="og:image" content={$page.data.meta_image} />
+	{#if page.data.meta_image}
+		<meta property="og:image" content={page.data.meta_image} />
 		<meta name="twitter:card" content="summary_large_image" />
 	{/if}
-	<link rel="canonical" href={$page.url.origin + $page.url.pathname} />
+	<link rel="canonical" href={siteOrigin(page.url) + page.url.pathname} />
 </svelte:head>
 
 <main

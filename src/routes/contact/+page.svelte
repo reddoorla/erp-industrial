@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { env } from '$env/dynamic/public';
+	import * as env from '$app/env/public';
 	import { loadTurnstile } from '$lib/turnstile';
 	import type { ActionData, PageData } from './$types';
 	let { data, form }: { data: PageData; form: ActionData } = $props();

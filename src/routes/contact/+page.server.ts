@@ -3,7 +3,7 @@ import { createIngestAction } from '@reddoorla/maintenance/forms';
 import { replyCopyFor } from '$lib/server/reply-copy';
 import { contactFields } from '$lib/server/contact-payload';
 // Server-only secrets, read at runtime. Never exposed to the client (unlike VITE_-prefixed vars).
-import { env } from '$env/dynamic/private';
+import * as env from '$app/env/private';
 import type { Actions, PageServerLoad } from './$types';
 
 // A form `action` cannot run on a prerendered route ("Cannot prerender pages with actions").

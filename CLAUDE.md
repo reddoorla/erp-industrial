@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 The marketing site for **ERP Industrials** (Energy Related Properties) — a
-SvelteKit 2 / Svelte 5 (runes) / Tailwind 4 / Prismic site deployed on Netlify,
+SvelteKit 3 / Svelte 5 (runes) / Tailwind 4 / Prismic site deployed on Netlify,
 managed with pnpm. It is a full-screen slide site: three slices in
 `src/lib/slices/` (`Hero`, `RichText`, `FullScreenSlide` — the last dispatching
 to four variation components), plus a Vimeo hero and a Buildout listings map.
@@ -15,7 +15,7 @@ pnpm dev          # Vite, app on :5173
 pnpm build        # production build (adapter-netlify)
 pnpm check        # svelte-kit sync + svelte-check
 pnpm lint         # prettier --check + eslint
-pnpm test         # vitest unit tests
+pnpm test         # the prerender-origin output check, then vitest
 pnpm test:smoke   # Playwright smoke suite
 pnpm prismic:gen  # regenerate the Prismic types + slice index
 ```
@@ -24,6 +24,17 @@ There is no single `verify` script here. CI is the fleet's reusable workflow
 (`reddoorla/.github`), which runs prettier, eslint, svelte-check, build and an
 a11y audit on every PR — so run `pnpm lint && pnpm check && pnpm build` before
 pushing if you want to know what CI will say.
+
+SvelteKit 3's config is `sveltekit.config.js`, passed to `sveltekit(kitConfig)`
+in `vite.config.js`. Two checks hold it. `tests/kit-config.spec.ts` (in
+`test:smoke`, no browser) fails on a `svelte.config.js`, a `paths.origin`, an
+env var `src/` reads but `src/env.ts` does not declare (kit 3 exposes only
+declared ones; an undeclared read is `undefined` at runtime, and on the contact
+form that means leads stop), a `$app/stores` import, or a boolean matcher.
+`scripts/prerender-origin.mjs` (first in `pnpm test`) builds with Netlify's
+`URL` and fails on any built file naming kit's `http://sveltekit-prerender`
+placeholder: an absolute URL built from `page.url` must go through
+`$lib/seo`'s `siteOrigin`.
 
 ## Traps
 
