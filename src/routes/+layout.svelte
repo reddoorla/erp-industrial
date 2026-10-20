@@ -7,10 +7,14 @@
 
 	import { afterNavigate, goto, beforeNavigate } from '$app/navigation';
 	import { fade } from '$lib/transitions';
-	import type { Snippet } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 	import LandscapeModal from '$lib/components/LandscapeModal.svelte';
 
 	let { children, data }: { children?: Snippet; data: { isPreviewSession: boolean } } = $props();
+
+	// The fleet form-e2e probe waits for this before it fills the contact form, so
+	// its input is not wiped by hydration.
+	onMount(() => document.documentElement.setAttribute('data-hydrated', ''));
 
 	// Last-resort <meta name="description"> so every page ships a non-empty description even
 	// when its Prismic doc leaves meta_description empty (or the route has no Prismic doc, e.g.
