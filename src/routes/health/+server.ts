@@ -42,7 +42,10 @@ export const GET: RequestHandler = async ({ fetch }) => {
 	const forms = {
 		ingestUrl: !!privateEnv.FORMS_INGEST_URL,
 		ingestToken: !!privateEnv.FORMS_INGEST_TOKEN,
-		turnstile: !!publicEnv.PUBLIC_TURNSTILE_SITE_KEY?.trim()
+		turnstile: !!publicEnv.PUBLIC_TURNSTILE_SITE_KEY?.trim(),
+		// The contact action forwards the form-e2e probe's `testMode` marker
+		// ($lib/server/contact-payload), so the fleet probe may submit here.
+		testMode: true
 	};
 	// We're inside the handler, so the function ran; ok is false only when the
 	// Prismic probe actively errored.

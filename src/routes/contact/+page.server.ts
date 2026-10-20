@@ -1,6 +1,7 @@
 import { createClient } from '$lib/prismicio';
 import { createIngestAction } from '@reddoorla/maintenance/forms';
 import { replyCopyFor } from '$lib/server/reply-copy';
+import { contactFields } from '$lib/server/contact-payload';
 // Server-only secrets, read at runtime. Never exposed to the client (unlike VITE_-prefixed vars).
 import { env } from '$env/dynamic/private';
 import type { Actions, PageServerLoad } from './$types';
@@ -34,9 +35,8 @@ export const actions: Actions = {
 			token: env.FORMS_INGEST_TOKEN
 		}),
 		buildPayload: async (form, event) => ({
-			email: form.get('email')?.toString(),
-			message: form.get('message')?.toString(),
-			interest: form.get('interest')?.toString() || undefined, // → extraFields.interest, the routing key
+			// email, message, interest, and the form-e2e probe's testMode marker.
+			...contactFields(form),
 			// Full URL incl. query string so UTM/campaign params (?utm_source=…) are captured.
 			sourceUrl: event.url.href,
 			// Confirmation-email copy the client wrote in Prismic, resolved
