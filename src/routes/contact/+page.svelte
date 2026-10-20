@@ -195,16 +195,21 @@
 					</button>
 				</form>
 			{/if}
-			{#if form?.success}
-				<div class="w-full h-72 flex flex-col items-center justify-center gap-16" role="status">
-					<h5 class="text-white" bind:this={thankYouHeading} tabindex="-1">THANK YOU!</h5>
-					<p class="text-white">
-						We'll get back to you as soon as possible. In the meantime, explore our available
-						properties.
-					</p>
-					<DefaultButton text="AVAILABILITIES" href="/industrial-portfolio" filled={false} />
-				</div>
-			{/if}
+			<!-- An always-present live region, empty (and zero-size) until the thank-you
+			     renders inside it, so a screen reader announces it. It is also the success
+			     signal the fleet's form-e2e probe waits for. -->
+			<div role="status">
+				{#if form?.success}
+					<div class="w-full h-72 flex flex-col items-center justify-center gap-16">
+						<h5 class="text-white" bind:this={thankYouHeading} tabindex="-1">THANK YOU!</h5>
+						<p class="text-white">
+							We'll get back to you as soon as possible. In the meantime, explore our available
+							properties.
+						</p>
+						<DefaultButton text="AVAILABILITIES" href="/industrial-portfolio" filled={false} />
+					</div>
+				{/if}
+			</div>
 		</div>
 	</ContentWidth>
 	<div class="h-[20dvh]"></div>
