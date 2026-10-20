@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ContentWidth from '$lib/components/ContentWidth.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import type { FullScreenSlideSliceEmbed } from '../../../../../prismicio-types';
 
 	let { slice }: { slice: FullScreenSlideSliceEmbed } = $props();
@@ -13,7 +13,7 @@
 		<h3 class="font-bold">{slice.primary.title}</h3>
 	</ContentWidth>
 	<div class="buildout-embed min-h-0 flex-1 overflow-hidden px-2 pb-6 md:px-0 md:pb-10">
-		{#key $page.url.pathname}
+		{#key page.url.pathname}
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html slice.primary.external_embed}
 		{/key}
