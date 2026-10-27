@@ -253,7 +253,7 @@ The action now forwards the probe's hidden `testMode=true` input as top-level bo
 
 Review ran three rounds. Round 2 found that a retry could never pass (the capture outlived it and the marker was the test id alone) and that the fixed capture port collided between suites; both are fixed, and the spec also asserts that `/health` declares `forms.testMode`. The branch then took main's SvelteKit 3 migration (#79) in a merge commit: the action and `/health` read env through `$app/env/private`, `src/env.ts` declares both ingest variables, and the spec, the harness and a re-run of the forwarding mutation all held on kit 3. Round 3 was nits only.
 
-## 2026-10-27 — The toolbar test loses its sleep; the preview-end source check stays, because ending a preview is broken here (#TBD)
+## 2026-10-27 — The toolbar test loses its sleep; the preview-end source check stays, because ending a preview is broken here (#86)
 
 The fleet test audit (`reddoorla/reddoor-workspace` `audits/2026-10-26-fleet-test-audit/report.md`, batch D) flagged two tests here. Its mutants for this site were all Playwright, so none had a vitest catch to restore.
 
