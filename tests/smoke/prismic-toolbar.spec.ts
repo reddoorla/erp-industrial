@@ -12,7 +12,8 @@ function watchToolbar(page: Page) {
 test('a normal visit loads no Prismic toolbar', async ({ page, context }) => {
 	const requests = watchToolbar(page);
 	await page.goto('/', { waitUntil: 'load' });
-	await page.waitForTimeout(3000);
+	await page.locator('html[data-hydrated]').waitFor({ state: 'attached' });
+	await page.waitForLoadState('networkidle');
 	expect(requests).toEqual([]);
 	expect((await context.cookies()).filter((c) => c.name.startsWith('io.prismic'))).toEqual([]);
 });
