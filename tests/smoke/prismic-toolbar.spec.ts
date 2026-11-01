@@ -32,8 +32,19 @@ test('a normal visit loads no Prismic toolbar', async ({ page, context }) => {
 	// Hydrated means the layout's client code, which mounts PrismicPreview for a
 	// preview session, has run. Network idle is not that: the home page streams a
 	// Prismic CDN video, which sets when the page goes idle.
+	//
+	// A toolbar loaded from a timer after hydration (a deferred or idle-callback
+	// load) is the regression this must catch. The fake clock fires the page's
+	// timers in order without real time passing, so a slow runner does not change
+	// the result. runFor(10_000) bounds which timers are covered: a timer longer
+	// than that still escapes.
+	await page.clock.install();
 	await page.goto('/', { waitUntil: 'domcontentloaded' });
 	await page.locator('html[data-hydrated]').waitFor({ state: 'attached' });
+	await page.clock.runFor(10_000);
+	// One animation frame lets the request of a script appended by the last timer
+	// reach this test before the list is read. Nothing depends on how many pass.
+	await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r(null))));
 	expect(requests).toEqual([]);
 	await expect(page.locator('script[src*="static.cdn.prismic.io"]')).toHaveCount(0);
 	expect((await context.cookies()).filter((c) => c.name.startsWith('io.prismic'))).toEqual([]);
@@ -52,21 +63,31 @@ test('a preview session still loads the Prismic toolbar', async ({ page, context
 // the test.fail() call and the reset: false source lines in
 // tests/kit-config.spec.ts. test.fail() is declared only after hydration and the
 // listener are proved, so a failure before it is red. Its limit: after it, any
-// failure counts as "#87 stands" (an end handler that throws, a 500 on /about),
-// so a missing unexpected pass proves less than it seems.
+// failure counts as "#87 stands" (a 500 on /about, a navigation that never
+// starts), so a missing unexpected pass proves less than it seems. An end handler
+// that throws is red, not expected: nothing navigates, and the wait below runs to
+// the test budget and ends timedOut.
 test('ending a preview reaches the published page (#87)', async ({ page, context, baseURL }) => {
-	// Room for a cold dev server's first compile of /preview/about plus the URL
-	// wait; a timeout would be red, not the expected failure.
+	// Room for a cold dev server's first compile of /preview/about plus the
+	// navigation wait; a timeout would be red, not the expected failure.
 	test.setTimeout(60_000);
 	await context.addCookies([{ name: 'io.prismic.preview', value: '{}', url: baseURL! }]);
 	await page.goto('/preview/about', { waitUntil: 'domcontentloaded' });
 	await page.locator('html[data-hydrated]').waitFor({ state: 'attached' });
 	expect(await windowListens(page, 'prismicPreviewEnd'), 'PrismicPreview listens').toBe(true);
 	test.fail(true, 'reddoorla/erp-industrial#87');
+	// Wait for the first main-frame navigation after the dispatch, then assert where
+	// it went. With #87 standing, PrismicPreview pushes back to /preview/about about
+	// 0.5 s later. With #87 fixed, the first navigation is /about, however long its
+	// load takes, so no fixed wait decides the result.
+	const next = page.waitForEvent('framenavigated', {
+		predicate: (f) => f === page.mainFrame(),
+		timeout: 0
+	});
 	// Dispatch once: each dispatch starts a new goto that supersedes the one in
 	// flight, so retrying could keep a slow load from landing even with #87 fixed.
 	await page.evaluate(() =>
 		window.dispatchEvent(new Event('prismicPreviewEnd', { cancelable: true }))
 	);
-	await expect(page).toHaveURL((url) => url.pathname === '/about', { timeout: 15_000 });
+	expect(new URL((await next).url()).pathname).toBe('/about');
 });
