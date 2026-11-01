@@ -36,11 +36,22 @@ test('a normal visit loads no Prismic toolbar', async ({ page, context }) => {
 	// A toolbar loaded from a timer after hydration (a deferred or idle-callback
 	// load) is the regression this must catch. The fake clock fires the page's
 	// timers in order without real time passing, so a slow runner does not change
-	// the result. runFor(10_000) bounds which timers are covered: a timer longer
-	// than that still escapes.
+	// the result. What is covered: timers up to 10 s after hydration, and the
+	// page's own fetch, xhr and script requests. A toolbar loaded once one of
+	// those answers is read only after they settle, then the clock runs 10 s more
+	// for whatever they scheduled. A timer longer than 10 s still escapes.
+	// Media is not counted: the home page streams a video.
+	const inflight = new Set<object>();
+	page.on('request', (r) => {
+		if (['fetch', 'xhr', 'script'].includes(r.resourceType())) inflight.add(r);
+	});
+	page.on('requestfinished', (r) => inflight.delete(r));
+	page.on('requestfailed', (r) => inflight.delete(r));
 	await page.clock.install();
 	await page.goto('/', { waitUntil: 'domcontentloaded' });
 	await page.locator('html[data-hydrated]').waitFor({ state: 'attached' });
+	await page.clock.runFor(10_000);
+	await expect.poll(() => inflight.size).toBe(0);
 	await page.clock.runFor(10_000);
 	// One animation frame lets the request of a script appended by the last timer
 	// reach this test before the list is read. Nothing depends on how many pass.
@@ -63,8 +74,9 @@ test('a preview session still loads the Prismic toolbar', async ({ page, context
 // the test.fail() call and the reset: false source lines in
 // tests/kit-config.spec.ts. test.fail() is declared only after hydration and the
 // listener are proved, so a failure before it is red. Its limit: after it, any
-// failure counts as "#87 stands" (a 500 on /about, a navigation that never
-// starts), so a missing unexpected pass proves less than it seems. An end handler
+// failure counts as "#87 stands" (a "fix" whose first navigation lands somewhere
+// other than /about, such as / from a bad prefix strip), so a missing unexpected
+// pass proves less than it seems. An end handler
 // that throws is red, not expected: nothing navigates, and the wait below runs to
 // the test budget and ends timedOut.
 test('ending a preview reaches the published page (#87)', async ({ page, context, baseURL }) => {
