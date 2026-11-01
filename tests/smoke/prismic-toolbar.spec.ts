@@ -25,6 +25,9 @@ function watchToolbar(page: Page) {
 }
 
 test('a normal visit loads no Prismic toolbar', async ({ page, context }) => {
+	// Room for a cold dev server's first compile of /: the shared config never
+	// reuses a server, so this test is the cold one when it runs first.
+	test.setTimeout(60_000);
 	const requests = watchToolbar(page);
 	// Hydrated means the layout's client code, which mounts PrismicPreview for a
 	// preview session, has run. Network idle is not that: the home page streams a
