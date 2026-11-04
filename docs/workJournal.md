@@ -252,3 +252,39 @@ The action now forwards the probe's hidden `testMode=true` input as top-level bo
 **Measured.** Against this branch's production build, with ingest pointed at a local capture server, the runner reported `success:true` in 944 ms click to banner (814 ms to the action's POST). It synthesised `interest` (Leasing), and the captured body carried `testMode: true`. The action's 800 ms fill-time screen drops a faster submit without forwarding it, so the spec waits 1.2 s, as the probe does.
 
 Review ran three rounds. Round 2 found that a retry could never pass (the capture outlived it and the marker was the test id alone) and that the fixed capture port collided between suites; both are fixed, and the spec also asserts that `/health` declares `forms.testMode`. The branch then took main's SvelteKit 3 migration (#79) in a merge commit: the action and `/health` read env through `$app/env/private`, `src/env.ts` declares both ingest variables, and the spec, the harness and a re-run of the forwarding mutation all held on kit 3. Round 3 was nits only.
+
+## 2026-11-04 — Fleet majors pilot: staging created; @prismicio/svelte 3, vitest 5 and the svelte-gestures removal on it; Node 26 held (#75, #85, #90, #93, #94)
+
+This was phase 1 of the fleet majors work (reddoorla/reddoor-maintenance#1949). The cockpit listed ERP as five packages a major behind: `@prismicio/svelte@2`, `@types/node@24`, `svelte-gestures@4`, `typescript@6` and `vitest@4`. The aim was to clear each one here and write a recipe that the other sixteen sites follow (`briefs/2026-11-04-fleet-majors/recipe.md` in the workspace).
+
+**The repo had no `staging` branch.** The brief assumed one. The operator chose to set the flow up first. `staging` was cut from `main` at `078a098`, and the Netlify site's `allowed_branches` went from `["main"]` to `["main","staging"]`, the only `build_settings` change. The `staging` ruleset is still the operator's to add, and the promotion (#94) must wait for it, because `delete_branch_on_merge` would delete an unprotected `staging`.
+
+**@prismicio/svelte 3 (#75) and vitest 5 (#85) needed no code change at all.**
+
+- The site already used v3's forms: a `children` snippet on `SliceSimulator`, and no `SvelteRichTextSerializer`.
+- The prerendered HTML of all eight pages is identical to v2's except for v3's new `<!--prismic-slice-start/end-->` comments and one trailing space in a class attribute.
+- vitest 5 ran the same five files and thirty tests, with the same per-file counts (2, 17, 4, 3, 4).
+- Mutation 1, the v2 `let:slices` slot, fails `svelte-check` on v3 and passes on v2.
+- Mutation 2, pinning vitest 4 with the v5 config, stays green. There was no config change for v4 to reject. So on ERP the proof that v5 is in use is CI's `RUN v5.1.0` line.
+
+**svelte-gestures was a dead dependency.** Its last import was removed as unused in `bc2ec53`, and the slider it once served is button-driven. The operator chose removal over the bump for the whole fleet. #90 removed it, and Renovate's #63 was closed unmerged.
+
+**TypeScript 7 is held.** With 7.0.2 installed, `svelte-kit sync` dies with `Cannot read properties of undefined (reading 'readFile')`, and eslint stops with `typescript-eslint does not support TS 7.0.`. TS 7 is the Go compiler and has no JS API, and kit 3.1.1, svelte-check 4.7.8 and typescript-eslint 8.72.1 all cap at TS 6.
+
+**Node 26 (#93) is built, green and held.** This is the belief that turned out wrong. Moving `NODE_VERSION` to 26 was taken to move production to Node 26, and it doesn't.
+
+- #93's deploy preview lists `sveltekit-render`, the function that serves `/contact`, `/health` and the previews, on `nodejs24.x`.
+- Netlify falls back to 24 because AWS's `nodejs26.x` is still a preview.
+- With `@types/node` 26 on top, `new QuotaExceededError('x')` in server code passes `svelte-check` and would throw in production.
+- The operator chose to hold #93 until AWS ships `nodejs26.x` as GA. It will land then, together with `AWS_LAMBDA_JS_RUNTIME=nodejs26.x`.
+
+The same PR found that Node 25 and later ship without corepack. So `prismic-codegen.yml`'s bare `corepack enable` would have failed; #93 installs corepack 0.36.0 first.
+
+**CI runs more than this file's `CLAUDE.md` says.** `ci / ci` also runs `pnpm test` (vitest) and `pnpm test:smoke` (26 Playwright tests), not only prettier, eslint, svelte-check, build and a11y.
+
+**Two landing notes.**
+
+- A second lockfile PR conflicted as soon as the first landed. Each was resolved by merging `staging`, taking its lockfile and running `pnpm install --lockfile-only`, never as text.
+- The `@smoke` suite targets only a local server, so the staging URL was checked by hand: each route's status, `/health`, and the markup against production. It matched apart from the contact form's per-request timestamp.
+
+The review minors are filed as #91 (no test proves slices or the simulator render, and `vitest-setup.ts` is not load-bearing) and #92 (stale comments, `engines.node`).
