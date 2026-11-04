@@ -4,5 +4,5 @@
     functions = "functions/"
 
 [build.environment]
-    NODE_VERSION = "24"
+    NODE_VERSION = "26"
     COREPACK_INTEGRITY_KEYS = "0"
