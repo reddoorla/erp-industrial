@@ -260,6 +260,7 @@ This was phase 1 of the fleet majors work (reddoorla/reddoor-maintenance#1949). 
 **The repo had no `staging` branch.** The brief assumed one. The operator chose to set the flow up first. `staging` was cut from `main` at `078a098`, and the Netlify site's `allowed_branches` went from `["main"]` to `["main","staging"]`, the only `build_settings` change. The `staging` ruleset is still the operator's to add, and the promotion (#94) must wait for it, because `delete_branch_on_merge` would delete an unprotected `staging`.
 
 **@prismicio/svelte 3 (#75) and vitest 5 (#85) needed no code change at all.**
+
 - The site already used v3's forms: a `children` snippet on `SliceSimulator`, and no `SvelteRichTextSerializer`.
 - The prerendered HTML of all eight pages is identical to v2's except for v3's new `<!--prismic-slice-start/end-->` comments and one trailing space in a class attribute.
 - vitest 5 ran the same five files and thirty tests, with the same per-file counts (2, 17, 4, 3, 4).
@@ -271,6 +272,7 @@ This was phase 1 of the fleet majors work (reddoorla/reddoor-maintenance#1949). 
 **TypeScript 7 is held.** With 7.0.2 installed, `svelte-kit sync` dies with `Cannot read properties of undefined (reading 'readFile')`, and eslint stops with `typescript-eslint does not support TS 7.0.`. TS 7 is the Go compiler and has no JS API, and kit 3.1.1, svelte-check 4.7.8 and typescript-eslint 8.72.1 all cap at TS 6.
 
 **Node 26 (#93) is built, green and held.** This is the belief that turned out wrong. Moving `NODE_VERSION` to 26 was taken to move production to Node 26, and it doesn't.
+
 - #93's deploy preview lists `sveltekit-render`, the function that serves `/contact`, `/health` and the previews, on `nodejs24.x`.
 - Netlify falls back to 24 because AWS's `nodejs26.x` is still a preview.
 - With `@types/node` 26 on top, `new QuotaExceededError('x')` in server code passes `svelte-check` and would throw in production.
@@ -281,6 +283,7 @@ The same PR found that Node 25 and later ship without corepack. So `prismic-code
 **CI runs more than this file's `CLAUDE.md` says.** `ci / ci` also runs `pnpm test` (vitest) and `pnpm test:smoke` (26 Playwright tests), not only prettier, eslint, svelte-check, build and a11y.
 
 **Two landing notes.**
+
 - A second lockfile PR conflicted as soon as the first landed. Each was resolved by merging `staging`, taking its lockfile and running `pnpm install --lockfile-only`, never as text.
 - The `@smoke` suite targets only a local server, so the staging URL was checked by hand: each route's status, `/health`, and the markup against production. It matched apart from the contact form's per-request timestamp.
 
