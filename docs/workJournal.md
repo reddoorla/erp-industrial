@@ -264,3 +264,39 @@ The other change was meant to retire the source-text check in `tests/kit-config.
 So the source check stays, unchanged. A test that passes today would have to assert the bug, so the browser test went in as `test.fail("ending a preview reaches the published page (#87)")` instead: it asserts the fix, is green while the defect stands, and reports an unexpected pass the day it is fixed (proved by short-circuiting the layout's interception), which forces the source check out in that change. The defect itself is reddoorla/erp-industrial#87, for its own session.
 
 Review 2 found two holes in that expected failure. Its first version retried the event every 2 s, and each dispatch starts a `goto` that supersedes the one in flight, so with #87 fixed and `/about`'s data delayed 2.5 s it stayed green 3 of 3: the fix would have gone unnoticed. It now dispatches once and waits for the first main-frame navigation after the dispatch, then asserts its pathname (review 4: the 15 s URL wait spent about 15 s of a 60 s budget on a wait that fails by design, and one timeout at load about 23 is consistent with that). Under a 16 s `/about` delay with #87 fixed, the fix reports "Expected to fail, but passed" 3 of 3, and the unfixed tree stays an expected failure 3 of 3. The second hole was that any failure counts. Moving the check that `window` has the `prismicPreviewEnd` listener into an `expect.poll` did not help, because a poll that runs out reports an ordinary failure, which `test.fail` accepts (a listener that never attached came out green). So the test is now an ordinary test that calls `test.fail()` only after hydration and the listener are proved: a missing marker or listener is red. After that point any failure still reads as "#87 stands" (a "fix" whose first navigation lands somewhere other than `/about`, such as `/` from a bad prefix strip), and the comment above the test says so. Review 5 found the two examples this paragraph first gave wrong: a 500 on `/about` with #87 fixed is red ("Expected to fail, but passed"), and a navigation that never starts is `timedOut`, so neither hides. An end handler that throws is red: nothing navigates, the wait runs to the budget, and the result is `timedOut`. Review 4 measured this 1 of 1 with a `throw` at the top of the handler; this session did not re-run it. The test has its own 60 s budget, because a cold dev server spent about 15 s on `/preview/about` and the resulting timeout was red, not the expected failure. Review 3 raised "a normal visit" to the same 60 s, for the cold first compile of `/`: a first run at load 7.3 to 7.7 took 30.7 s, which the old 30 s budget would have failed. This PR later restored main's 30 s default for that test (see the paragraph on "a normal visit" above).
+
+## 2026-11-04 — Fleet majors pilot: staging created; @prismicio/svelte 3, vitest 5 and the svelte-gestures removal on it; Node 26 held (#75, #85, #90, #93, #94)
+
+This was phase 1 of the fleet majors work (reddoorla/reddoor-maintenance#1949). The cockpit listed ERP as five packages a major behind: `@prismicio/svelte@2`, `@types/node@24`, `svelte-gestures@4`, `typescript@6` and `vitest@4`. The aim was to clear each one here and write a recipe that the other sixteen sites follow (`briefs/2026-11-04-fleet-majors/recipe.md` in the workspace).
+
+**The repo had no `staging` branch.** The brief assumed one. The operator chose to set the flow up first. `staging` was cut from `main` at `078a098`, and the Netlify site's `allowed_branches` went from `["main"]` to `["main","staging"]`, the only `build_settings` change. The `staging` ruleset is still the operator's to add, and the promotion (#94) must wait for it, because `delete_branch_on_merge` would delete an unprotected `staging`.
+
+**@prismicio/svelte 3 (#75) and vitest 5 (#85) needed no code change at all.**
+
+- The site already used v3's forms: a `children` snippet on `SliceSimulator`, and no `SvelteRichTextSerializer`.
+- The prerendered HTML of all eight pages is identical to v2's except for v3's new `<!--prismic-slice-start/end-->` comments and one trailing space in a class attribute.
+- vitest 5 ran the same five files and thirty tests, with the same per-file counts (2, 17, 4, 3, 4).
+- Mutation 1, the v2 `let:slices` slot, fails `svelte-check` on v3 and passes on v2.
+- Mutation 2, pinning vitest 4 with the v5 config, stays green. There was no config change for v4 to reject. So on ERP the proof that v5 is in use is CI's `RUN v5.1.0` line.
+
+**svelte-gestures was a dead dependency.** Its last import was removed as unused in `bc2ec53`, and the slider it once served is button-driven. The operator chose removal over the bump for the whole fleet. #90 removed it, and Renovate's #63 was closed unmerged.
+
+**TypeScript 7 is held.** With 7.0.2 installed, `svelte-kit sync` dies with `Cannot read properties of undefined (reading 'readFile')`, and eslint stops with `typescript-eslint does not support TS 7.0.`. TS 7 is the Go compiler and has no JS API, and kit 3.1.1, svelte-check 4.7.8 and typescript-eslint 8.72.1 all cap at TS 6.
+
+**Node 26 (#93) is built, green and held.** This is the belief that turned out wrong. Moving `NODE_VERSION` to 26 was taken to move production to Node 26, and it doesn't.
+
+- #93's deploy preview lists `sveltekit-render`, the function that serves `/contact`, `/health` and the previews, on `nodejs24.x`.
+- Netlify falls back to 24 because AWS's `nodejs26.x` is still a preview.
+- With `@types/node` 26 on top, `new QuotaExceededError('x')` in server code passes `svelte-check` and would throw in production.
+- The operator chose to hold #93 until AWS ships `nodejs26.x` as GA. It will land then, together with `AWS_LAMBDA_JS_RUNTIME=nodejs26.x`.
+
+The same PR found that Node 25 and later ship without corepack. So `prismic-codegen.yml`'s bare `corepack enable` would have failed; #93 installs corepack 0.36.0 first.
+
+**CI runs more than this file's `CLAUDE.md` says.** `ci / ci` also runs `pnpm test` (vitest) and `pnpm test:smoke` (26 Playwright tests), not only prettier, eslint, svelte-check, build and a11y.
+
+**Two landing notes.**
+
+- A second lockfile PR conflicted as soon as the first landed. Each was resolved by merging `staging`, taking its lockfile and running `pnpm install --lockfile-only`, never as text.
+- The `@smoke` suite targets only a local server, so the staging URL was checked by hand: each route's status, `/health`, and the markup against production. It matched apart from the contact form's per-request timestamp.
+
+The review minors are filed as #91 (no test proves slices or the simulator render, and `vitest-setup.ts` is not load-bearing) and #92 (stale comments, `engines.node`).
