@@ -300,3 +300,7 @@ The same PR found that Node 25 and later ship without corepack. So `prismic-code
 - The `@smoke` suite targets only a local server, so the staging URL was checked by hand: each route's status, `/health`, and the markup against production. It matched apart from the contact form's per-request timestamp.
 
 The review minors are filed as #91 (no test proves slices or the simulator render, and `vitest-setup.ts` is not load-bearing) and #92 (stale comments, `engines.node`).
+
+## 2026-11-04 — #86 retargeted from `main` to `staging` (P1-84)
+
+ERP took the staging flow today (the fleet majors pilot above; promotion #94), so this PR moved to `staging`. I merged `origin/staging` (`3553bd0`). The only conflict was this file, where both entries are kept, and with this file left out the diff against `staging` matches the old diff against `main` line for line. The risk was `@prismicio/svelte` 3, now on `staging`: if v3 had fixed #87, the `test.fail` test would pass and go red. It did not. `tests/smoke/prismic-toolbar.spec.ts` passed 3 of 3 on the merged tree, the expected failure included, and #87 is still open. Lint and svelte-check are clean, with 0 errors and the 6 warnings `staging` already has.
