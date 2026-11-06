@@ -304,3 +304,16 @@ The review minors are filed as #91 (no test proves slices or the simulator rende
 ## 2026-11-04 — #86 retargeted from `main` to `staging` (P1-84)
 
 ERP took the staging flow today (the fleet majors pilot above; promotion #94), so this PR moved to `staging`. I merged `origin/staging` (`3553bd0`). The only conflict was this file, where both entries are kept, and with this file left out the diff against `staging` matches the old diff against `main` line for line. The risk was `@prismicio/svelte` 3, now on `staging`: if v3 had fixed #87, the `test.fail` test would pass and go red. It did not. `tests/smoke/prismic-toolbar.spec.ts` passed 3 of 3 on the merged tree, the expected failure included, and #87 is still open. Lint and svelte-check are clean, with 0 errors and the 6 warnings `staging` already has.
+
+## 2026-11-06 — jsdom 30 → 31 on `staging` (P1-102, reddoorla/reddoor-maintenance#1967)
+
+jsdom is a devDependency here, used only as vitest's `environment: 'jsdom'`, and it never ships to visitors. The 11-05 nightly listed `jsdom@30` as ERP's one major behind, which kept ERP in the cockpit's Watch. Renovate's `jsdom-31.x` branch was still "Awaiting Schedule" on the Dependency Dashboard (#41), so the bump was cut by hand from `staging` (`01f9f60`) with `pnpm add -D jsdom@^31.0.0`. Only `package.json` and `pnpm-lock.yaml` change. jsdom 31 drops `css-tree`, `@asamuzakjp/*`, `@csstools/*` and `bidi-js` from the tree and adds `bcp-47`, `parse5-parser-stream` and the `is-alpha*` helpers. Its one peer, `@napi-rs/canvas`, is optional and not installed.
+
+vitest ran the same 11 files and 30 tests on jsdom 31 as on 30, with the same per-file counts, all passing (Node 24.22.2, vitest 5.1.0).
+
+jsdom 31 replaced its CSS engine (jsdom `d8867d0`, "Replace CSS parsing, selectors, and computed styles"). Inline styles now read back the way browsers serialise them: `translateY(0)` reads back as `translateY(0px)`, `calc()` comes back simplified, and a `var()` shorthand reads back as `""` once one of its longhands is set. ERP has no test that reads an inline style back, so nothing here changed. Six other sites in this sweep do have such tests, and they fail on 31. Those are held for the operator's decision.
+
+Mutations:
+
+- **The deps audit.** maintenance's `loadHoldRules` with `scanOutdated`, run on `staging`, gives `behind: ["jsdom@30"]`. On this branch it gives `behind: []`, and the holds are unchanged (`@types/node@24`, `typescript@6`).
+- **The test environment.** With `environment: 'node'`, 23 of the 30 tests fail, all of them DOM tests such as `BgVideo.test.ts`. So the suite really runs on jsdom.
