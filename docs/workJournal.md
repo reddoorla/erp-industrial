@@ -309,7 +309,7 @@ ERP took the staging flow today (the fleet majors pilot above; promotion #94), s
 
 jsdom is a devDependency here, used only as vitest's `environment: 'jsdom'`, and it never ships to visitors. The 11-05 nightly listed `jsdom@30` as ERP's one major behind, which kept ERP in the cockpit's Watch. Renovate's `jsdom-31.x` branch was still "Awaiting Schedule" on the Dependency Dashboard (#41), so the bump was cut by hand from `staging` (`01f9f60`) with `pnpm add -D jsdom@^31.0.0`. Only `package.json` and `pnpm-lock.yaml` change. jsdom 31 drops `css-tree`, `@asamuzakjp/*`, `@csstools/*` and `bidi-js` from the tree and adds `bcp-47`, `parse5-parser-stream` and the `is-alpha*` helpers. Its one peer, `@napi-rs/canvas`, is optional and not installed.
 
-vitest ran the same 11 files and 30 tests on jsdom 31 as on 30, with the same per-file counts, all passing (Node 24.22.2, vitest 5.1.0).
+vitest ran the same 5 files and 30 tests on jsdom 31 as on 30, with the same per-file counts, all passing (Node 24.22.2, vitest 5.1.0).
 
 jsdom 31 replaced its CSS engine (jsdom `d8867d0`, "Replace CSS parsing, selectors, and computed styles"). Inline styles now read back the way browsers serialise them: `translateY(0)` reads back as `translateY(0px)`, `calc()` comes back simplified, and a `var()` shorthand reads back as `""` once one of its longhands is set. ERP has no test that reads an inline style back, so nothing here changed. Six other sites in this sweep do have such tests, and they fail on 31. Those are held for the operator's decision.
 
