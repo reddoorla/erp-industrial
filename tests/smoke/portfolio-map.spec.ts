@@ -48,7 +48,7 @@ for (const viewport of [
 				section: box(section),
 				heading: box(section?.querySelector('h3') ?? null),
 				target: box(document.getElementById('buildout')),
-				footer: box(footer),
+				footer: footer.getBoundingClientRect(),
 				logoBottom: box(logo)!.bottom,
 				footerOverflow: deepest - footer.getBoundingClientRect().bottom
 			};
