@@ -337,6 +337,8 @@ Usage: see the workspace journal entry for this session.
 
 ## 2026-11-09 — The portfolio map fills the last screen again (#101)
 
+> Superseded in part by 2026-11-09 — The portfolio map slide follows the Figma design.
+
 Brennan Berry (ERP) emailed at 2:08pm PT that the portfolio map "is no longer showing at the bottom of the first page when you scroll all of the way down". The map was never missing. Buildout's iframe loaded, 764px tall with 75 listings and no console errors. What failed was the last screen of the homepage. Scrolled to the bottom on production, the "Our Portfolio" slide's top sat at −194px in Chromium and −180px in WebKit at 1440×900, so the heading (at −158) was off the top. The fixed nav's logo (32–150px) and links sat over the listings panel and the top of the map.
 
 Three causes, stacked:
