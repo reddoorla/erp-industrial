@@ -317,3 +317,38 @@ Mutations:
 
 - **The deps audit.** maintenance's `loadHoldRules` with `scanOutdated`, run on `staging`, gives `behind: ["jsdom@30"]`. On this branch it gives `behind: []`, and the holds are unchanged (`@types/node@24`, `typescript@6`).
 - **The test environment.** With `environment: 'node'`, 23 of the 30 tests fail, all of them DOM tests such as `BgVideo.test.ts`. So the suite really runs on jsdom.
+
+## 2026-11-09 — The portfolio map fills the last screen again (#101)
+
+Brennan Berry (ERP) emailed at 2:08pm PT that the portfolio map "is no longer showing at the bottom of the first page when you scroll all of the way down". The map was never missing. Buildout's iframe loaded, 764px tall with 75 listings and no console errors. What failed was the last screen of the homepage. Scrolled to the bottom on production, the "Our Portfolio" slide's top sat at −194px in Chromium and −180px in WebKit at 1440×900, so the heading (at −158) was off the top. The fixed nav's logo (32–150px) and links sat over the listings panel and the top of the map.
+
+Three causes, stacked:
+
+- **Footer band vs. a full-height slide.** On md+ the footer is a 20dvh band, and the embed slide above it was a full 100dvh. At the end of the page the slide's top 20dvh scrolled away.
+- **The heading row was shorter than the nav.** It was 96px tall, under a logo that reaches 150px. So even a slide at top 0 would have had the logo over the map.
+- **The footer overflowed its band.** Its four-link column needs about 182px, more than 20dvh on any screen under 910px tall. At 1024×768 the OFFICE link sat at y 778–808, below the screen and unreachable. Chromium counts that overflow as scrollable, which is why it showed 194 where WebKit showed 180. WebKit does not. A `w-screen` slide under `overflow-scroll` also gave Chromium an idle horizontal scrollbar.
+
+**Why "no longer":** e53777a (2026-06-03) swapped `snap-mandatory` for `snap-proximity`. Under mandatory snapping a scroll came to rest with the map slide's top at the top of the screen. Under proximity it runs to the end of the page. **Prismic is not the cause.** The home document's only change to the embed field since March 2025 removed an inline `height:80vh`, which `EmbedSlide.svelte` already overrode with `height: 100% !important`.
+
+**The fix:**
+
+- `--footer-h: max(20dvh, 11.5rem)` in `app.css` sizes both the desktop footer band and the embed slide (`100dvh − --footer-h`), so the two fill the last screen exactly.
+- The footer columns go from `gap-4` to `gap-1`.
+- The heading sits beside the logo, and the map starts at 152px.
+- `<main>` is `overflow-y-auto overflow-x-hidden`.
+
+After the fix, at the bottom of the page in both engines: section top 0, map from 152px to the footer, footer flush with the bottom of the screen. The map is 540px tall at 1440×900, 408 at 1024×768 and 360 at 1280×720. `tests/smoke/portfolio-map.spec.ts` holds this. It failed on `staging` with `section top = 194` before passing here.
+
+**What was tried and abandoned.** The first cut set the slide to a flat `md:h-[80dvh]`. Chromium still showed a 14–40px strip between slide and footer. Listing every element below the footer's bottom edge found the overflowing OFFICE link, which is what led to the shared variable.
+
+**Beliefs corrected.**
+
+- The first test run failed at 1024 with the slide 2304px off. The layout's `afterNavigate` scrolls `<main>` back to the top 400ms after load, and on a cold dev server that reset landed after the test's scroll. The test now waits it out.
+- The first push failed CI on svelte-check (`'m.footer' is possibly 'null'`) in the new test, which I hadn't type-checked locally. That was fixed in `a88cafc`.
+
+**For the operator:**
+
+- Below md the footer is a full screen of its own, so the very bottom of the page on a phone is the footer. The map is the full screen before it.
+- Buildout's own cookie-consent modal covers the middle of the map until it is dismissed. It belongs to Buildout and was not touched.
+
+Usage: not readable
