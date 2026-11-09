@@ -19,13 +19,12 @@
 	);
 
 	onMount(() => {
-		document.getElementsByTagName('main')[0].addEventListener(
-			'scroll',
-			() => {
-				isLogoLarge = false;
-			},
-			{ once: true }
-		);
+		// The logo is large at the top of the page and small once the page has scrolled; it grows back
+		// when the visitor returns to the top (it used to shrink on the first scroll for good).
+		const main = document.getElementsByTagName('main')[0];
+		const onScroll = () => (isLogoLarge = main.scrollTop < 8);
+		main.addEventListener('scroll', onScroll, { passive: true });
+		return () => main.removeEventListener('scroll', onScroll);
 	});
 </script>
 

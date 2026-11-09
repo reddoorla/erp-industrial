@@ -260,7 +260,7 @@
 
 		<ContentWidth class="h-full relative justify-end z-30">
 			<div
-				class="md:w-11/12 max-w-(--breakpoint-lg) relative h-full flex flex-col justify-end overflow-hidden py-32 sm:py-16 lg:py-32"
+				class="md:w-11/12 max-w-(--breakpoint-lg) relative h-full flex flex-col justify-end overflow-hidden pt-24 pb-16 sm:py-16 lg:py-32"
 			>
 				<!-- Rendered unconditionally so the hero <h1> is in the server HTML (LCP). -->
 				<div transition:fade>
