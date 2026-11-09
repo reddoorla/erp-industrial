@@ -95,7 +95,7 @@
 	bind:this={main}
 	class="{isSnappy
 		? 'snap-y snap-proximity'
-		: ''} h-dvh overflow-scroll m-0 scroll-smooth overscroll-none"
+		: ''} h-dvh overflow-x-hidden overflow-y-auto m-0 scroll-smooth overscroll-none"
 >
 	{@render children?.()}
 </main>

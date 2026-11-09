@@ -9,7 +9,11 @@
 
 <svelte:window bind:innerWidth={viewportWidth} />
 
-<footer class="bg-black w-screen sticky snap-end h-dvh top-0 md:h-[20dvh] md:top-[80dvh] z-40">
+<!-- On md+ the footer is a band of --footer-h (app.css) at the bottom of the last screen; the embed
+     slide sizes itself against the same variable so the two fill that screen exactly. -->
+<footer
+	class="bg-black w-screen sticky snap-end h-dvh top-0 md:h-(--footer-h) md:top-[calc(100dvh-var(--footer-h))] z-40"
+>
 	<ContentWidth class="flex flex-row pt-6 h-full py-32 md:py-6">
 		{#if viewportWidth > 768}
 			<div class="h-full w-1/3 relative">
@@ -20,13 +24,13 @@
 					<img src={logoFull} alt="ERP Industrials" class="w-full" />
 				</a>
 			</div>
-			<div class="h-full w-1/6 flex flex-col gap-4">
+			<div class="h-full w-1/6 flex flex-col gap-1">
 				<a href="/about" class="footer-link">ABOUT</a>
 				<a href="/portfolio" class="footer-link">INDUSTRIAL PORTFOLIO</a>
 				<a href="/investors" class="footer-link">INVESTORS</a>
 				<a href="/office" class="footer-link">OFFICE</a>
 			</div>
-			<div class="h-full w-1/6 flex flex-col gap-4">
+			<div class="h-full w-1/6 flex flex-col gap-1">
 				<a href="https://icx.efrontcloud.com/@9894/ERP/login.aspx" class="footer-link"
 					>PE INVESTOR PORTAL</a
 				>
