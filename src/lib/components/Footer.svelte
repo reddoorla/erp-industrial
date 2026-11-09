@@ -4,128 +4,112 @@
 	import loopnet from '../assets/icons/loopnet.svg';
 	import DefaultButton from './Buttons/DefaultButton.svelte';
 
-	let viewportWidth: number;
+	const siteLinks = [
+		{ href: '/about', text: 'About' },
+		{ href: '/portfolio', text: 'Industrial Portfolio' },
+		{ href: '/investors', text: 'Investors' },
+		{ href: '/office', text: 'Office' }
+	];
+	const portalLinks = [
+		{ href: 'https://icx.efrontcloud.com/@9894/ERP/login.aspx', text: 'PE Investor Portal' },
+		{ href: 'https://starportal2.star.vistra.com/erp/#/index', text: 'DST Investor Portal' },
+		{
+			href: 'https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161',
+			text: 'Tenant Portal'
+		}
+	];
 </script>
 
-<svelte:window bind:innerWidth={viewportWidth} />
+{#snippet social()}
+	<div class="flex flex-row items-center gap-2 text-subtle-blue md:-ml-3">
+		<a
+			href="https://www.linkedin.com/company/erp-industrials/"
+			class="text-xl inline-flex items-center justify-center min-h-11 min-w-11"
+			aria-label="LinkedIn"
+			><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
+				><path
+					d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"
+				/></svg
+			></a
+		>
+		<a
+			href="https://www.facebook.com/ERPFunds/"
+			class="text-xl inline-flex items-center justify-center min-h-11 min-w-11"
+			aria-label="Facebook"
+			><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
+				><path
+					d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+				/></svg
+			></a
+		>
+		<a
+			href="https://www.loopnet.com/company/erp-industrials/midland-tx/9rvtzp4l/"
+			class="inline-flex items-center justify-center min-h-11 min-w-11"
+			aria-label="LoopNet"
+			><img src={loopnet} class="size-[30px]" alt="ERP Industrials on LoopNet" /></a
+		>
+	</div>
+{/snippet}
 
-<!-- On md+ the footer is a band of --footer-h (app.css) at the bottom of the last screen; the embed
-     slide sizes itself against the same variable so the two fill that screen exactly. -->
+<!-- Desktop and phone layouts are both in the markup and switched by CSS at md. They used to be
+     switched on a bound innerWidth, which is 0 during SSR, so every desktop visit got the phone
+     footer from the server and swapped it for the desktop one on hydration.
+
+     On md+ the footer is a band of --footer-h (app.css) at the bottom of the last screen; the embed
+     slide sizes itself against the same variable so the two fill that screen exactly. Below md it is
+     a screen of its own that paints over the fixed nav (both z-40, the footer later), carrying every
+     nav link itself. -->
 <footer
 	class="bg-black w-screen sticky snap-end h-dvh top-0 md:h-(--footer-h) md:top-[calc(100dvh-var(--footer-h))] z-40"
 >
-	<ContentWidth class="flex flex-row pt-6 h-full py-32 md:py-6">
-		{#if viewportWidth > 768}
-			<div class="h-full w-1/3 relative">
-				<a
-					href="/"
-					class="w-[25%] hover:opacity-80 transition-all duration-500 bump brightness-0 invert relative block"
-				>
-					<img src={logoFull} alt="ERP Industrials" class="w-full" />
-				</a>
-			</div>
-			<div class="h-full w-1/6 flex flex-col gap-1">
-				<a href="/about" class="footer-link">ABOUT</a>
-				<a href="/portfolio" class="footer-link">INDUSTRIAL PORTFOLIO</a>
-				<a href="/investors" class="footer-link">INVESTORS</a>
-				<a href="/office" class="footer-link">OFFICE</a>
-			</div>
-			<div class="h-full w-1/6 flex flex-col gap-1">
-				<a href="https://icx.efrontcloud.com/@9894/ERP/login.aspx" class="footer-link"
-					>PE INVESTOR PORTAL</a
-				>
-				<a href="https://starportal2.star.vistra.com/erp/#/index" class="footer-link"
-					>DST INVESTOR PORTAL</a
-				>
-				<a
-					href="https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161"
-					class="footer-link">TENANT PORTAL</a
-				>
-			</div>
-			<div class="h-full w-1/12"></div>
-			<div class="h-full w-1/4 flex flex-col gap-8">
-				<div class="w-full flex flex-row items-center gap-6 text-subtle-blue">
-					<a
-						href="https://www.linkedin.com/company/erp-industrials/"
-						class="text-xl"
-						aria-label="LinkedIn"
-						><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
-							><path
-								d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"
-							/></svg
-						></a
-					>
-					<a href="https://www.facebook.com/ERPFunds/" class="text-xl" aria-label="Facebook"
-						><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
-							><path
-								d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-							/></svg
-						></a
-					>
-					<a
-						href="https://www.loopnet.com/company/erp-industrials/midland-tx/9rvtzp4l/"
-						aria-label="LoopNet"
-						><img src={loopnet} alt="ERP Industrials on LoopNet" class="size-[30px]" /></a
-					>
-				</div>
-				<a href="/contact">
-					<DefaultButton text="Contact" filled={false} class="text-white border-2 border-white" />
-				</a>
-			</div>
-		{:else}
-			<div class="w-full h-full flex flex-col gap-8 justify-end relative">
-				<a
-					href="/"
-					class="h-12 hover:opacity-80 transition-all duration-500 bump brightness-0 invert block translate-y-2 absolute top-4"
-				>
-					<img src={logoFull} alt="ERP Industrials" class="h-12" />
-				</a>
-				<a href="/about" class="footer-link">ABOUT</a>
-				<a href="/portfolio" class="footer-link">INDUSTRIAL PORTFOLIO</a>
-				<a href="/investors" class="footer-link">INVESTORS</a>
-				<a href="https://icx.efrontcloud.com/@9894/ERP/login.aspx" class="footer-link"
-					>PE INVESTOR PORTAL</a
-				>
-				<a href="https://starportal2.star.vistra.com/erp/#/index" class="footer-link"
-					>DST INVESTOR PORTAL</a
-				>
-				<a
-					href="https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161"
-					class="footer-link">TENANT PORTAL</a
-				>
-				<div class="w-full flex flex-row items-center gap-2 text-subtle-blue">
-					<a
-						href="https://www.linkedin.com/company/erp-industrials/"
-						class="text-xl inline-flex items-center justify-center min-h-11 min-w-11"
-						aria-label="LinkedIn"
-						><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
-							><path
-								d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"
-							/></svg
-						></a
-					>
-					<a
-						href="https://www.facebook.com/ERPFunds/"
-						class="text-xl inline-flex items-center justify-center min-h-11 min-w-11"
-						aria-label="Facebook"
-						><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
-							><path
-								d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-							/></svg
-						></a
-					>
-					<a
-						href="https://www.loopnet.com/company/erp-industrials/midland-tx/9rvtzp4l/"
-						class="inline-flex items-center justify-center min-h-11 min-w-11"
-						aria-label="LoopNet"
-						><img src={loopnet} class="size-[30px]" alt="ERP Industrials on LoopNet" /></a
-					>
-				</div>
-				<a href="/contact">
-					<DefaultButton text="Contact" filled={false} class="text-white border-2 border-white" />
-				</a>
-			</div>
-		{/if}
+	<ContentWidth
+		class="hidden md:flex flex-row justify-between gap-8 h-full py-6 text-white whitespace-nowrap"
+	>
+		<a
+			href="/"
+			class="w-24 lg:w-32 shrink-0 self-start hover:opacity-80 transition-all duration-500 bump brightness-0 invert block"
+		>
+			<img src={logoFull} alt="ERP Industrials" class="w-full" />
+		</a>
+		<div class="flex flex-row gap-12 lg:gap-20">
+			<nav aria-label="Site" class="flex flex-col gap-1">
+				{#each siteLinks as link (link.href)}
+					<a href={link.href} class="footer-link">{link.text}</a>
+				{/each}
+			</nav>
+			<nav aria-label="Portals" class="flex flex-col gap-1">
+				{#each portalLinks as link (link.href)}
+					<a href={link.href} class="footer-link">{link.text}</a>
+				{/each}
+			</nav>
+		</div>
+		<div class="flex flex-col gap-4 shrink-0">
+			{@render social()}
+			<DefaultButton href="/contact" text="Contact" filled={false} />
+		</div>
+	</ContentWidth>
+
+	<ContentWidth class="md:hidden flex flex-col justify-center gap-8 h-full pt-24 pb-12 text-white">
+		<a
+			href="/"
+			class="w-28 hover:opacity-80 transition-all duration-500 bump brightness-0 invert block"
+		>
+			<img src={logoFull} alt="ERP Industrials" class="w-full" />
+		</a>
+		<div class="grid grid-cols-2 gap-x-6">
+			<nav aria-label="Site" class="flex flex-col">
+				{#each siteLinks as link (link.href)}
+					<a href={link.href} class="footer-link py-3!">{link.text}</a>
+				{/each}
+			</nav>
+			<nav aria-label="Portals" class="flex flex-col">
+				{#each portalLinks as link (link.href)}
+					<a href={link.href} class="footer-link py-3!">{link.text}</a>
+				{/each}
+			</nav>
+		</div>
+		{@render social()}
+		<DefaultButton href="/contact" text="Contact" filled={false} />
 	</ContentWidth>
 </footer>
 

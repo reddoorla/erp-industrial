@@ -91,10 +91,14 @@
 	<link rel="canonical" href={siteOrigin(page.url) + page.url.pathname} />
 </svelte:head>
 
+<!-- Mandatory snapping, so a scroll always comes to rest on a whole slide. e53777a (2026-06-03)
+     moved to proximity because mandatory fought the old JS that toggled slides between sticky and
+     relative; with that gone, mandatory puts every snap point on a slide boundary in Chromium and
+     WebKit, while proximity let a scroll stop anywhere, half on one slide and half on the next. -->
 <main
 	bind:this={main}
 	class="{isSnappy
-		? 'snap-y snap-proximity'
+		? 'snap-y snap-mandatory'
 		: ''} h-dvh overflow-x-hidden overflow-y-auto m-0 scroll-smooth overscroll-none"
 >
 	{@render children?.()}
