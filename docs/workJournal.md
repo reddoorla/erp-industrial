@@ -352,3 +352,35 @@ After the fix, at the bottom of the page in both engines: section top 0, map fro
 - Buildout's own cookie-consent modal covers the middle of the map until it is dismissed. It belongs to Buildout and was not touched.
 
 Usage: not readable
+
+## 2026-11-09 — Slides always come to rest whole; phone hero, footer and logo fixes (#103)
+
+> Stacked on #101 (the entry above).
+
+Tucker asked mid-session for a pass on the scroll snap and the site's general jank ("I made it a long time ago and it does feel a little janky").
+
+**The instrument came first, and two were thrown out.**
+
+- Chromium's CDP `Input.synthesizeScrollGesture` with `gestureSourceType: 'touch'` scrolled nothing, even on a plain four-section test page.
+- Its mouse gestures and Playwright's wheel events both snap to the _nearest_ point under `snap-mandatory`, so a 450px gesture on a 664px page snaps back to 0. WebKit snaps in the scroll direction instead.
+
+Neither reproduces a trackpad fling or iOS momentum, so how it _feels_ was not measured headless. What was measured is the snap map: instant-scroll to positions across the page, let the browser re-snap, and record where it settles. On the test page that gave 0/900/1800/2700 in both engines before it was trusted.
+
+**Snapping.** As shipped (`snap-proximity`), /about at 1440×900 settled at 14 points between slides (360, 540, 1260, 2160, 2340…). e53777a chose proximity because mandatory fought the old JS that toggled slides between sticky and relative. **Belief corrected:** I expected sticky slides to put the mandatory snap points in the wrong places in Chromium. Forcing `y mandatory` on the shipped page put every one exactly on a slide boundary, in Chromium and WebKit, desktop and iPhone 13. So the change is one class. `tests/smoke/scroll-snap.spec.ts` runs the map on /about and /office. It fails on `staging` and passes here.
+
+**Footer.**
+
+- Desktop vs. phone layout was chosen from `bind:innerWidth`, which is 0 in SSR, so every desktop visit was served the phone footer and swapped it on hydration. Now both are in the markup, switched at `md` by CSS.
+- The phone footer was `justify-end` and overflowed upward under the nav, so its logo printed over INDUSTRIAL PORTFOLIO. It is now centred below 96px, in two columns.
+- At 1024px the `w-1/6` columns ran INDUSTRIAL PORTFOLIO into DST INVESTOR PORTAL.
+- Contact was a `<button>` inside an `<a>`.
+
+**Phone hero.** The 200% "large" logo sat over the About title, and `pb-32` pushed about 460px of copy up under it. The large logo is now md+ only, and phone padding is `pt-24 pb-16`.
+
+**Logo.** It shrank on the first scroll (`{ once: true }`) and never grew back. It now tracks `scrollTop < 8`, with the listener removed on unmount.
+
+**Tried and reverted.** I registered the footer with `slideObserver` so the nav would turn light over the black phone footer. A screenshot showed the nav is not visible there at all: both are `z-40` and the footer paints later. So the change did nothing and came out.
+
+**Noticed, not changed.** On /office at 1024 the nav links are dark over the black half of the Tenant Portal slide. That is the slide's `isnavlight` in Prismic, a content setting.
+
+Usage: not readable
