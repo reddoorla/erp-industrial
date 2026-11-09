@@ -37,8 +37,13 @@
 	in:fade={{ delay: 400 }}
 	out:fade
 >
+	<!-- The embed (Buildout map) slide is the homepage's last. On md+ the footer is a band of
+	     --footer-h, so at the bottom of the page a full-height slide had that much of its top
+	     scrolled off, taking the heading and the top of the map with it. Shortened by the band, the
+	     slide and the footer exactly fill the last screen. -->
 	<FullPageSlide
 		backgroundImage={slice.variation === 'embed' ? null : slice.primary.background_image}
+		height={slice.variation === 'embed' ? 'h-dvh md:h-[calc(100dvh-var(--footer-h))]' : 'h-dvh'}
 	>
 		{#if slice.variation === 'embed'}
 			<EmbedSlide {slice} />

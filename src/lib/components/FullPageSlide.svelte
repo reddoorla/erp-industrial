@@ -7,8 +7,14 @@
 
 	let {
 		backgroundImage = null,
+		height = 'h-dvh',
 		children
-	}: { backgroundImage?: ImageFieldImage | null; children?: Snippet } = $props();
+	}: {
+		backgroundImage?: ImageFieldImage | null;
+		/** Tailwind height classes for the slide; a full viewport unless a variation needs less. */
+		height?: string;
+		children?: Snippet;
+	} = $props();
 
 	let viewportWidth = $state(0);
 	let viewportHeight = $state(0);
@@ -16,7 +22,7 @@
 
 <svelte:window bind:innerHeight={viewportHeight} bind:innerWidth={viewportWidth} />
 
-<div class="w-screen h-dvh overflow-hidden relative">
+<div class="w-screen {height} overflow-hidden relative">
 	{#if backgroundImage}
 		<PrismicImage
 			field={backgroundImage}
