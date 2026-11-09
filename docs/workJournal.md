@@ -317,3 +317,20 @@ Mutations:
 
 - **The deps audit.** maintenance's `loadHoldRules` with `scanOutdated`, run on `staging`, gives `behind: ["jsdom@30"]`. On this branch it gives `behind: []`, and the holds are unchanged (`@types/node@24`, `typescript@6`).
 - **The test environment.** With `environment: 'node'`, 23 of the 30 tests fail, all of them DOM tests such as `BgVideo.test.ts`. So the suite really runs on jsdom.
+
+## 2026-11-09 — The old `/fasken-center.html` and `/who-we-are.html` 301 instead of 404, and the sitemap lists `/investors` (`fix/gsc-legacy-404s` → `staging`)
+
+Search Console emailed at 1:46am PT on 11-09 that `https://www.erpfunds.com/` had a new indexing reason, "Not found (404)". The indexing report has no API, so the URLs behind it were found by asking the property itself. The GA service account is `siteOwner` on `https://www.erpfunds.com/`, a URL-prefix property. The candidates were the 5 sitemap URLs plus every page in Search Analytics over 16 months (12 pages), each checked by `urlInspection.index.inspect` and by `curl`. Two of them 404:
+
+- **`/fasken-center.html`**: 8,233 impressions and 164 clicks from 2025-07-10 to 2026-11-08, of which 3,014 impressions and 35 clicks fall in the last 90 days. It ranks at about position 1.8 for "fasken" every day this month. So Google sends people to a 404 from its first result for the building's name. The Fasken Center is a slide on `/office`, so it now 301s there.
+- **`/who-we-are.html`**: 2 impressions in August 2025. It 301s to `/about`.
+
+Corrected on contact: URL Inspection calls `/fasken-center.html` "URL is unknown to Google" while Search Analytics shows it ranking daily. Inspection is not the authority on whether an old URL is in the index. The status code and the Search Analytics rows are.
+
+The redirects are a `handle` hook (`src/hooks.server.ts` → `$lib/legacy-redirects`), not `netlify.toml`, for the reason Roalson's identical hook records: adapter-netlify serves the site through one function claiming `/*` (`split: false`), and Netlify matches a function's path before redirect rules. Measured on `vite preview` of the production build: both old paths, and the upper-case variant, answer 301 to their targets; `/nope.html` still 404s; `/office`, `/about`, `/investors` and `/index.html` answer 200. The unit test fails with either map entry removed.
+
+`static/sitemap.xml` was missing `/investors`. That page is in every page's nav, has a self-canonical, is indexed, and drew 7,027 impressions in 16 months. Now the sitemap lists all six nav pages. It is still a hand-written file, so the next page added in Prismic has to be added there by hand.
+
+Left as they are, on purpose. The site serves `www` as primary (the apex 301s to it, and the property is `www`), so this is not one of the apex-primary sites, and nothing here changes that. `/index.html` is "Alternate page with proper canonical tag" pointing at `/`, which is expected. `/buildout-map` (200, self-canonical, outside the sitemap and the nav, 19 impressions) and `/about?=undefined&safari-private=false` (canonical `/about`) are unknown to URL Inspection and were not in the email.
+
+Usage: see the workspace journal entry for this session.
