@@ -317,3 +317,126 @@ Mutations:
 
 - **The deps audit.** maintenance's `loadHoldRules` with `scanOutdated`, run on `staging`, gives `behind: ["jsdom@30"]`. On this branch it gives `behind: []`, and the holds are unchanged (`@types/node@24`, `typescript@6`).
 - **The test environment.** With `environment: 'node'`, 23 of the 30 tests fail, all of them DOM tests such as `BgVideo.test.ts`. So the suite really runs on jsdom.
+
+## 2026-11-09 — The old `/fasken-center.html` and `/who-we-are.html` 301 instead of 404, and the sitemap lists `/investors` (`fix/gsc-legacy-404s` → `staging`)
+
+Search Console emailed at 1:46am PT on 11-09 that `https://www.erpfunds.com/` had a new indexing reason, "Not found (404)". The indexing report has no API, so the URLs behind it were found by asking the property itself. The GA service account is `siteOwner` on `https://www.erpfunds.com/`, a URL-prefix property. The candidates were the 5 sitemap URLs plus every page in Search Analytics over 16 months (12 pages), each checked by `urlInspection.index.inspect` and by `curl`. Two of them 404:
+
+- **`/fasken-center.html`**: 8,233 impressions and 164 clicks from 2025-07-10 to 2026-11-08, of which 3,014 impressions and 35 clicks fall in the last 90 days. It ranks at about position 1.8 for "fasken" every day this month. So Google sends people to a 404 from its first result for the building's name. The Fasken Center is a slide on `/office`, so it now 301s there.
+- **`/who-we-are.html`**: 2 impressions in August 2025. It 301s to `/about`.
+
+Corrected on contact: URL Inspection calls `/fasken-center.html` "URL is unknown to Google" while Search Analytics shows it ranking daily. Inspection is not the authority on whether an old URL is in the index. The status code and the Search Analytics rows are.
+
+The redirects are a `handle` hook (`src/hooks.server.ts` → `$lib/legacy-redirects`), not `netlify.toml`, for the reason Roalson's identical hook records: adapter-netlify serves the site through one function claiming `/*` (`split: false`), and Netlify matches a function's path before redirect rules. Measured on `vite preview` of the production build: both old paths, and the upper-case variant, answer 301 to their targets; `/nope.html` still 404s; `/office`, `/about`, `/investors` and `/index.html` answer 200. The unit test fails with either map entry removed.
+
+`static/sitemap.xml` was missing `/investors`. That page is in every page's nav, has a self-canonical, is indexed, and drew 7,027 impressions in 16 months. Now the sitemap lists all six nav pages. It is still a hand-written file, so the next page added in Prismic has to be added there by hand.
+
+Left as they are, on purpose. The site serves `www` as primary (the apex 301s to it, and the property is `www`), so this is not one of the apex-primary sites, and nothing here changes that. `/index.html` is "Alternate page with proper canonical tag" pointing at `/`, which is expected. `/buildout-map` (200, self-canonical, outside the sitemap and the nav, 19 impressions) and `/about?=undefined&safari-private=false` (canonical `/about`) are unknown to URL Inspection and were not in the email.
+
+Usage: see the workspace journal entry for this session.
+
+## 2026-11-09 — The portfolio map fills the last screen again (#101)
+
+> Superseded in part by 2026-11-09 — The portfolio map slide follows the Figma design.
+
+Brennan Berry (ERP) emailed at 2:08pm PT that the portfolio map "is no longer showing at the bottom of the first page when you scroll all of the way down". The map was never missing. Buildout's iframe loaded, 764px tall with 75 listings and no console errors. What failed was the last screen of the homepage. Scrolled to the bottom on production, the "Our Portfolio" slide's top sat at −194px in Chromium and −180px in WebKit at 1440×900, so the heading (at −158) was off the top. The fixed nav's logo (32–150px) and links sat over the listings panel and the top of the map.
+
+Three causes, stacked:
+
+- **Footer band vs. a full-height slide.** On md+ the footer is a 20dvh band, and the embed slide above it was a full 100dvh. At the end of the page the slide's top 20dvh scrolled away.
+- **The heading row was shorter than the nav.** It was 96px tall, under a logo that reaches 150px. So even a slide at top 0 would have had the logo over the map.
+- **The footer overflowed its band.** Its four-link column needs about 182px, more than 20dvh on any screen under 910px tall. At 1024×768 the OFFICE link sat at y 778–808, below the screen and unreachable. Chromium counts that overflow as scrollable, which is why it showed 194 where WebKit showed 180. WebKit does not. A `w-screen` slide under `overflow-scroll` also gave Chromium an idle horizontal scrollbar.
+
+**Why "no longer":** e53777a (2026-06-03) swapped `snap-mandatory` for `snap-proximity`. Under mandatory snapping a scroll came to rest with the map slide's top at the top of the screen. Under proximity it runs to the end of the page. **Prismic is not the cause.** The home document's only change to the embed field since March 2025 removed an inline `height:80vh`, which `EmbedSlide.svelte` already overrode with `height: 100% !important`.
+
+**The fix:**
+
+- `--footer-h: max(20dvh, 11.5rem)` in `app.css` sizes both the desktop footer band and the embed slide (`100dvh − --footer-h`), so the two fill the last screen exactly.
+- The footer columns go from `gap-4` to `gap-1`.
+- The heading sits beside the logo, and the map starts at 152px.
+- `<main>` is `overflow-y-auto overflow-x-hidden`.
+
+After the fix, at the bottom of the page in both engines: section top 0, map from 152px to the footer, footer flush with the bottom of the screen. The map is 540px tall at 1440×900, 408 at 1024×768 and 360 at 1280×720. `tests/smoke/portfolio-map.spec.ts` holds this. It failed on `staging` with `section top = 194` before passing here.
+
+**What was tried and abandoned.** The first cut set the slide to a flat `md:h-[80dvh]`. Chromium still showed a 14–40px strip between slide and footer. Listing every element below the footer's bottom edge found the overflowing OFFICE link, which is what led to the shared variable.
+
+**Beliefs corrected.**
+
+- The first test run failed at 1024 with the slide 2304px off. The layout's `afterNavigate` scrolls `<main>` back to the top 400ms after load, and on a cold dev server that reset landed after the test's scroll. The test now waits it out.
+- The first push failed CI on svelte-check (`'m.footer' is possibly 'null'`) in the new test, which I hadn't type-checked locally. That was fixed in `a88cafc`.
+
+**For the operator:**
+
+- Below md the footer is a full screen of its own, so the very bottom of the page on a phone is the footer. The map is the full screen before it.
+- Buildout's own cookie-consent modal covers the middle of the map until it is dismissed. It belongs to Buildout and was not touched.
+
+Usage: not readable
+
+## 2026-11-09 — Slides always come to rest whole; phone hero, footer and logo fixes (#103)
+
+> Stacked on #101 (the entry above).
+
+Tucker asked mid-session for a pass on the scroll snap and the site's general jank ("I made it a long time ago and it does feel a little janky").
+
+**The instrument came first, and two were thrown out.**
+
+- Chromium's CDP `Input.synthesizeScrollGesture` with `gestureSourceType: 'touch'` scrolled nothing, even on a plain four-section test page.
+- Its mouse gestures and Playwright's wheel events both snap to the _nearest_ point under `snap-mandatory`, so a 450px gesture on a 664px page snaps back to 0. WebKit snaps in the scroll direction instead.
+
+Neither reproduces a trackpad fling or iOS momentum, so how it _feels_ was not measured headless. What was measured is the snap map: instant-scroll to positions across the page, let the browser re-snap, and record where it settles. On the test page that gave 0/900/1800/2700 in both engines before it was trusted.
+
+**Snapping.** As shipped (`snap-proximity`), /about at 1440×900 settled at 14 points between slides (360, 540, 1260, 2160, 2340…). e53777a chose proximity because mandatory fought the old JS that toggled slides between sticky and relative. **Belief corrected:** I expected sticky slides to put the mandatory snap points in the wrong places in Chromium. Forcing `y mandatory` on the shipped page put every one exactly on a slide boundary, in Chromium and WebKit, desktop and iPhone 13. So the change is one class. `tests/smoke/scroll-snap.spec.ts` runs the map on /about and /office. It fails on `staging` and passes here.
+
+**Footer.**
+
+- Desktop vs. phone layout was chosen from `bind:innerWidth`, which is 0 in SSR, so every desktop visit was served the phone footer and swapped it on hydration. Now both are in the markup, switched at `md` by CSS.
+- The phone footer was `justify-end` and overflowed upward under the nav, so its logo printed over INDUSTRIAL PORTFOLIO. It is now centred below 96px, in two columns.
+- At 1024px the `w-1/6` columns ran INDUSTRIAL PORTFOLIO into DST INVESTOR PORTAL.
+- Contact was a `<button>` inside an `<a>`.
+
+**Phone hero.** The 200% "large" logo sat over the About title, and `pb-32` pushed about 460px of copy up under it. The large logo is now md+ only, and phone padding is `pt-24 pb-16`.
+
+**Logo.** It shrank on the first scroll (`{ once: true }`) and never grew back. It now tracks `scrollTop < 8`, with the listener removed on unmount.
+
+**Tried and reverted.** I registered the footer with `slideObserver` so the nav would turn light over the black phone footer. A screenshot showed the nav is not visible there at all: both are `z-40` and the footer paints later. So the change did nothing and came out.
+
+**Noticed, not changed.** On /office at 1024 the nav links are dark over the black half of the Tenant Portal slide. That is the slide's `isnavlight` in Prismic, a content setting.
+
+Usage: not readable
+
+## 2026-11-09 — The portfolio map slide follows the Figma design (`fix/portfolio-map-design`)
+
+> Corrects in part 2026-11-09 — The portfolio map fills the last screen again (#101).
+
+After #101 and #103 merged, Tucker found the map slide "not working as intended, some weirdly tight margins and the map looks cut off". The reference is the "Build Out Map" frame (`5018:13743`) and "our portfolio" frames in the 2024 **ERP Website Design** Figma file (`xRX9GaUhKI2rGaq0RtJJ5U`), found through a Figma comment email because nothing in this repo links it. In that design:
+
+- The slide is off-white (#fafafa).
+- "OUR PORTFOLIO" is centred under the nav.
+- The Buildout widget is about 580px tall, inside the content column, its edges lined up with the logo on the left and the nav on the right.
+- There are about 50px of air before the footer. On a phone the map is inset under the heading.
+
+What `staging` rendered after #101:
+
+- **Edge to edge.** The widget ran 0–1440 on desktop and was inset only 8px on a phone. The section was pure white against Buildout's off-white panels.
+- **Squeezed.** #101 made the slide share the last screen with the 184px footer band, so the widget was 360px tall at 1280×720 and 408px at 1024×768, with listing cards and map cut off. **#101 traded the map's size for its position, and that was the wrong trade on laptop-height screens.**
+
+The fix:
+
+- `--map-slide-h: max(calc(100dvh − --footer-h), 44rem)`. On screens 888px and taller the section and footer still share the last screen exactly, as #101 intended. Below that the slide keeps 44rem, is its own snap stop (mandatory since #103), and the footer comes one scroll later.
+- The widget is in `ContentWidth`, so it lines up with the logo, with `md:pb-12` of air below.
+- The section is #fafafa.
+
+Measured, resting on the slide: the widget is 110–1330 × 168–668 (500px) at 1440×900, and 488px tall at 1280×720 and 1024×768, in Chromium and WebKit. On an iPhone 13 it is 16–374 × 136–632.
+
+**A defect hit on the way.** Moving `.buildout-embed` onto `ContentWidth`'s class prop silently dropped the iframe to 150px tall. Svelte scopes a component's `<style>` by hashing its own elements, and a class string passed to a child component's element never gets the hash, so the scoped rules matched nothing. The rules are now `:global(.buildout-embed …)`.
+
+`tests/smoke/portfolio-map.spec.ts` is rewritten around the two rules:
+
+- Resting on the slide shows the whole section, with the widget clear of the logo, aligned with it, 40px above the section bottom and at least 480px tall.
+- At 888px and taller, the section and footer fill the last screen.
+
+It passes here. On `staging` it fails with the widget 41–110px off the content column.
+
+**Noticed, not changed.** Buildout decides whether a phone opens on the listing list or the map; the 2024 design shows the map. Buildout's cookie modal still covers the widget until it is dismissed.
+
+Usage: not readable

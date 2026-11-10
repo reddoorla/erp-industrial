@@ -100,7 +100,7 @@
 				class="h-12 md:h-32 transition-all duration-700 ease-fast-slow hover:opacity-100 {$isNavLight
 					? 'brightness-0 invert'
 					: ''} {isLogoLarge
-					? 'scale-[200%] translate-y-full  translate-x-1/2'
+					? 'translate-y-1/2 md:translate-y-full md:translate-x-1/2 md:scale-[200%]'
 					: 'translate-y-1/2'}"
 				style="clip-path: {isLogoLarge ? 'inset(0)' : 'inset(0 0 10px 0)'};"
 			/>

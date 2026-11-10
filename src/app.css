@@ -20,6 +20,19 @@
 	}
 }
 
+/* Height of the desktop footer band. 20dvh, but never shorter than its four-link column (about
+   11.25rem): at 20dvh alone a 768px-tall window cut the OFFICE link off below the screen, and in
+   Chromium the overflow lengthened the page and pushed the last slide up under the nav. */
+:root {
+	--footer-h: max(20dvh, 11.5rem);
+	/* Height of the homepage's Buildout map slide on md+. Where the screen is tall enough it is the
+	   screen less the footer band, so the whole section and the footer share the last screen. It
+	   never drops below 44rem (a 488px widget): at 1280×720 the band left the map 360px tall, with
+	   the listings and map visibly cut off. On a shorter screen the slide is its own snap stop and
+	   the footer follows one scroll later. */
+	--map-slide-h: max(calc(100dvh - var(--footer-h)), 44rem);
+}
+
 body {
 	font-family: 'neue-haas-grotesk-display', sans-serif;
 	font-feature-settings:
