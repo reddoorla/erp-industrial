@@ -476,3 +476,37 @@ The smoke spec's 404 test now covers a missing Prismic UID and a path no route m
 **Not fixed here: apex is two hops.** `erpfunds.com/industrial-properties.html` goes first to `www` (Netlify's domain redirect, the same for every path), then to `/`. Making that one hop means changing how the alias host is handled, and the brief keeps the primary-host question out of this task.
 
 Usage: not readable
+
+## 2026-11-10 — The contact page gets its own footer, and the form no longer scrolls under the footer band (`fix/contact-footer-design` → `staging`)
+
+The operator, after #106: "the form is scrollable and has both logos of the same size which is not the design, can we cut the footer logo, add home to the footer and do a design pass. this page should get its own footer altogether honestly."
+
+The reference is the "Contact" frame (`5018:53376`) in the 2024 **ERP Website Design** Figma file (`xRX9GaUhKI2rGaq0RtJJ5U`): an 813px screen holding the heading column and the form, then the 171px footer below it in the page.
+
+What `/contact` did instead:
+
+- **The section was `fixed top-0 h-dvh overflow-y-auto`, a layer of its own.** The shared footer, a sticky band, sat over its bottom. At 1440×900 the left column ran to about 780px, so its bottom (MESSAGE, the email address) was behind the band, and the form scrolled inside the section to come out from under it.
+- **Two logos, both 128px tall:** the nav's and the footer's.
+- **No footer at all below 768px.** The page rendered it only when a bound `innerWidth` was over 768, which is 0 during SSR, so every server render had no footer.
+
+The fix:
+
+- **The page.** The section is back in the page's flow. It and a new `ContactFooter` share one column at least a screen tall (`min-h-dvh flex flex-col snap-start`). The columns are top-aligned, as in the frame; they used to be centred.
+- **`ContactFooter`.** No logo, Home listed with the site's sections, the portals, and the social icons. It drops the Contact button, which on this page would link to itself.
+- **Shared parts.** The portal links (now in `$lib/site-links`) and the social icons (`SocialLinks.svelte`) moved out of `Footer`, so both footers use one copy. The `.footer-link` styles moved to `app.css` unchanged. One side effect: Footer's scoped `a { transition: opacity 400ms }` used to override the footer logo's `transition-all duration-500`. With that rule gone, the logo's hover fade runs 500ms over all properties instead of 400ms over opacity. The opacity still ends at 0.8. The hover rule is now on `.footer-link` and `.social-link` rather than a global `footer a`, which would also have caught the outlined Contact button.
+
+Measured on `vite preview` of the production build:
+
+- The page scrolls 103px at 1440×900 and 235px at 1024×768. The design's own page is 984px tall, so it scrolls at 900 too.
+- At the end of the scroll the footer runs 707–900 and 575–768 respectively.
+- The section never scrolls on its own, and there is one logo.
+
+`tests/smoke/contact-layout.spec.ts` holds these at three sizes. It fails on `staging` with "the contact section scrolls on its own" and passes here. The contact-form e2e still passes.
+
+**A defect hit on the way.** The first cut took `snap-end` off the footer, leaving the column's `snap-start` as the page's only snap point. On an iPhone 13 a scroll to the end snapped back to the top, so the footer could not be reached. Putting `snap-end` back gives a resting point at the end; the phone now settles at 0, 113, 226, 339, 452, 537 and 901.
+
+**Noticed, not changed.** At the end of the scroll the fixed, transparent nav sits over the top of the heading, because every page's nav floats over its content. The page's copy keeps the site's type: the frame's paragraph is smaller than the site's `p`, and that was not overridden.
+
+**Instrument note.** Twice a `vite preview` left running from an earlier build held port 4173. It served HTML naming assets the new build had deleted, so the page measured unstyled. Restart the preview with `--strictPort` after every build.
+
+Usage: not readable

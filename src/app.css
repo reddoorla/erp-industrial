@@ -120,6 +120,35 @@ button,
 	height: 100% !important;
 }
 
+/* The footers' links (Footer.svelte, ContactFooter.svelte, SocialLinks.svelte). */
+.footer-link {
+	color: var(--ffffff, #fff);
+	display: inline-block;
+	padding: 0.5rem 0;
+
+	font-feature-settings:
+		'clig' off,
+		'liga' off;
+
+	/* Button - all caps */
+
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 145%; /* 11.6px */
+	letter-spacing: 2px;
+	text-transform: uppercase;
+}
+
+.footer-link,
+.social-link {
+	transition: opacity 400ms ease;
+}
+.footer-link:hover,
+.social-link:hover {
+	opacity: 0.8;
+}
+
 main::-webkit-scrollbar,
 div::-webkit-scrollbar {
 	display: none;

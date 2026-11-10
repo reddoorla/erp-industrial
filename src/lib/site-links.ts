@@ -7,3 +7,13 @@ export const siteLinks = [
 	{ href: '/investors', text: 'Investors' },
 	{ href: '/office', text: 'Office' }
 ];
+
+// The investor and tenant portals, external, listed in every footer.
+export const portalLinks = [
+	{ href: 'https://icx.efrontcloud.com/@9894/ERP/login.aspx', text: 'PE Investor Portal' },
+	{ href: 'https://starportal2.star.vistra.com/erp/#/index', text: 'DST Investor Portal' },
+	{
+		href: 'https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161',
+		text: 'Tenant Portal'
+	}
+];
