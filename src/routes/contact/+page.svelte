@@ -66,9 +66,8 @@
 	afterNavigate(() => {
 		disableScrollHandling();
 		isNavLight.set(true);
-		setTimeout(() => {
-			scrollTo({ top: 0, behavior: 'instant' });
-		}, 50);
+		// No scroll reset here: <main> is the scroll container, and the layout's afterNavigate
+		// returns it to the top (a window.scrollTo here never moved anything).
 	});
 
 	onMount(() => {
@@ -78,9 +77,9 @@
 
 <Nav {navLinks} isLogoLarge={false} />
 
-<!-- The section and its own footer share one column at least a screen tall: where the form fits, as
-     at 1440×900, the page does not scroll at all and the footer sits at the bottom; on a shorter
-     screen the page scrolls as one. The section used to be a fixed full-screen layer that scrolled
+<!-- The section and its own footer share one column at least a screen tall, so the footer sits at
+     the bottom of the page and the whole page scrolls as one: a little at 1440×900 (103px), as the
+     design's own 984px-tall page does. The section used to be a fixed full-screen layer that scrolled
      inside itself under the shared footer band, so the bottom of the form sat behind the footer. -->
 <div class="min-h-dvh flex flex-col snap-start">
 	<section class="flex-1 w-screen">

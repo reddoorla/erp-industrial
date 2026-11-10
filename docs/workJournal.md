@@ -493,7 +493,7 @@ The fix:
 
 - **The page.** The section is back in the page's flow. It and a new `ContactFooter` share one column at least a screen tall (`min-h-dvh flex flex-col snap-start`). The columns are top-aligned, as in the frame; they used to be centred.
 - **`ContactFooter`.** No logo, Home listed with the site's sections, the portals, and the social icons. It drops the Contact button, which on this page would link to itself.
-- **Shared parts.** The portal links (now in `$lib/site-links`) and the social icons (`SocialLinks.svelte`) moved out of `Footer`, so both footers use one copy. The `.footer-link` styles moved to `app.css` unchanged. The hover rule is now on `.footer-link` and `.social-link` rather than a global `footer a`, which would also have caught the outlined Contact button.
+- **Shared parts.** The portal links (now in `$lib/site-links`) and the social icons (`SocialLinks.svelte`) moved out of `Footer`, so both footers use one copy. The `.footer-link` styles moved to `app.css` unchanged. One side effect: Footer's scoped `a { transition: opacity 400ms }` used to override the footer logo's `transition-all duration-500`. With that rule gone, the logo's hover fade runs 500ms over all properties instead of 400ms over opacity. The opacity still ends at 0.8. The hover rule is now on `.footer-link` and `.social-link` rather than a global `footer a`, which would also have caught the outlined Contact button.
 
 Measured on `vite preview` of the production build:
 
