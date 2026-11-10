@@ -31,3 +31,14 @@ export const LEGACY_PATHS: Record<string, string> = {
 export function legacyRedirect(pathname: string): string | null {
 	return LEGACY_PATHS[pathname.toLowerCase()] ?? null;
 }
+
+/**
+ * The full Location for an old URL: its successor plus the visitor's own query string, or null.
+ * The query is kept so a tagged link (Midland Polo's sponsor link with `?utm_…`) still reaches
+ * gtag on the page it lands on (#107). Kit strips its own `x-sveltekit-*` parameters from
+ * `event.url` before the hook sees it, so only the visitor's query is passed on.
+ */
+export function legacyLocation(url: Pick<URL, 'pathname' | 'search'>): string | null {
+	const target = legacyRedirect(url.pathname);
+	return target === null ? null : target + url.search;
+}
