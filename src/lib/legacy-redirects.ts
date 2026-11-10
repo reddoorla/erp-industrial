@@ -35,8 +35,9 @@ export function legacyRedirect(pathname: string): string | null {
 /**
  * The full Location for an old URL: its successor plus the visitor's own query string, or null.
  * The query is kept so a tagged link (Midland Polo's sponsor link with `?utm_…`) still reaches
- * gtag on the page it lands on (#107). Kit strips its own `x-sveltekit-*` parameters from
- * `event.url` before the hook sees it, so only the visitor's query is passed on.
+ * gtag on the page it lands on (#107). Only the visitor's query reaches it: on a data request kit
+ * deletes its own `x-sveltekit-invalidated` and trailing-slash parameters from `event.url` before
+ * the hook runs, and it answers any other `x-sveltekit-*` parameter with a 400 before the hook.
  */
 export function legacyLocation(url: Pick<URL, 'pathname' | 'search'>): string | null {
 	const target = legacyRedirect(url.pathname);
