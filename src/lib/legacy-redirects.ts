@@ -14,6 +14,7 @@
 export const LEGACY_PATHS: Record<string, string> = {
 	// The Office page carries the Fasken Center (its "Fasken Center" slide).
 	'/fasken-center.html': '/office',
+	// Search Console's 2026-11-09 report (2 impressions, August 2025).
 	'/who-we-are.html': '/about',
 	// Midland Polo's sponsor page links here (ERP's Brennan Berry, 2026-11-10), and visitors got
 	// the bare 404. It goes to the homepage, as he asked: the homepage ends on the portfolio map.

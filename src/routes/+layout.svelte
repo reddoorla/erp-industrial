@@ -80,7 +80,7 @@
 <svelte:head>
 	<title
 		>{page.error
-			? `${page.status === 404 ? 'Page not found' : 'Error'} | ERP Industrials`
+			? `${page.status === 404 ? 'Page not found' : 'Something went wrong'} | ERP Industrials`
 			: page.data.title || 'ERP Industrials'}</title
 	>
 	<meta name="description" content={metaDescription} />

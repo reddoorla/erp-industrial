@@ -453,13 +453,16 @@ Brennan Berry (ERP) emailed the operator at 6:21am PT: Midland Polo's sponsor pa
 
 **Left to the 404, on purpose.** `/properties.html` and similar guesses: no evidence any were ever linked, and a redirect for a guessed URL is a claim the site cannot back. archive.org reset the connection three times from the container (as on 11-09), and a web search for the domain found no pages of it, so the old site's full URL list was not recoverable here. A Search Console query from this session was refused by the session's permission classifier. #102 had already run that query on 11-09.
 
-**The 404 page** (`src/routes/+error.svelte`) is laid out as `/contact`, the site's other text-on-black page, and uses only existing pieces:
+**The 404 page** (`src/routes/+error.svelte`) takes `/contact`'s black, light nav and top margin (`mt-28 md:mt-48`; `/contact` itself has no h1, its heading is an h2). It is built only from existing pieces and utilities already used in `src/`:
 
 - `Nav`, light via `slideObserver`;
-- an `h5` label (the status), the site's `h1` and `p` type, and three outlined `DefaultButton`s (Home, Industrial Portfolio, Contact);
+- an `h5` label (the status), the hero's `h1` and the site's `p` type;
+- `ContentBox`'s row of outlined `DefaultButton`s (Home, Industrial Portfolio, Contact);
 - the `Footer`.
 
-On md+ the section is `100dvh − --footer-h`, so it and the footer band fill one screen, as the homepage's map slide does. Measured on `vite preview` of the production build: the section runs 0–716 and the footer 716–900 at 1440×900, and 0–584 / 584–768 at 1024×768. The h1's left edge is the logo's at both widths (110px and 41px). The nav's links come from a new `$lib/site-links`, shared with the footer, rather than the Prismic `nav` document: an error page has no load of its own, and a Prismic call per unknown URL would make every bot probe cost one. The cost: a nav link added in Prismic must also be added there. Analytics comes with it, since gtag is in `app.html`. The layout now titles an error page "Page not found | ERP Industrials" and gives it no canonical, and the page carries `noindex`.
+A first cut invented spacing (`max-w-2xl`, `md:pt-40`, `md:pb-10`, `sm:gap-5`) that is used nowhere else on the site. The Opus review caught it, and the page now uses the site's own values.
+
+On md+ the section is `100dvh − --footer-h`, so it and the footer band fill one screen, as the homepage's map slide does. Measured on `vite preview` of the production build: the section runs 0–716 and the footer 716–900 at 1440×900, and 0–584 / 584–768 at 1024×768. The h1's left edge is the logo's at both widths (110px and 41px, measured on the first cut, whose column was the same). The nav's links come from a new `$lib/site-links`, shared with the footer, rather than the Prismic `nav` document: an error page has no load of its own, and a Prismic call per unknown URL would make every bot probe cost one. The cost: a nav link added in Prismic must also be added there. Analytics comes with it, since gtag is in `app.html`. The layout now titles an error page "Page not found | ERP Industrials" and gives it no canonical, and the page carries `noindex`.
 
 Measured on `vite preview`:
 
