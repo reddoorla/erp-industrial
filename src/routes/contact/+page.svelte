@@ -60,164 +60,165 @@
 
 	import { afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { isNavLight } from '$lib/stores/isNavLight';
-	import Footer from '$lib/components/Footer.svelte';
+	import ContactFooter from '$lib/components/ContactFooter.svelte';
 	import { onMount } from 'svelte';
 
 	afterNavigate(() => {
 		disableScrollHandling();
 		isNavLight.set(true);
-		setTimeout(() => {
-			scrollTo({ top: 0, behavior: 'instant' });
-		}, 50);
+		// No scroll reset here: <main> is the scroll container, and the layout's afterNavigate
+		// returns it to the top (a window.scrollTo here never moved anything).
 	});
 
 	onMount(() => {
 		isNavLight.set(true);
 	});
-
-	let viewportWidth = $state(0);
 </script>
-
-<svelte:window bind:innerWidth={viewportWidth} />
 
 <Nav {navLinks} isLogoLarge={false} />
 
-<section class="h-dvh w-screen snap-end fixed top-0 overflow-y-auto">
-	<ContentWidth class="flex flex-col md:flex-row items-center justify-center mt-28 md:mt-48">
-		<div class="w-full md:w-1/3 flex flex-col gap-4">
-			<h2 class="text-white mb-4">We'd Love to Hear from You</h2>
-			<p class="text-white mb-12">
-				Please send us a message so that we can know how to best serve you and your industrial real
-				estate needs.
-			</p>
-			<div class="button-text text-white">VISIT</div>
-			<p class="text-white mb-4 whitespace-pre-line">
-				400 W. Illinois Avenue, Suite 1630 <br /> Midland, TX 79701
-			</p>
-			<div class="button-text text-white">CALL</div>
-			<a
-				href="tel:+14322428850"
-				class="text-white mb-4 inline-block hover:opacity-80 transition-opacity">432.242.8850</a
-			>
-			<div class="button-text text-white">MESSAGE</div>
-			<a
-				href="mailto:info@erpfunds.com"
-				class="text-white inline-block hover:opacity-80 transition-opacity">info@erpfunds.com</a
-			>
-		</div>
-		<div class="w-full md:w-2/3 mt-10 mb-16 md:my-0 md:pl-16 relative">
-			{#if !form?.success}
-				{#if form?.error}
-					<div
-						class="absolute flex flex-col items-center justify-center -top-24 right-0 border-[#b21c0e] border-2 bg-black"
-						transition:fade
-						role="alert"
-					>
-						<h5 class="text-subtle-blue p-8">
-							Something went wrong sending your message. Please check your details and try again.
-						</h5>
-					</div>
-				{/if}
-				<form
-					class="w-full flex flex-col gap-8"
-					name="contact"
-					id="contact"
-					method="POST"
-					use:enhance={() => {
-						submitting = true;
-						return async ({ update }) => {
-							await update();
-							submitting = false;
-						};
-					}}
+<!-- The section and its own footer share one column at least a screen tall, so the footer sits at
+     the bottom of the page and the whole page scrolls as one: a little at 1440×900 (103px), as the
+     design's own 984px-tall page does. The section used to be a fixed full-screen layer that scrolled
+     inside itself under the shared footer band, so the bottom of the form sat behind the footer. -->
+<div class="min-h-dvh flex flex-col snap-start">
+	<section class="flex-1 w-screen">
+		<ContentWidth
+			class="flex flex-col md:flex-row md:items-start justify-center pt-28 md:pt-48 md:pb-12"
+		>
+			<div class="w-full md:w-1/3 flex flex-col gap-4">
+				<h2 class="text-white mb-4">We'd Love to Hear from You</h2>
+				<p class="text-white mb-12">
+					Please send us a message so that we can know how to best serve you and your industrial
+					real estate needs.
+				</p>
+				<div class="button-text text-white">VISIT</div>
+				<p class="text-white mb-4 whitespace-pre-line">
+					400 W. Illinois Avenue, Suite 1630 <br /> Midland, TX 79701
+				</p>
+				<div class="button-text text-white">CALL</div>
+				<a
+					href="tel:+14322428850"
+					class="text-white mb-4 inline-block hover:opacity-80 transition-opacity">432.242.8850</a
 				>
-					<h5 class="text-white">SEND US A MESSAGE</h5>
-
-					<!-- Anti-bot: per-request timing token + a hidden honeypot. Naive bots
-					     fill the honeypot; a too-fast fill is caught by the timing screen. -->
-					<input type="hidden" name="ts" value={data.formTs} />
-					<input
-						type="text"
-						name="bot-field"
-						tabindex="-1"
-						autocomplete="off"
-						aria-hidden="true"
-						class="hidden"
-					/>
-
-					<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">
-						<input
-							type="email"
-							name="email"
-							placeholder="Your Email"
-							aria-label="Your email"
-							required
-							class="md:w-[45%]"
-						/>
-						<select
-							name="interest"
-							class="md:w-[45%] cursor-pointer"
-							aria-label="Area of interest"
-							required
+				<div class="button-text text-white">MESSAGE</div>
+				<a
+					href="mailto:info@erpfunds.com"
+					class="text-white inline-block hover:opacity-80 transition-opacity">info@erpfunds.com</a
+				>
+			</div>
+			<div class="w-full md:w-2/3 mt-10 mb-16 md:my-0 md:pl-16 relative">
+				{#if !form?.success}
+					{#if form?.error}
+						<div
+							class="absolute flex flex-col items-center justify-center -top-24 right-0 border-[#b21c0e] border-2 bg-black"
+							transition:fade
+							role="alert"
 						>
-							<option value="" disabled selected>Select Interest</option>
-							<option value="Leasing">Leasing</option>
-							<option value="Investor Relations">Investor Relations</option>
-							<option value="Property Sales and Acquistions">Property Sales and Acquisitions</option
-							>
-						</select>
-					</div>
-					<div class="w-full">
-						<textarea
-							name="message"
-							class="w-full h-48"
-							placeholder="Your Message"
-							aria-label="Your message"
-							required></textarea>
-					</div>
-					{#if turnstileSiteKey}
-						<!-- Cloudflare Turnstile mount point; the effect renders it explicitly and
-						     injects a hidden cf-turnstile-response input that createIngestAction forwards. -->
-						<div class="cf-turnstile" bind:this={turnstileEl}></div>
+							<h5 class="text-subtle-blue p-8">
+								Something went wrong sending your message. Please check your details and try again.
+							</h5>
+						</div>
 					{/if}
-					<button
-						type="submit"
-						disabled={submitting}
-						class="hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 disabled:cursor-not-allowed disabled:opacity-70"
+					<form
+						class="w-full flex flex-col gap-8"
+						name="contact"
+						id="contact"
+						method="POST"
+						use:enhance={() => {
+							submitting = true;
+							return async ({ update }) => {
+								await update();
+								submitting = false;
+							};
+						}}
 					>
-						{#if !submitting}
-							Submit
-						{:else}
-							<div>
-								<LoaderCircle class="leading-4 w-4 size-[2em] animate-spin" strokeWidth={2} />
-							</div>
+						<h5 class="text-white">SEND US A MESSAGE</h5>
+
+						<!-- Anti-bot: per-request timing token + a hidden honeypot. Naive bots
+					     fill the honeypot; a too-fast fill is caught by the timing screen. -->
+						<input type="hidden" name="ts" value={data.formTs} />
+						<input
+							type="text"
+							name="bot-field"
+							tabindex="-1"
+							autocomplete="off"
+							aria-hidden="true"
+							class="hidden"
+						/>
+
+						<div class="w-full flex flex-col gap-8 md:gap-0 md:flex-row justify-between">
+							<input
+								type="email"
+								name="email"
+								placeholder="Your Email"
+								aria-label="Your email"
+								required
+								class="md:w-[45%]"
+							/>
+							<select
+								name="interest"
+								class="md:w-[45%] cursor-pointer"
+								aria-label="Area of interest"
+								required
+							>
+								<option value="" disabled selected>Select Interest</option>
+								<option value="Leasing">Leasing</option>
+								<option value="Investor Relations">Investor Relations</option>
+								<option value="Property Sales and Acquistions"
+									>Property Sales and Acquisitions</option
+								>
+							</select>
+						</div>
+						<div class="w-full">
+							<textarea
+								name="message"
+								class="w-full h-48"
+								placeholder="Your Message"
+								aria-label="Your message"
+								required></textarea>
+						</div>
+						{#if turnstileSiteKey}
+							<!-- Cloudflare Turnstile mount point; the effect renders it explicitly and
+						     injects a hidden cf-turnstile-response input that createIngestAction forwards. -->
+							<div class="cf-turnstile" bind:this={turnstileEl}></div>
 						{/if}
-					</button>
-				</form>
-			{/if}
-			<!-- An always-present live region, empty (and zero-size) until the thank-you
+						<button
+							type="submit"
+							disabled={submitting}
+							class="hover:bg-erp-blue border-white border-2 text-white active:bg-black w-full md:w-fit text-center mb-5 sm:mb-0 uppercase cursor-pointer text-nowrap transition-all duration-300 active:-translate-y-2 disabled:cursor-not-allowed disabled:opacity-70"
+						>
+							{#if !submitting}
+								Submit
+							{:else}
+								<div>
+									<LoaderCircle class="leading-4 w-4 size-[2em] animate-spin" strokeWidth={2} />
+								</div>
+							{/if}
+						</button>
+					</form>
+				{/if}
+				<!-- An always-present live region, empty (and zero-size) until the thank-you
 			     renders inside it, so a screen reader announces it. It is also the success
 			     signal the fleet's form-e2e probe waits for. -->
-			<div role="status">
-				{#if form?.success}
-					<div class="w-full h-72 flex flex-col items-center justify-center gap-16">
-						<h5 class="text-white" bind:this={thankYouHeading} tabindex="-1">THANK YOU!</h5>
-						<p class="text-white">
-							We'll get back to you as soon as possible. In the meantime, explore our available
-							properties.
-						</p>
-						<DefaultButton text="AVAILABILITIES" href="/industrial-portfolio" filled={false} />
-					</div>
-				{/if}
+				<div role="status">
+					{#if form?.success}
+						<div class="w-full h-72 flex flex-col items-center justify-center gap-16">
+							<h5 class="text-white" bind:this={thankYouHeading} tabindex="-1">THANK YOU!</h5>
+							<p class="text-white">
+								We'll get back to you as soon as possible. In the meantime, explore our available
+								properties.
+							</p>
+							<DefaultButton text="AVAILABILITIES" href="/portfolio" filled={false} />
+						</div>
+					{/if}
+				</div>
 			</div>
-		</div>
-	</ContentWidth>
-	<div class="h-[20dvh]"></div>
-</section>
+		</ContentWidth>
+	</section>
 
-{#if viewportWidth > 768}
-	<Footer />
-{/if}
+	<ContactFooter />
+</div>
 
 <style>
 	input,

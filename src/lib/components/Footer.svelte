@@ -1,55 +1,10 @@
 <script lang="ts">
 	import ContentWidth from './ContentWidth.svelte';
 	import logoFull from '../assets/fullLogo.webp';
-	import loopnet from '../assets/icons/loopnet.svg';
 	import DefaultButton from './Buttons/DefaultButton.svelte';
-
-	const siteLinks = [
-		{ href: '/about', text: 'About' },
-		{ href: '/portfolio', text: 'Industrial Portfolio' },
-		{ href: '/investors', text: 'Investors' },
-		{ href: '/office', text: 'Office' }
-	];
-	const portalLinks = [
-		{ href: 'https://icx.efrontcloud.com/@9894/ERP/login.aspx', text: 'PE Investor Portal' },
-		{ href: 'https://starportal2.star.vistra.com/erp/#/index', text: 'DST Investor Portal' },
-		{
-			href: 'https://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161',
-			text: 'Tenant Portal'
-		}
-	];
+	import { portalLinks, siteLinks } from '$lib/site-links';
+	import SocialLinks from './SocialLinks.svelte';
 </script>
-
-{#snippet social()}
-	<div class="flex flex-row items-center gap-2 text-subtle-blue md:-ml-3">
-		<a
-			href="https://www.linkedin.com/company/erp-industrials/"
-			class="text-xl inline-flex items-center justify-center min-h-11 min-w-11"
-			aria-label="LinkedIn"
-			><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
-				><path
-					d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"
-				/></svg
-			></a
-		>
-		<a
-			href="https://www.facebook.com/ERPFunds/"
-			class="text-xl inline-flex items-center justify-center min-h-11 min-w-11"
-			aria-label="Facebook"
-			><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="size-[1em]"
-				><path
-					d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-				/></svg
-			></a
-		>
-		<a
-			href="https://www.loopnet.com/company/erp-industrials/midland-tx/9rvtzp4l/"
-			class="inline-flex items-center justify-center min-h-11 min-w-11"
-			aria-label="LoopNet"
-			><img src={loopnet} class="size-[30px]" alt="ERP Industrials on LoopNet" /></a
-		>
-	</div>
-{/snippet}
 
 <!-- Desktop and phone layouts are both in the markup and switched by CSS at md. They used to be
      switched on a bound innerWidth, which is 0 during SSR, so every desktop visit got the phone
@@ -84,7 +39,7 @@
 			</nav>
 		</div>
 		<div class="flex flex-col gap-4 shrink-0">
-			{@render social()}
+			<SocialLinks />
 			<DefaultButton href="/contact" text="Contact" filled={false} />
 		</div>
 	</ContentWidth>
@@ -108,35 +63,7 @@
 				{/each}
 			</nav>
 		</div>
-		{@render social()}
+		<SocialLinks />
 		<DefaultButton href="/contact" text="Contact" filled={false} />
 	</ContentWidth>
 </footer>
-
-<style>
-	.footer-link {
-		color: var(--ffffff, #fff);
-		display: inline-block;
-		padding: 0.5rem 0;
-
-		font-feature-settings:
-			'clig' off,
-			'liga' off;
-
-		/* Button - all caps */
-
-		font-size: 10px;
-		font-style: normal;
-		font-weight: 500;
-		line-height: 145%; /* 11.6px */
-		letter-spacing: 2px;
-		text-transform: uppercase;
-	}
-
-	a {
-		transition: opacity 400ms ease;
-	}
-	a:hover {
-		opacity: 0.8;
-	}
-</style>

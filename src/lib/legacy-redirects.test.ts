@@ -3,9 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { LEGACY_PATHS, legacyRedirect } from './legacy-redirects';
 
 describe('legacyRedirect', () => {
-	it('sends the old pages Google still serves to their successors', () => {
+	it('sends each old URL that 404ed to its successor', () => {
 		expect(legacyRedirect('/fasken-center.html')).toBe('/office');
 		expect(legacyRedirect('/who-we-are.html')).toBe('/about');
+		expect(legacyRedirect('/industrial-properties.html')).toBe('/');
+		expect(legacyRedirect('/contact.html')).toBe('/contact');
+		expect(legacyRedirect('/industrial-portfolio')).toBe('/portfolio');
 	});
 
 	it('matches whatever case the link was typed in', () => {
