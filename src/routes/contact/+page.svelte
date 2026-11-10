@@ -206,7 +206,7 @@
 							We'll get back to you as soon as possible. In the meantime, explore our available
 							properties.
 						</p>
-						<DefaultButton text="AVAILABILITIES" href="/industrial-portfolio" filled={false} />
+						<DefaultButton text="AVAILABILITIES" href="/portfolio" filled={false} />
 					</div>
 				{/if}
 			</div>

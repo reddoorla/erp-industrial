@@ -440,3 +440,39 @@ It passes here. On `staging` it fails with the widget 41–110px off the content
 **Noticed, not changed.** Buildout decides whether a phone opens on the listing list or the map; the 2024 design shows the map. Buildout's cookie modal still covers the widget until it is dismissed.
 
 Usage: not readable
+
+## 2026-11-10 — The old `/industrial-properties.html` 301s to the homepage, and missing pages get a designed 404 (`fix/legacy-301s-and-404` → `staging`)
+
+Brennan Berry (ERP) emailed the operator at 6:21am PT: Midland Polo's sponsor page links to `https://www.erpfunds.com/industrial-properties.html`, and visitors get a blank page. Measured at 9:15am PT: that URL answered **404** (5,274 bytes) on `www`, and the apex 301s to it on `www`. "Blank" was SvelteKit's default error page: `<h1>404</h1><p>Page not found</p>` with no nav, no footer and no styles beyond black, so on a black body it read as nothing. #102's Search Console pass could not have caught it: the URL was not among the 12 pages Search Analytics has shown for this property in 16 months. The link sends people, not crawlers.
+
+**The redirects.** Same mechanism as #102 (the `handle` hook and `$lib/legacy-redirects`; its header says why not `netlify.toml`):
+
+- `/industrial-properties.html` → `/`, as Brennan asked and the operator agreed. The homepage ends on the portfolio map.
+- `/contact.html` → `/contact`. The old site's pages were `<name>.html`. Probed live: `/about.html`, `/portfolio.html`, `/investors.html` and `/office.html` all answer 200, because adapter-netlify prerenders each page to `<name>.html` and Netlify serves that static file before the function sees the request. `/contact` is not prerendered (it has a form action), so its twin 404ed.
+- `/industrial-portfolio` → `/portfolio`. The contact form's thank-you button linked there, and it was never a page. The button now links `/portfolio`. Found by reading the code, not from any report.
+
+**Left to the 404, on purpose.** `/properties.html` and similar guesses: no evidence any were ever linked, and a redirect for a guessed URL is a claim the site cannot back. archive.org reset the connection three times from the container (as on 11-09), and a web search for the domain found no pages of it, so the old site's full URL list was not recoverable here. A Search Console query from this session was refused by the session's permission classifier. #102 had already run that query on 11-09.
+
+**The 404 page** (`src/routes/+error.svelte`) takes `/contact`'s black, light nav and top margin (`mt-28 md:mt-48`; `/contact` itself has no h1, its heading is an h2). It is built only from existing pieces and utilities already used in `src/`:
+
+- `Nav`, light via `slideObserver`;
+- an `h5` label (the status), the hero's `h1` and the site's `p` type;
+- `ContentBox`'s row of outlined `DefaultButton`s (Home, Industrial Portfolio, Contact);
+- the `Footer`.
+
+A first cut invented spacing (`max-w-2xl`, `md:pt-40`, `md:pb-10`, `sm:gap-5`) that is used nowhere else on the site. The Opus review caught it, and the page now uses the site's own values.
+
+On md+ the section is `100dvh − --footer-h`, so it and the footer band fill one screen, as the homepage's map slide does. Measured on `vite preview` of the production build: the section runs 0–716 and the footer 716–900 at 1440×900, and 0–584 / 584–768 at 1024×768. The h1's left edge is the logo's at both widths (110px and 41px, measured on the first cut, whose column was the same). The nav's links come from a new `$lib/site-links`, shared with the footer, rather than the Prismic `nav` document: an error page has no load of its own, and a Prismic call per unknown URL would make every bot probe cost one. The cost: a nav link added in Prismic must also be added there. Analytics comes with it, since gtag is in `app.html`. The layout now titles an error page "Page not found | ERP Industrials" and gives it no canonical, and the page carries `noindex`.
+
+Measured on `vite preview`:
+
+- `/industrial-properties.html` (and `/Industrial-Properties.html`) → 301 `/`.
+- `/contact.html` → 301 `/contact`; `/industrial-portfolio` → 301 `/portfolio`; `/fasken-center.html` still → 301 `/office`.
+- `/this-page-does-not-exist` and `/a/b/c` → 404 with the new page.
+- `/`, `/about`, `/portfolio` and `/contact` → 200.
+
+The smoke spec's 404 test now covers a missing Prismic UID and a path no route matches. It checks for the real 404, the h1, `noindex`, no canonical, the three links and the footer. It passes here and fails on `staging`, with no "Page not found" heading.
+
+**Not fixed here: apex is two hops.** `erpfunds.com/industrial-properties.html` goes first to `www` (Netlify's domain redirect, the same for every path), then to `/`. Making that one hop means changing how the alias host is handled, and the brief keeps the primary-host question out of this task.
+
+Usage: not readable

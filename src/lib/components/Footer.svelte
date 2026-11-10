@@ -3,13 +3,8 @@
 	import logoFull from '../assets/fullLogo.webp';
 	import loopnet from '../assets/icons/loopnet.svg';
 	import DefaultButton from './Buttons/DefaultButton.svelte';
+	import { siteLinks } from '$lib/site-links';
 
-	const siteLinks = [
-		{ href: '/about', text: 'About' },
-		{ href: '/portfolio', text: 'Industrial Portfolio' },
-		{ href: '/investors', text: 'Investors' },
-		{ href: '/office', text: 'Office' }
-	];
 	const portalLinks = [
 		{ href: 'https://icx.efrontcloud.com/@9894/ERP/login.aspx', text: 'PE Investor Portal' },
 		{ href: 'https://starportal2.star.vistra.com/erp/#/index', text: 'DST Investor Portal' },

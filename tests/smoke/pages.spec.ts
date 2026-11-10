@@ -51,15 +51,29 @@ for (const route of smokeRoutes) {
 	});
 }
 
-test('404 page renders the custom error component', async ({ page }) => {
-	// The browser logs a top-level "Failed to load resource: 404" for the page
-	// itself — expected on a 404 route, not a bug. Allow it here.
-	const errors = attachConsoleWatcher(page, [/Failed to load resource.*404/i]);
-	const response = await page.goto('/this-uid-does-not-exist', {
-		waitUntil: 'domcontentloaded'
+// The designed not-found page (src/routes/+error.svelte), for a missing Prismic page (/[uid]
+// throws 404) and for a path no route matches. Both must answer a real 404, never a soft 200,
+// carry noindex and no canonical, and show the site's nav, footer and the way back.
+for (const path of ['/this-uid-does-not-exist', '/a/b/c']) {
+	test(`404 page renders the designed error page at ${path}`, async ({ page }) => {
+		// The browser logs a top-level "Failed to load resource: 404" for the page
+		// itself — expected on a 404 route, not a bug. Allow it here.
+		const errors = attachConsoleWatcher(page, [/Failed to load resource.*404/i]);
+		const response = await page.goto(path, { waitUntil: 'domcontentloaded' });
+		expect(response?.status()).toBe(404);
+		await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
+		await expect(page.getByText('404', { exact: true })).toBeVisible();
+		await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+		await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+		await expect(page).toHaveTitle('Page not found | ERP Industrials');
+		const section = page.locator('section').filter({ hasText: 'Page not found' });
+		for (const [name, href] of [
+			['Home', '/'],
+			['Industrial Portfolio', '/portfolio'],
+			['Contact', '/contact']
+		])
+			await expect(section.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+		await expect(page.locator('footer')).toBeAttached();
+		expect(errors).toEqual([]);
 	});
-	expect(response?.status()).toBe(404);
-	// src/routes/+error.svelte renders `<h1>{page.status}</h1>` → "404".
-	await expect(page.getByText('404', { exact: false }).first()).toBeVisible();
-	expect(errors).toEqual([]);
-});
+}
