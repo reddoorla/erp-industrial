@@ -337,6 +337,8 @@ Usage: see the workspace journal entry for this session.
 
 ## 2026-11-09 — The portfolio map fills the last screen again (#101)
 
+> Superseded in part by 2026-11-09 — The portfolio map slide follows the Figma design.
+
 Brennan Berry (ERP) emailed at 2:08pm PT that the portfolio map "is no longer showing at the bottom of the first page when you scroll all of the way down". The map was never missing. Buildout's iframe loaded, 764px tall with 75 listings and no console errors. What failed was the last screen of the homepage. Scrolled to the bottom on production, the "Our Portfolio" slide's top sat at −194px in Chromium and −180px in WebKit at 1440×900, so the heading (at −158) was off the top. The fixed nav's logo (32–150px) and links sat over the listings panel and the top of the map.
 
 Three causes, stacked:
@@ -399,5 +401,42 @@ Neither reproduces a trackpad fling or iOS momentum, so how it _feels_ was not m
 **Tried and reverted.** I registered the footer with `slideObserver` so the nav would turn light over the black phone footer. A screenshot showed the nav is not visible there at all: both are `z-40` and the footer paints later. So the change did nothing and came out.
 
 **Noticed, not changed.** On /office at 1024 the nav links are dark over the black half of the Tenant Portal slide. That is the slide's `isnavlight` in Prismic, a content setting.
+
+Usage: not readable
+
+## 2026-11-09 — The portfolio map slide follows the Figma design (`fix/portfolio-map-design`)
+
+> Corrects in part 2026-11-09 — The portfolio map fills the last screen again (#101).
+
+After #101 and #103 merged, Tucker found the map slide "not working as intended, some weirdly tight margins and the map looks cut off". The reference is the "Build Out Map" frame (`5018:13743`) and "our portfolio" frames in the 2024 **ERP Website Design** Figma file (`xRX9GaUhKI2rGaq0RtJJ5U`), found through a Figma comment email because nothing in this repo links it. In that design:
+
+- The slide is off-white (#fafafa).
+- "OUR PORTFOLIO" is centred under the nav.
+- The Buildout widget is about 580px tall, inside the content column, its edges lined up with the logo on the left and the nav on the right.
+- There are about 50px of air before the footer. On a phone the map is inset under the heading.
+
+What `staging` rendered after #101:
+
+- **Edge to edge.** The widget ran 0–1440 on desktop and was inset only 8px on a phone. The section was pure white against Buildout's off-white panels.
+- **Squeezed.** #101 made the slide share the last screen with the 184px footer band, so the widget was 360px tall at 1280×720 and 408px at 1024×768, with listing cards and map cut off. **#101 traded the map's size for its position, and that was the wrong trade on laptop-height screens.**
+
+The fix:
+
+- `--map-slide-h: max(calc(100dvh − --footer-h), 44rem)`. On screens 888px and taller the section and footer still share the last screen exactly, as #101 intended. Below that the slide keeps 44rem, is its own snap stop (mandatory since #103), and the footer comes one scroll later.
+- The widget is in `ContentWidth`, so it lines up with the logo, with `md:pb-12` of air below.
+- The section is #fafafa.
+
+Measured, resting on the slide: the widget is 110–1330 × 168–668 (500px) at 1440×900, and 488px tall at 1280×720 and 1024×768, in Chromium and WebKit. On an iPhone 13 it is 16–374 × 136–632.
+
+**A defect hit on the way.** Moving `.buildout-embed` onto `ContentWidth`'s class prop silently dropped the iframe to 150px tall. Svelte scopes a component's `<style>` by hashing its own elements, and a class string passed to a child component's element never gets the hash, so the scoped rules matched nothing. The rules are now `:global(.buildout-embed …)`.
+
+`tests/smoke/portfolio-map.spec.ts` is rewritten around the two rules:
+
+- Resting on the slide shows the whole section, with the widget clear of the logo, aligned with it, 40px above the section bottom and at least 480px tall.
+- At 888px and taller, the section and footer fill the last screen.
+
+It passes here. On `staging` it fails with the widget 41–110px off the content column.
+
+**Noticed, not changed.** Buildout decides whether a phone opens on the listing list or the map; the 2024 design shows the map. Buildout's cookie modal still covers the widget until it is dismissed.
 
 Usage: not readable

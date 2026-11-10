@@ -32,18 +32,18 @@
 	data-slice-variation={slice.variation}
 	style="position: {slice.primary.doesStack ? 'sticky' : 'relative'}"
 	class="snap-start {slice.primary.doesStack ? 'top-0' : ''} {slice.variation === 'embed'
-		? 'bg-white'
+		? 'bg-[#fafafa]'
 		: 'bg-black'} overflow-hidden"
 	in:fade={{ delay: 400 }}
 	out:fade
 >
-	<!-- The embed (Buildout map) slide is the homepage's last. On md+ the footer is a band of
-	     --footer-h, so at the bottom of the page a full-height slide had that much of its top
-	     scrolled off, taking the heading and the top of the map with it. Shortened by the band, the
-	     slide and the footer exactly fill the last screen. -->
+	<!-- The embed (Buildout map) slide is the homepage's last. Its md+ height is --map-slide-h
+	     (app.css): the screen less the footer band where that leaves room, so the section and the
+	     footer share the last screen, and never under 44rem. Its off-white (#fafafa) is the
+	     design's and matches Buildout's own panels, so the widget reads as part of the page. -->
 	<FullPageSlide
 		backgroundImage={slice.variation === 'embed' ? null : slice.primary.background_image}
-		height={slice.variation === 'embed' ? 'h-dvh md:h-[calc(100dvh-var(--footer-h))]' : 'h-dvh'}
+		height={slice.variation === 'embed' ? 'h-dvh md:h-(--map-slide-h)' : 'h-dvh'}
 	>
 		{#if slice.variation === 'embed'}
 			<EmbedSlide {slice} />
