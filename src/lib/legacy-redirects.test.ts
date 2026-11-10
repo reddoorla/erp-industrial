@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { LEGACY_PATHS, legacyRedirect } from './legacy-redirects';
+import { LEGACY_PATHS, legacyLocation, legacyRedirect } from './legacy-redirects';
 
 describe('legacyRedirect', () => {
 	it('sends each old URL that 404ed to its successor', () => {
@@ -19,5 +19,22 @@ describe('legacyRedirect', () => {
 		const own = ['/', '/about', '/office', '/portfolio', '/investors', '/contact', '/index.html'];
 		for (const path of [...own, ...Object.values(LEGACY_PATHS)])
 			expect(legacyRedirect(path), path).toBeNull();
+	});
+});
+
+describe('legacyLocation', () => {
+	it("keeps the visitor's query string, so a tagged sponsor link keeps its UTM tags", () => {
+		const url = new URL(
+			'https://www.erpfunds.com/industrial-properties.html?utm_source=midlandpolo&utm_medium=sponsor'
+		);
+		expect(legacyLocation(url)).toBe('/?utm_source=midlandpolo&utm_medium=sponsor');
+	});
+
+	it('adds no stray "?" when there is no query', () => {
+		expect(legacyLocation(new URL('https://www.erpfunds.com/contact.html'))).toBe('/contact');
+	});
+
+	it('is null for a path that is not a legacy URL, query or not', () => {
+		expect(legacyLocation(new URL('https://www.erpfunds.com/about?utm_source=x'))).toBeNull();
 	});
 });
