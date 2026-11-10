@@ -78,7 +78,11 @@
 </script>
 
 <svelte:head>
-	<title>{page.data.title || 'ERP Industrials'}</title>
+	<title
+		>{page.error
+			? `${page.status === 404 ? 'Page not found' : 'Error'} | ERP Industrials`
+			: page.data.title || 'ERP Industrials'}</title
+	>
 	<meta name="description" content={metaDescription} />
 	<meta property="og:description" content={metaDescription} />
 	{#if page.data.meta_title}
@@ -88,7 +92,10 @@
 		<meta property="og:image" content={page.data.meta_image} />
 		<meta name="twitter:card" content="summary_large_image" />
 	{/if}
-	<link rel="canonical" href={siteOrigin(page.url) + page.url.pathname} />
+	<!-- An error page (+error.svelte, noindex) names no canonical: it is not a page of the site. -->
+	{#if !page.error}
+		<link rel="canonical" href={siteOrigin(page.url) + page.url.pathname} />
+	{/if}
 </svelte:head>
 
 <!-- Mandatory snapping, so a scroll always comes to rest on a whole slide. e53777a (2026-06-03)

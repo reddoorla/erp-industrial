@@ -6,6 +6,9 @@ describe('legacyRedirect', () => {
 	it('sends the old pages Google still serves to their successors', () => {
 		expect(legacyRedirect('/fasken-center.html')).toBe('/office');
 		expect(legacyRedirect('/who-we-are.html')).toBe('/about');
+		expect(legacyRedirect('/industrial-properties.html')).toBe('/');
+		expect(legacyRedirect('/contact.html')).toBe('/contact');
+		expect(legacyRedirect('/industrial-portfolio')).toBe('/portfolio');
 	});
 
 	it('matches whatever case the link was typed in', () => {
