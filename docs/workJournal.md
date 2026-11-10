@@ -510,3 +510,22 @@ Measured on `vite preview` of the production build:
 **Instrument note.** Twice a `vite preview` left running from an earlier build held port 4173. It served HTML naming assets the new build had deleted, so the page measured unstyled. Restart the preview with `--strictPort` after every build.
 
 Usage: not readable
+
+## 2026-11-10 — The legacy 301s keep the visitor's query string (#107, `fix/legacy-redirect-query` → `staging`)
+
+The operator asked for #107 to be fixed: "keep the query string on the redirect". The `handle` hook built its `Location` from the path alone. So `www.erpfunds.com/industrial-properties.html?utm_source=midlandpolo` arrived at `/` without the tag, and gtag on the homepage never saw where the visitor came from.
+
+`$lib/legacy-redirects` gains `legacyLocation(url)`, which returns the successor plus `url.search`. The hook uses it.
+
+Measured on `vite preview` of the production build:
+
+- The tagged sponsor URL 301s to `/?utm_source=midlandpolo&utm_medium=sponsor`.
+- The bare URL 301s to `/`, with no stray `?`.
+- `/contact.html?ref=x` 301s to `/contact?ref=x`.
+- `/about?utm_source=x` (200) and `/nope?utm_source=x` (404) are untouched.
+
+The mutations named before the code both turned a test red: dropping `+ url.search` (the #107 bug itself), and always appending `'?' + searchParams` (a stray `?` on a bare URL).
+
+**Belief corrected on contact.** #107 also said the hook "answers a `__data.json` request for a legacy path with an HTML redirect". It does not. Kit 3's `respond.js` turns any 30x `Response` a `handle` hook returns for a data request into its JSON redirect ("Edge case: If user does `return Response(30x)` in handle hook while processing a data request…"). Measured: `/industrial-portfolio/__data.json?utm_source=x&x-sveltekit-invalidated=01` answers `200 application/json` with `{"type":"redirect","status":301,"location":"/portfolio?utm_source=x"}`. On a data request kit deletes its own `x-sveltekit-invalidated` and trailing-slash parameters from `event.url` before the hook runs, and it answers any other `x-sveltekit-*` parameter with a 400 before the hook. So only the visitor's query is passed on. One side effect of that deletion: kit re-serialises the query, so on a data request `b%20c~` comes back as `b+c%7E`. It decodes to the same values, and page requests pass the query through byte for byte. That half of the issue needed no code, only the comment saying why. The hook comment that still said "Old URLs Google still serves" is corrected in the same change.
+
+Usage: not readable
