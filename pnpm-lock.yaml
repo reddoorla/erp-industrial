@@ -28,8 +28,8 @@ importers:
         specifier: ^1.60.0
         version: 1.65.1
       '@reddoorla/maintenance':
-        specifier: ^0.109.1
-        version: 0.109.1(@sveltejs/kit@3.2.0(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(jiti@2.7.0)(playwright-core@1.65.1)(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)
+        specifier: ^0.117.0
+        version: 0.117.2(@sveltejs/kit@3.2.0(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(jiti@2.7.0)(playwright-core@1.65.1)(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)
       '@sveltejs/adapter-netlify':
         specifier: ^7.0.1
         version: 7.0.1(@sveltejs/kit@3.2.0(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))
@@ -446,8 +446,8 @@ packages:
       '@sveltejs/kit':
         optional: true
 
-  '@reddoorla/maintenance@0.109.1':
-    resolution: {integrity: sha512-zwDTofeZoelQw7D7Kyp4CALhNRHrzfwwnGoVJObzml2hpNHFsY1HD997qIHe9ffYmYUMEv/pfBO6pMDAhY3J0Q==}
+  '@reddoorla/maintenance@0.117.2':
+    resolution: {integrity: sha512-RlakityoeO36b+EkNtty9oM1PRh42z1QM1Z5hktFoXBricr2r6VFAvEwMSyh1KCpN+7ZZRvwcU0DQWGfjRjYdA==}
     engines: {node: '>=20'}
     hasBin: true
     peerDependencies:
@@ -948,6 +948,9 @@ packages:
     resolution: {integrity: sha512-4Dj6M28JB+oAH8kFkTLUo+a2jwOFkuqb3yucU0CANcRRUbxS0cP0nZYCGjcc3BNXwRIsUVmDGgzawme7zvJHvg==}
     engines: {node: '>=12'}
 
+  argparse@2.0.1:
+    resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
+
   aria-query@5.3.0:
     resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
 
@@ -1328,6 +1331,10 @@ packages:
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+
+  js-yaml@4.3.2:
+    resolution: {integrity: sha512-SFNOvSJ+Dgf/9An904Yx+CgSlIPCkIpao4qo51lpee25TIRejdH3rhR4EZMGoNx3/TP3O+wzWuiTFl4sqbltzA==}
+    hasBin: true
 
   jsdom@31.0.1:
     resolution: {integrity: sha512-CbhJL8ZQg3eKswxSZth4QO9tW0jPIhmR0vtSXQSbKSfWbwIT6hoRc17wdHIVTQ43KI0mdV5iTJr3281IDgVZ5g==}
@@ -2250,7 +2257,7 @@ snapshots:
     optionalDependencies:
       '@sveltejs/kit': 3.2.0(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2))
 
-  '@reddoorla/maintenance@0.109.1(@sveltejs/kit@3.2.0(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(jiti@2.7.0)(playwright-core@1.65.1)(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)':
+  '@reddoorla/maintenance@0.117.2(@sveltejs/kit@3.2.0(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.2)))(jiti@2.7.0)(playwright-core@1.65.1)(svelte@5.57.3(@typescript-eslint/types@8.72.2))(typescript@6.0.3)':
     dependencies:
       '@axe-core/playwright': 4.14.0(playwright-core@1.65.1)
       '@eslint/js': 10.0.1(eslint@10.15.0(jiti@2.7.0))
@@ -2260,6 +2267,7 @@ snapshots:
       eslint-config-prettier: 10.1.8(eslint@10.15.0(jiti@2.7.0))
       eslint-plugin-svelte: 3.24.1(eslint@10.15.0(jiti@2.7.0))(svelte@5.57.3(@typescript-eslint/types@8.72.2))
       globals: 17.14.0
+      js-yaml: 4.3.2
       listr2: 10.2.2
       node-html-parser: 9.0.7
       prettier: 3.10.1
@@ -2671,6 +2679,8 @@ snapshots:
 
   ansi-styles@6.2.3: {}
 
+  argparse@2.0.1: {}
+
   aria-query@5.3.0:
     dependencies:
       dequal: 2.0.3
@@ -3025,6 +3035,10 @@ snapshots:
   jiti@2.7.0: {}
 
   js-tokens@4.0.0: {}
+
+  js-yaml@4.3.2:
+    dependencies:
+      argparse: 2.0.1
 
   jsdom@31.0.1:
     dependencies:
