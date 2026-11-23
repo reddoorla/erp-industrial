@@ -80,8 +80,10 @@
 				<a
 					href={item.href}
 					class="nav-link text-white pointer-events-auto py-3 px-4"
-					onclick={toggleOverlayOff}>{item.text}</a
+					onclick={toggleOverlayOff}
 				>
+					{item.text}
+				</a>
 			{/each}
 		</ContentWidth>
 	</div>
