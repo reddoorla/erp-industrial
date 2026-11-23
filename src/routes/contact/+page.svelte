@@ -99,13 +99,17 @@
 				<div class="button-text text-white">CALL</div>
 				<a
 					href="tel:+14322428850"
-					class="text-white mb-4 inline-block hover:opacity-80 transition-opacity">432.242.8850</a
+					class="text-white mb-4 inline-block hover:opacity-80 transition-opacity"
 				>
+					432.242.8850
+				</a>
 				<div class="button-text text-white">MESSAGE</div>
 				<a
 					href="mailto:info@erpfunds.com"
-					class="text-white inline-block hover:opacity-80 transition-opacity">info@erpfunds.com</a
+					class="text-white inline-block hover:opacity-80 transition-opacity"
 				>
+					info@erpfunds.com
+				</a>
 			</div>
 			<div class="w-full md:w-2/3 mt-10 mb-16 md:my-0 md:pl-16 relative">
 				{#if !form?.success}
@@ -165,9 +169,9 @@
 								<option value="" disabled selected>Select Interest</option>
 								<option value="Leasing">Leasing</option>
 								<option value="Investor Relations">Investor Relations</option>
-								<option value="Property Sales and Acquistions"
-									>Property Sales and Acquisitions</option
-								>
+								<option value="Property Sales and Acquistions">
+									Property Sales and Acquisitions
+								</option>
 							</select>
 						</div>
 						<div class="w-full">
