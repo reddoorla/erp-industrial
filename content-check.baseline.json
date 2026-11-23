@@ -1,0 +1,140 @@
+{
+	"version": 1,
+	"counts": {
+		"src/lib/components/BgVideo.svelte": {
+			"copy\tPause background video": 1,
+			"copy\tPlay background video": 1
+		},
+		"src/lib/components/Buttons/ArrowButton.svelte": {
+			"alt\tlink arrow": 1,
+			"image\twireframe-link-arrow-right.svg": 1
+		},
+		"src/lib/components/ContactFooter.svelte": {
+			"copy\tHome": 1,
+			"copy\tPortals": 1,
+			"copy\tSite": 1,
+			"link\t/": 1
+		},
+		"src/lib/components/Footer.svelte": {
+			"alt\tERP Industrials": 2,
+			"copy\tContact": 2,
+			"copy\tPortals": 2,
+			"copy\tSite": 2,
+			"image\tfullLogo.webp": 1,
+			"link\t/": 2,
+			"link\t/contact": 2
+		},
+		"src/lib/components/LandscapeModal.svelte": {
+			"heading\tPlease Switch to Portrait Mode": 1
+		},
+		"src/lib/components/Nav.svelte": {
+			"alt\tERP Industrials": 1,
+			"copy\tClose menu": 1,
+			"copy\tOpen menu": 1,
+			"image\terp_logo_subtitled.svg": 1,
+			"link\t/": 1
+		},
+		"src/lib/components/SliderOfContentBoxes.svelte": {
+			"copy\tGo to slide ${…}": 1,
+			"copy\tNext slide": 1,
+			"copy\tPrevious slide": 1
+		},
+		"src/lib/components/SocialLinks.svelte": {
+			"alt\tERP Industrials on LoopNet": 1,
+			"copy\tFacebook": 1,
+			"copy\tLinkedIn": 1,
+			"copy\tLoopNet": 1,
+			"image\tloopnet.svg": 1,
+			"link\thttps://www.loopnet.com/company/erp-industrials/midland-tx/9rvtzp4l/": 1,
+			"social\thttps://www.facebook.com/ERPFunds/": 1,
+			"social\thttps://www.linkedin.com/company/erp-industrials/": 1
+		},
+		"src/lib/site-links.ts": {
+			"copy\tAbout": 1,
+			"copy\tDST Investor Portal": 1,
+			"copy\tIndustrial Portfolio": 1,
+			"copy\tInvestors": 1,
+			"copy\tOffice": 1,
+			"copy\tPE Investor Portal": 1,
+			"copy\tTenant Portal": 1,
+			"link\t/about": 1,
+			"link\t/investors": 1,
+			"link\t/office": 1,
+			"link\t/portfolio": 1,
+			"link\thttps://icx.efrontcloud.com/@9894/ERP/login.aspx": 1,
+			"link\thttps://starportal2.star.vistra.com/erp/#/index": 1,
+			"link\thttps://tenantportal-erpfunds.securecafe3.com/newtenantportal/content2/login/?companyId=161": 1
+		},
+		"src/lib/slices/FullScreenSlide/variations/HalfPageSlide.svelte": {
+			"copy\tClose": 1,
+			"copy\tGo Back": 1
+		},
+		"src/lib/slices/FullScreenSlide/variations/SlideOverlay.svelte": {
+			"copy\tClose": 1,
+			"copy\tbackground video": 2
+		},
+		"src/lib/slices/FullScreenSlide/variations/StackedContent.svelte": {
+			"copy\tManagement Team": 1,
+			"copy\tWatch": 1
+		},
+		"src/lib/slices/Hero/index.svelte": {
+			"copy\tClose": 1,
+			"copy\tWatch": 1,
+			"copy\tbackground video": 3,
+			"video\thttps://player.vimeo.com/video/939250244?background=1&muted=0&autoplay=1&dnt=1": 1,
+			"video\thttps://player.vimeo.com/video/939250244?dnt=1": 1
+		},
+		"src/routes/+error.svelte": {
+			"copy\tContact": 2,
+			"copy\tHome": 1,
+			"copy\tIndustrial Portfolio": 1,
+			"copy\tThe page you were looking for isn't here. It may have moved when we rebuilt the site. Everything we do is a click away below.": 1,
+			"copy\tThis page couldn't be shown. Everything we do is a click away below.": 1,
+			"heading\tPage not found": 1,
+			"heading\tSomething went wrong": 1,
+			"link\t/": 1,
+			"link\t/contact": 2,
+			"link\t/portfolio": 1
+		},
+		"src/routes/+layout.svelte": {
+			"seo\t${…} | ERP Industrials": 1,
+			"seo\tPage not found": 1,
+			"seo\tSomething went wrong": 1
+		},
+		"src/routes/buildout-map/+page.svelte": {
+			"seo\tERP Properties": 1
+		},
+		"src/routes/contact/+page.server.ts": {
+			"heading\tContact — ERP Industrials": 1
+		},
+		"src/routes/contact/+page.svelte": {
+			"address\t400 W. Illinois Avenue, Suite 1630": 1,
+			"button\tSubmit": 1,
+			"copy\tAVAILABILITIES": 1,
+			"copy\tArea of interest": 1,
+			"copy\tCALL": 1,
+			"copy\tInvestor Relations": 1,
+			"copy\tLeasing": 1,
+			"copy\tMESSAGE": 1,
+			"copy\tMidland, TX 79701": 1,
+			"copy\tPlease send us a message so that we can know how to best serve you and your industrial real estate needs.": 1,
+			"copy\tProperty Sales and Acquisitions": 1,
+			"copy\tSelect Interest": 1,
+			"copy\tVISIT": 1,
+			"copy\tWe'll get back to you as soon as possible. In the meantime, explore our available properties.": 1,
+			"copy\tYour Email": 1,
+			"copy\tYour Message": 1,
+			"copy\tYour email": 1,
+			"copy\tYour message": 1,
+			"email\tinfo@erpfunds.com": 1,
+			"email\tmailto:info@erpfunds.com": 1,
+			"heading\tSEND US A MESSAGE": 1,
+			"heading\tSomething went wrong sending your message. Please check your details and try again.": 1,
+			"heading\tTHANK YOU!": 1,
+			"heading\tWe'd Love to Hear from You": 1,
+			"link\t/portfolio": 1,
+			"phone\t432.242.8850": 1,
+			"phone\ttel:+14322428850": 1
+		}
+	}
+}
